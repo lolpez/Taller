@@ -3,5 +3,5 @@
     <input type="text" name="nombre"/>
     <label for="pic">Archivo: </label>
     <input type="file" name="archivo"/>
-    <input type="submit" />
+    <input type="submit"/>
 </form>
