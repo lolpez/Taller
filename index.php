@@ -1,19 +1,40 @@
-<form method="POST" enctype="multipart/form-data" action="upload.php">
-    <h1>Agregar Nuevo Archivo</h1>
-    <label for="username">Nombre archivo:</label>
-    <input type="text" name="nombre"/>
-    <label for="pic">Archivo: </label>
-    <input type="file" name="archivo"/>
-    <input type="submit"/>
-</form>
-
 <?php
-$url = "mongodb://admin:U4f9rDwdDsMd@127.12.74.132:27017/";
-$database = 'taller';
-$m = new MongoClient($url);
-$db = $m->selectDB($database);
-$lista = $db->selectCollection('fs.files')->find();
-foreach ($lista as $r) {
-    echo "<a href='download.php?nombre=".$r["nombre"]."'>".$r["nombre"]."</a><br>";
+session_start();
+$_controllers_permitidos = array("documento","notificacion","usuario");
+$_acciones_permitidos = array("enviar");
+if (!isset($_REQUEST['c'])) {
+    if (!isset($_SESSION['usuario'])) {
+        header('Location: login.php');
+    }
+    else
+    {
+        header('Location: ?c=documento');
+    }
+} else {
+    if (!isset($_SESSION['usuario'])) {
+        header('Location: login.php');
+    }
+    $controller = strtolower($_REQUEST['c']);
+    $accion = isset($_REQUEST['a']) ? $_REQUEST['a'] : 'Index';
+    // Instanciamos el controlador
+    if (file_exists("controller/$controller.controller.php") && is_readable("controller/$controller.controller.php")) {
+        //Validacion de privilegios del usuario que se encuentra en esta session
+        if (!in_array($controller,$_controllers_permitidos) ) {
+            echo 'controlador no permitido';
+            exit;
+        }
+        require_once ("controller/".$controller.".controller.php");
+        $controller = ucwords($controller) . 'Controller';
+        $controller = new $controller;
+        if (method_exists($controller, $accion)) {
+            call_user_func(array($controller, $accion));
+        } else {
+            echo 'accion no encontrada 404';    //cuando la accion no se encuentra
+            exit;
+        }
+    } else {
+        echo 'controlador no encontrado o no se puede leerlo 404';  //cuando el controlador no se encuentra
+        exit;
+    }
 }
 ?>
