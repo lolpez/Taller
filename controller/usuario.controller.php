@@ -1,13 +1,99 @@
 <?php
+require_once 'view/usuario/usuario.view.php';
 require_once 'model/usuario.php';
+require_once 'model/cargo.php';
+require_once 'model/bitacora.php';
+require_once 'model/fachada/fachada.php';
+
 class UsuarioController {
 
     private $model;
+    private $vista;
+    private $item;
+    private $cargo;
+    private $bitacora;
     private $llave;
+    private $menu;
 
     public function __CONSTRUCT() {
         $this->model = new Usuario();
-        $this->llave = pack('H*', "bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
+        $this->vista = new UsuarioView();
+        $this->cargo = new Cargo();
+        $this->bitacora = new Bitacora();
+        $this->llave = pack('H*',"bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
+        $this->item = 'usuario';
+        $fachada = new Fachada();
+        $this->menu = $fachada->Obtener_Privilegio($_SESSION['usuario']->fkcargo);
+    }
+
+    public function Index() {
+        $lista = $this->model->Listar();
+        $this->vista->View($lista,$this->menu);
+    }
+
+    public function Nuevo() {
+        $cargos=$this->cargo->Listar();
+        $this->vista->Nuevo($cargos,$this->menu);
+    }
+
+    public function Editar() {
+        $personal= $this->model->Obtener($_REQUEST['pkusuario']);
+        $cargos= $this->cargo->Listar();
+        $this->vista->Editar($personal,$cargos,$this->menu);
+    }
+
+    public function Guardar() {
+        if (isset($_POST['pk'])){   //si es editar
+            $usuario = $this->model->Obtener($_POST['pk']);
+            $nombre_archivo_antiguo = 'resources/users/'.$usuario->archivo;
+            $nombre_archivo_nuevo = $_POST['username'].'.crip';
+            $datos = array(
+                'pk' => $_POST['pk'],
+                'ci' => $_POST['ci'],
+                'nombre' => $_POST['nombre'],
+                'email' => $_POST['correo'],
+                'telefono' => $_POST['telefono'],
+                'archivo' => $nombre_archivo_nuevo,
+                'fkcargo' => $_POST['cargo']
+            );
+            $exito = $this->model->Editar($datos);
+            $DescripcionBitacora = 'se modifico el usuario '.$_POST['nombre'];
+            $tarea = 'modificar';
+            if ($exito){
+                //Eliminar el archivo antiguo y crear nuevo
+                $arrayDesencriptado = $this->desencriptar($nombre_archivo_antiguo,$this->llave);
+                unlink($nombre_archivo_antiguo);
+                $texto = $_POST['username'].'#'.$arrayDesencriptado[1].'#'.$_POST['ci'];
+                $this->encriptar('resources/users/'.$nombre_archivo_nuevo,$this->llave,$texto);
+            }
+        }else{
+            if (!file_exists('resources/users/'.$_POST['username'].'.crip')){
+                $datos = array(
+                    'ci' => $_POST['ci'],
+                    'nombre' => $_POST['nombre'],
+                    'email' => $_POST['correo'],
+                    'telefono' => $_POST['telefono'],
+                    'archivo' => $_POST['username'].'.epsas',
+                    'fkcargo' => $_POST['cargo']
+                );
+                $exito = $this->model->Guardar($datos);
+                $DescripcionBitacora = 'se agrego un nuevo usuario '.$_POST['nombre'];
+                $tarea = 'agregar';
+                if ($exito){
+                    //Encriptar nuevo archivo
+                    $nombre_archivo = 'resources/users/'.$_POST['username'].'.crip';
+                    $texto = $_POST['username'].'#'.$_POST['pass'].'#'.$_POST['ci'];
+                    $this->encriptar($nombre_archivo,$this->llave,$texto);
+                }
+            }else{
+                $exito = false;
+                $tarea = 'agregar';
+            }
+        }
+        if ($exito){
+            $this->bitacora->GuardarBitacora($DescripcionBitacora);
+        }
+        header('Location: ?c=usuario&item='.$this->item.' '.$_POST['nombre'].'&tarea='.$tarea.'&exito='.$exito);
     }
 
     public function Login() {
@@ -19,14 +105,21 @@ class UsuarioController {
                 if (($_POST['username']== $texto[0]) && ($_POST['password'] == $texto[1])) {
                     $usuario = $this->model->Login((int)$texto[2]);
                     $_SESSION['usuario'] = $usuario;
-                    //$DescripcionBitacora = 'Inicio de sesion';
-                    //$this->bitacora->GuardarBitacora($DescripcionBitacora);
+                    $DescripcionBitacora = 'Inicio de sesion';
+                    $this->bitacora->GuardarBitacora($DescripcionBitacora);
                     header('Location: ?k&c=notificacion');
                     return;
                 }
             }
         }
         header('Location: login.php?hell');
+    }
+
+    public function Logout() {
+        $DescripcionBitacora = 'Cierre de sesion';
+        $this->bitacora->GuardarBitacora($DescripcionBitacora);
+        session_destroy();
+        header('Location: index.php');
     }
 
     function encriptar($nombre_archivo, $llave, $texto){

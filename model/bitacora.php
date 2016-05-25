@@ -8,7 +8,7 @@ class Bitacora {
 
     public function __CONSTRUCT() {
         try {
-            $this->pdo = ConexionMysql::getInstance()->getPDO();
+            $this->pdo = ConexionMysql::getInstance()->obtenerConexion();
         } catch (Exception $e) {
             die($e->getMessage());
         }
@@ -19,7 +19,7 @@ class Bitacora {
         $fecha=date("d/m/Y");
         $hora=date("h:i:s");
         $datosbitacora = array(
-            'fkusuario' => $_SESSION['usuario'],
+            'fkusuario' => $_SESSION['usuario']->pkusuario,
             'accion' => $descripcion,
             'fecha' => $fecha,
             'hora' => $hora,

@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_controllers_permitidos = array("documento","notificacion","usuario");
+$_controllers_permitidos = array("documento","notificacion","usuario","bitacora","usuario","cargo");
 $_acciones_permitidos = array("enviar");
 if (!isset($_REQUEST['c'])) {
     if (!isset($_SESSION['usuario'])) {
@@ -16,9 +16,7 @@ if (!isset($_REQUEST['c'])) {
     }
     $controller = strtolower($_REQUEST['c']);
     $accion = isset($_REQUEST['a']) ? $_REQUEST['a'] : 'Index';
-    // Instanciamos el controlador
     if (file_exists("controller/$controller.controller.php") && is_readable("controller/$controller.controller.php")) {
-        //Validacion de privilegios del usuario que se encuentra en esta session
         if (!in_array($controller,$_controllers_permitidos) ) {
             echo 'controlador no permitido';
             exit;

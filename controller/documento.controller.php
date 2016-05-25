@@ -1,18 +1,21 @@
 <?php
-
-require_once 'model/documento.php';
 require_once 'view/documento/documento.view.php';
+require_once 'model/documento.php';
+require_once 'model/fachada/fachada.php';
 
 class DocumentoController {
 
     private $model;
     private $vista;
     private $item;
+    private $menu;
 
     public function __CONSTRUCT() {
         $this->model = new Documento();
         $this->vista = new DocumentoView();
         $this->item = 'documento';
+        $fachada = new Fachada();
+        $this->menu = $fachada->Obtener_Privilegio($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {
@@ -24,11 +27,11 @@ class DocumentoController {
             $objeto->nombre = $c['nombre'];
             $lista[] = $objeto;
         }
-        $this->vista->View($lista);
+        $this->vista->View($lista,$this->menu);
     }
 
     public function Nuevo() {
-        $this->vista->Nuevo();
+        $this->vista->Nuevo($this->menu);
     }
 
     public function Descargar(){

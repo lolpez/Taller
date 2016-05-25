@@ -73,17 +73,17 @@
                     break;
                 case "modificar":
                     if (<?php echo $_REQUEST['exito'];?>) {
-                        mensaje = "Se ha modificado un ";
+                        mensaje = "Se ha modificado ";
                     } else {
-                        mensaje = "No se puede modificar un ";
+                        mensaje = "No se puede modificar ";
                         correcto = false;
                     }
                     break;
                 case "eliminar":
                     if (<?php echo $_REQUEST['exito'];?>) {
-                        mensaje = "Se ha eliminado un ";
+                        mensaje = "Se ha eliminado ";
                     } else {
-                        mensaje = "No se puede eliminar un ";
+                        mensaje = "No se puede eliminar ";
                         correcto = false;
                     }
                     break;

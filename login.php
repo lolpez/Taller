@@ -17,7 +17,7 @@ if (isset($_REQUEST['no'])) {
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <meta name="description" content="">
     <meta name="author" content="">
-    <title>EPSAS</title>
+    <title>TITBOL</title>
     <link rel="shortcut icon" href="resources/img/icono.ico">
     <!-- Bootstrap Core CSS -->
     <link href="resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">

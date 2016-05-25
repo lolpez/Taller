@@ -8,7 +8,7 @@ class Usuario {
 
     public function __CONSTRUCT() {
         try {
-            $this->pdo = ConexionMysql::getInstance()->getPDO();
+            $this->pdo = ConexionMysql::getInstance()->obtenerConexion();
         } catch (Exception $e) {
             die($e->getMessage());
         }
@@ -77,9 +77,9 @@ class Usuario {
                     $datos['fkcargo']
                 )
             );
-            return 'si';
+            return true;
         } catch (Exception $e) {
-            return 'no';
+            return false;
         }
     }
 
@@ -107,9 +107,9 @@ class Usuario {
                     $datos['pk']
                 )
             );
-            return 'si';
+            return true;
         } catch (exception $e) {
-            return 'no';
+            return false;
         }
     }
 
@@ -117,8 +117,9 @@ class Usuario {
         try {
             $sql = $this->pdo->prepare("UPDATE usuario SET estado=0 WHERE pkusuario = ?");
             $sql->execute(array($pk));
+            return true;
         } catch (Exception $e) {
-            die($e->getMessage());
+            return false;
         }
     }
 

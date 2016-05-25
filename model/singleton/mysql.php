@@ -2,11 +2,11 @@
 class ConexionMysql {
 
     private static $instance = null;
-    private static $pdo;
+    private static $mysql;
 
     final private function __construct() {
         try {
-            self::getPDO();
+            self::obtenerConexion();
         } catch (PDOException $e) {
 
         }
@@ -19,18 +19,18 @@ class ConexionMysql {
         return self::$instance;
     }
 
-    public function getPDO() {
-        if (self::$pdo == null) {
+    public function obtenerConexion() {
+        if (self::$mysql == null) {
             $username = 'adminPWHHWUh';
-            $password = 'Tf_L3kbF1PX-';
-            $host = '127.12.74.130';
-            $port = '3306';
-            $database = 'taller';
+			$password = 'Tf_L3kbF1PX-';
+			$host = '127.12.74.130';
+			$port = '3306';
+			$database = 'taller';
             $url = 'mysql:host='.$host.';port='.$port.';dbname='.$database;
-            self::$pdo = new PDO($url, $username, $password);
-            self::$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            self::$mysql = new PDO($url, $username, $password);
+            self::$mysql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
-        return self::$pdo;
+        return self::$mysql;
     }
 
     final protected function __clone() {
@@ -38,7 +38,7 @@ class ConexionMysql {
     }
 
     function _destructor() {
-        self::$pdo = null;
+        self::$mysql = null;
     }
 
 }

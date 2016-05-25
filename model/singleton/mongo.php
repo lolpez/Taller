@@ -7,7 +7,7 @@ class ConexionMongo{
     final private function __construct() {
         try {
             self::obtenerConexion();
-        } catch (Exception $e) {
+        } catch (MongoException $e) {
 
         }
     }
@@ -22,10 +22,10 @@ class ConexionMongo{
     public function obtenerConexion() {
         if (self::$mongo == null) {
             $username = 'admin';
-            $password = 'U4f9rDwdDsMd';
-            $host = '127.12.74.132';
-            $port = '27017';
-            $database = 'taller';
+			$password = 'U4f9rDwdDsMd';
+			$host = '127.12.74.132';
+			$port = '27017';
+			$database = 'taller';
             $url = 'mongodb://'.$username.':'.$password.'@'.$host.':'.$port.'/';
             //$url = 'localhost';
             self::$mongo = new MongoClient($url);
