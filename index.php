@@ -8,7 +8,7 @@ if (!isset($_REQUEST['c'])) {
     }
     else
     {
-        header('Location: ?c=documento');
+        header('Location: ?c=notificacion');
     }
 } else {
     if (!isset($_SESSION['usuario'])) {
