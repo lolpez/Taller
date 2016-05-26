@@ -73,7 +73,7 @@ class UsuarioController {
                     'nombre' => $_POST['nombre'],
                     'email' => $_POST['correo'],
                     'telefono' => $_POST['telefono'],
-                    'archivo' => $_POST['username'].'.epsas',
+                    'archivo' => $_POST['username'].'.crip',
                     'fkcargo' => $_POST['cargo']
                 );
                 $exito = $this->model->Guardar($datos);
@@ -94,6 +94,15 @@ class UsuarioController {
             $this->bitacora->GuardarBitacora($DescripcionBitacora);
         }
         header('Location: ?c=usuario&item='.$this->item.' '.$_POST['nombre'].'&tarea='.$tarea.'&exito='.$exito);
+    }
+
+    public function Perfil() {
+        $usuario = $this->model->Obtener($_SESSION['usuario']->pkusuario);
+        $usuario = $this->model->Login($usuario->ci);
+        $nombre_archivo = 'resources/users/'.$usuario->archivo;
+        $arrayDesencriptado = $this->desencriptar($nombre_archivo,$this->llave);
+        $pass = $arrayDesencriptado[1];
+        $this->vista->Profile($usuario,$pass,$this->menu);
     }
 
     public function Login() {

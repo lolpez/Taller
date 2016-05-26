@@ -33,7 +33,7 @@
             </div>
             <div class="form-group">
                 <label>Nombre de Usuario</label>
-                <input type="text" name="username" class="form-control" value="<?php echo substr($user->archivo,0,-6) ?>" />
+                <input type="text" name="username" class="form-control" value="<?php echo substr($user->archivo,0,-5) ?>" />
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
