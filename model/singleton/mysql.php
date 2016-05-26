@@ -27,6 +27,7 @@ class ConexionMysql {
 			$port = '3306';
 			$database = 'taller';
             $url = 'mysql:host='.$host.';port='.$port.';dbname='.$database;
+			//$url = 'mysql:host=localhost;port=3306;dbname=taller';$username='root';$password='';
             self::$mysql = new PDO($url, $username, $password);
             self::$mysql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
