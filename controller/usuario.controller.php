@@ -97,8 +97,6 @@ class UsuarioController {
     }
 
     public function Login() {
-		echo 'im here';
-        exit;
 		if ((isset($_POST['username']) && isset($_POST['password'])) && (!empty($_POST['username']) && !empty($_POST['password']))) {
             $nombre_archivo = 'resources/users/'.$_POST['username'].'.crip';
             $llave = pack('H*', "bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
