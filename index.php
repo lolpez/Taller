@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_controllers_permitidos = array("documento","notificacion","usuario","bitacora","usuario","cargo","privilegio","calendario");
+$_controllers_permitidos = array("documento","notificacion","usuario","bitacora","usuario","cargo","privilegio","calendario","archivo_config");
 if (!isset($_REQUEST['c'])) {
     if (!isset($_SESSION['usuario'])) {
         header('Location: login.php');

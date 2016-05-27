@@ -11,7 +11,7 @@
     feriados.push({fecha:'<?php echo $r->fecha;?>/'+ano, nombre: '<?php echo $r->nombre; ?>'});
     <?php endforeach ?>
 </script>
-<h1 class="page-header"><i class="fa fa-calendar fa-fw fa-2x"></i> Calendario de trabajo EPSAS</h1>
+<h1 class="page-header"><i class="fa fa-calendar fa-fw fa-2x"></i> Calendario de trabajo TITBOL</h1>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
