@@ -47,7 +47,7 @@
         });
 
         //Habilitar buscadores de tablas
-        $('#dataTable').DataTable();
+        $('#dataTables-example').DataTable();
 
         //Mensajes Sweet Alert
         <?php if (isset($_REQUEST['k'])) { ?>

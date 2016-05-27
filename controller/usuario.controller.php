@@ -105,6 +105,39 @@ class UsuarioController {
         $this->vista->Profile($usuario,$pass,$this->menu);
     }
 
+    public function Modificar_Perfil() {
+        $usuario = $this->model->Obtener($_POST['pk']);
+        $nombre_archivo_antiguo = 'resources/users/'.$usuario->archivo;
+        $nombre_archivo_nuevo = $_POST['username'].'.crip';
+        $datos = array(
+            'pk' => $_POST['pk'],
+            'ci' => $_POST['ci'],
+            'nombre' => $_POST['nombre'],
+            'email' => $_POST['correo'],
+            'telefono' => $_POST['telefono'],
+            'archivo' => $nombre_archivo_nuevo,
+            'fkcargo' => $_POST['cargo']
+        );
+        $exito = $this->model->Editar($datos);
+        if (substr($usuario->archivo,0,-5) != $_POST['username']){
+            $DescripcionBitacora = 'edito su nombre de usuario de '.substr($usuario->archivo,0,-5).' a '.$_POST['username'];
+        }else{
+            $DescripcionBitacora = 'edito su perfil de usuario';
+        }
+        $tarea = 'modificar';
+        if ($exito=='si'){
+            //Eliminar el archivo antiguo y crear nuevo
+            unlink($nombre_archivo_antiguo);
+            $texto = $_POST['username'].'#'.$_POST['pass'].'#'.$_POST['ci'];
+            $this->encriptar('resources/users/'.$nombre_archivo_nuevo,$this->llave,$texto);
+            $this->bitacora->GuardarBitacora($DescripcionBitacora);
+            //reiniciar sesion
+            $usuario = $this->model->Login($_POST['ci']);
+            $_SESSION['usuario'] = $usuario;
+        }
+        header('Location: ?c=notificacion&item='.$this->item.' '.$_POST['nombre'].'&tarea='.$tarea.'&exito='.$exito);
+    }
+
     public function Login() {
 		if ((isset($_POST['username']) && isset($_POST['password'])) && (!empty($_POST['username']) && !empty($_POST['password']))) {
             $nombre_archivo = 'resources/users/'.$_POST['username'].'.crip';
