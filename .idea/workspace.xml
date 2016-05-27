@@ -34,31 +34,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="153">
-              <caret line="2" column="55" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
+            <state vertical-scroll-proportion="0.13866232" vertical-offset="0" max-vertical-offset="613">
+              <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mysql.php" pinned="false" current-in-tab="true">
-        <entry file="file://$PROJECT_DIR$/model/singleton/mysql.php">
+      <file leaf-file-name="mongo.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/singleton/mongo.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.776509" vertical-offset="0" max-vertical-offset="867">
+            <state vertical-scroll-proportion="-12.769231" vertical-offset="144" max-vertical-offset="867">
               <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="cargo.php" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/model/cargo.php">
+      <file leaf-file-name="mysql.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/singleton/mysql.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="1445">
-              <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+            <state vertical-scroll-proportion="-13.076923" vertical-offset="153" max-vertical-offset="867">
+              <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
               <folding />
             </state>
           </provider>
@@ -105,7 +105,6 @@
         <option value="$PROJECT_DIR$/view/documento/documento-admin.php" />
         <option value="$PROJECT_DIR$/view/documento/documento-new.php" />
         <option value="$PROJECT_DIR$/resources/js/jslogin.js" />
-        <option value="$PROJECT_DIR$/model/singleton/mongo.php" />
         <option value="$PROJECT_DIR$/model/menu.php" />
         <option value="$PROJECT_DIR$/model/menu_detalle.php" />
         <option value="$PROJECT_DIR$/model/privilegio.php" />
@@ -133,6 +132,7 @@
         <option value="$PROJECT_DIR$/controller/usuario.controller.php" />
         <option value="$PROJECT_DIR$/index.php" />
         <option value="$PROJECT_DIR$/model/singleton/mysql.php" />
+        <option value="$PROJECT_DIR$/model/singleton/mongo.php" />
       </list>
     </option>
   </component>
@@ -681,14 +681,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/fachada/fachada.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.36052203" vertical-offset="0" max-vertical-offset="799">
-          <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/model/menu.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.27732465" vertical-offset="0" max-vertical-offset="1224">
@@ -699,14 +691,6 @@
             <marker date="1464190678465" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
             <marker date="1464190678465" expanded="true" signature="-1:-1" placeholder="UPDATE menu ..." />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/singleton/mongo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6101142" vertical-offset="102" max-vertical-offset="867">
-          <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -767,24 +751,40 @@
     </entry>
     <entry file="file://$PROJECT_DIR$/model/cargo.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="1445">
-          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+        <state vertical-scroll-proportion="-13.076923" vertical-offset="0" max-vertical-offset="1445">
+          <caret line="20" column="50" selection-start-line="20" selection-start-column="50" selection-end-line="20" selection-end-column="50" />
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/index.php">
+    <entry file="file://$PROJECT_DIR$/model/fachada/fachada.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="153">
-          <caret line="2" column="55" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
+        <state vertical-scroll-proportion="0.36052203" vertical-offset="0" max-vertical-offset="799">
+          <caret line="13" column="27" selection-start-line="13" selection-start-column="27" selection-end-line="13" selection-end-column="27" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/model/singleton/mysql.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.776509" vertical-offset="0" max-vertical-offset="867">
+        <state vertical-scroll-proportion="-13.076923" vertical-offset="153" max-vertical-offset="867">
+          <caret line="29" column="14" selection-start-line="29" selection-start-column="14" selection-end-line="29" selection-end-column="14" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/singleton/mongo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-12.769231" vertical-offset="144" max-vertical-offset="867">
           <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/index.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.13866232" vertical-offset="0" max-vertical-offset="613">
+          <caret line="5" column="2" selection-start-line="5" selection-start-column="2" selection-end-line="5" selection-end-column="2" />
           <folding />
         </state>
       </provider>
