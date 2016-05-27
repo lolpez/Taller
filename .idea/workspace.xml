@@ -34,21 +34,31 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="index.php" pinned="false" current-in-tab="true">
+      <file leaf-file-name="index.php" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/index.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.19412725" vertical-offset="0" max-vertical-offset="613">
-              <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+            <state vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="153">
+              <caret line="2" column="55" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="mysql.php" pinned="false" current-in-tab="false">
+      <file leaf-file-name="mysql.php" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/model/singleton/mysql.php">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-7.8461537" vertical-offset="34" max-vertical-offset="867">
-              <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
+            <state vertical-scroll-proportion="0.776509" vertical-offset="0" max-vertical-offset="867">
+              <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="cargo.php" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/model/cargo.php">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="1445">
+              <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
               <folding />
             </state>
           </provider>
@@ -120,9 +130,9 @@
         <option value="$PROJECT_DIR$/model/usuario.php" />
         <option value="$PROJECT_DIR$/view/usuario/usuario-admin.php" />
         <option value="$PROJECT_DIR$/view/usuario/usuario-profile.php" />
-        <option value="$PROJECT_DIR$/model/singleton/mysql.php" />
         <option value="$PROJECT_DIR$/controller/usuario.controller.php" />
         <option value="$PROJECT_DIR$/index.php" />
+        <option value="$PROJECT_DIR$/model/singleton/mysql.php" />
       </list>
     </option>
   </component>
@@ -745,28 +755,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/model/cargo.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.24959217" vertical-offset="0" max-vertical-offset="1445">
-          <caret line="9" column="8" selection-start-line="9" selection-start-column="8" selection-end-line="13" selection-end-column="9" />
-          <folding>
-            <marker date="1464211583859" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..cargo..." />
-            <marker date="1464211583859" expanded="true" signature="-1:-1" placeholder="SELECT * FRO..cargo..." />
-            <marker date="1464211583859" expanded="true" signature="-1:-1" placeholder="INSERT INTO ..." />
-            <marker date="1464211583859" expanded="true" signature="-1:-1" placeholder="UPDATE cargo..." />
-            <marker date="1464211583859" expanded="true" signature="-1:-1" placeholder="UPDATE cargo..." />
-          </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/model/singleton/mysql.php">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-7.8461537" vertical-offset="34" max-vertical-offset="867">
-          <caret line="14" column="27" selection-start-line="14" selection-start-column="27" selection-end-line="14" selection-end-column="27" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/login.php">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="-5.769231" vertical-offset="666" max-vertical-offset="1649">
@@ -777,10 +765,26 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/model/cargo.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-6.5384617" vertical-offset="0" max-vertical-offset="1445">
+          <caret line="10" column="27" selection-start-line="10" selection-start-column="27" selection-end-line="10" selection-end-column="27" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/index.php">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.19412725" vertical-offset="0" max-vertical-offset="613">
-          <caret line="7" column="2" selection-start-line="7" selection-start-column="2" selection-end-line="7" selection-end-column="2" />
+        <state vertical-scroll-proportion="-1.3076923" vertical-offset="0" max-vertical-offset="153">
+          <caret line="2" column="55" selection-start-line="2" selection-start-column="55" selection-end-line="2" selection-end-column="55" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/model/singleton/mysql.php">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.776509" vertical-offset="0" max-vertical-offset="867">
+          <caret line="28" column="12" selection-start-line="28" selection-start-column="12" selection-end-line="28" selection-end-column="12" />
           <folding />
         </state>
       </provider>
