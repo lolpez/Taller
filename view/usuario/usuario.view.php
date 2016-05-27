@@ -14,7 +14,7 @@ class UsuarioView{
         require_once 'view/footer.php';
     }
     
-     public function Editar($personal,$cargos,$menu){
+     public function Editar($usuario,$cargos,$pass,$menu){
         require_once 'view/header.php';
         require_once 'view/usuario/usuario-editar.php';
         require_once 'view/footer.php';

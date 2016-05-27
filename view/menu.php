@@ -5,7 +5,7 @@
     }
 </style>
 <div id="wrapper">
-    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0 ; background-color: #263340; border-color: #263340;">
+    <nav class="navbar navbar-default navbar-static-top" role="navigation" style="margin-bottom: 0 ; background-color: #263340; border-color: #263340; color: #ffffff">
         <div class="navbar-header">
             <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
                 <span class="sr-only">Toggle navigation</span>
@@ -13,7 +13,7 @@
                 <span class="icon-bar"></span>
                 <span class="icon-bar"></span>
             </button>
-            <a class="navbar-brand" href="?c=documento">TITBOL</a>
+            <a class="navbar-brand" href="?c=notificacion">TITBOL</a>
         </div>
         <!-- Barra horizontal -->
         <ul class="nav navbar-top-links navbar-right">

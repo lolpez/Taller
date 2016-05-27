@@ -56,7 +56,7 @@
                 showCancelButton: false,
                 showConfirmButton: false,
                 closeOnConfirm: false,
-                html:"<button class='close' style='color: #000000'><i class='fa fa-times'></i></button><br><h3><?php echo $_SESSION['usuario']->cargo; ?></h3><div class='col-md-6' style='max-height: 60px;'><img src='resources/img/Titbollogo.png' style='max-width: 100%;'/></div><div class='col-md-6' style='height:200px;'><div style='margin-top:40%'>Bienvenido de nuevo<br><?php echo $_SESSION['usuario']->nombre ?><div></div>"
+                html:"<button class='close' style='color: #000000'><i class='fa fa-times'></i></button><br><h3><?php echo $_SESSION['usuario']->cargo; ?></h3><div class='col-md-6' style='max-height: 60px;'><img src='resources/img/titbollogo.png' style='max-width: 100%;'/></div><div class='col-md-6' style='height:200px;'><div style='margin-top:40%'>Bienvenido de nuevo<br><?php echo $_SESSION['usuario']->nombre ?><div></div>"
             });
         <?php } ?>
         <?php if ((isset($_REQUEST['item'])) && (isset($_REQUEST['tarea'])) && (isset($_REQUEST['exito']))) { ?>

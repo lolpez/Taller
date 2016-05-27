@@ -3,7 +3,7 @@ require_once 'model/menu.php';
 require_once 'model/menu_detalle.php';
 require_once 'model/privilegio.php';
 
-class Fachada
+class Permiso
 {
     private $menu;
     private $menu_detalle;
@@ -16,7 +16,7 @@ class Fachada
         $this->privilegio = new Privilegio();
     }
 
-    public function Obtener_Privilegio($fkcargo){
+    public function Obtener_Permiso($fkcargo){
         $listaP = $this->privilegio->Obtener($fkcargo);
         $listaMenuDetalle = array();
         foreach ($listaP as $p):

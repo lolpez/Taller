@@ -7,7 +7,7 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <title>TITBOL</title>
-    <link rel="shortcut icon" href="resources/img/icono.ico">
+    <link rel="shortcut icon" href="resources/img/titbolicono.ico">
     <!--Loader-->
     <link href="resources/css/loader.css" rel="stylesheet">
     <!-- Bootstrap -->

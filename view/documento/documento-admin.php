@@ -1,4 +1,4 @@
-<h1 class="page-header"><i class="fa fa-cubes fa-fw fa-2x"></i> Documentos</h1>
+<h1 class="page-header"><i class="fa fa-file fa-fw fa-2x"></i> Documentos</h1>
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">

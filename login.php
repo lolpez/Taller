@@ -18,7 +18,7 @@ if (isset($_REQUEST['no'])) {
     <meta name="description" content="">
     <meta name="author" content="">
     <title>TITBOL</title>
-    <link rel="shortcut icon" href="resources/img/icono.ico">
+    <link rel="shortcut icon" href="resources/img/titbolicono.ico">
     <!-- Bootstrap Core CSS -->
     <link href="resources/bower_components/bootstrap/dist/css/bootstrap.min.css" rel="stylesheet">
     <link href="resources/css/cssprincipal.css" rel="stylesheet">
@@ -40,8 +40,8 @@ if (isset($_REQUEST['no'])) {
         <div class="col-md-4 col-md-offset-7 col-lg-5" style="margin-top: 10%">
             <div class="login-panel panel panel-default" >
                 <div class="panel-heading" style="text-align: center; height: 50px; margin-bottom: 40px" >
-                    <img src='resources/img/icono.png' style='margin-bottom: 15px; width:30px; height:30px; display: none' id='icono'/>
-                    <h3 class="panel-title" style="font-size: 30" id="cabezal"> TITBOL</h3>
+                    <img src='resources/img/titbollogotipo.png' style='margin-bottom: 15px; width:30px; height:30px; display: none' id='icono'/>
+                    <label class="panel-title" style="font-size: 30" id="cabezal"> TITBOL</label>
                 </div>
                 <div class="panel-body">
                     <form role="form" action="index.php?c=usuario&a=Login" method="POST" onsubmit="return confSubmit()">

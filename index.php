@@ -1,6 +1,6 @@
 <?php
 session_start();
-$_controllers_permitidos = array("documento","notificacion","usuario","bitacora","usuario","cargo");
+$_controllers_permitidos = array("documento","notificacion","usuario","bitacora","usuario","cargo","privilegio","calendario");
 if (!isset($_REQUEST['c'])) {
     if (!isset($_SESSION['usuario'])) {
         header('Location: login.php');
@@ -26,11 +26,11 @@ if (!isset($_REQUEST['c'])) {
         if (method_exists($controller, $accion)) {
             call_user_func(array($controller, $accion));
         } else {
-            echo 'accion no encontrada 404';    //cuando la accion no se encuentra
+            header('Location: 404.php');//cuando la accion no se encuentra
             exit;
         }
     } else {
-        echo 'controlador no encontrado o no se puede leerlo 404';  //cuando el controlador no se encuentra
+        header('Location: 404.php'); //cuando el controlador no se encuentra
         exit;
     }
 }

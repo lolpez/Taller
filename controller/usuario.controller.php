@@ -3,7 +3,7 @@ require_once 'view/usuario/usuario.view.php';
 require_once 'model/usuario.php';
 require_once 'model/cargo.php';
 require_once 'model/bitacora.php';
-require_once 'model/fachada/fachada.php';
+require_once 'model/fachada/permiso.php';
 
 class UsuarioController {
 
@@ -13,7 +13,7 @@ class UsuarioController {
     private $cargo;
     private $bitacora;
     private $llave;
-    private $menu;
+    private $permiso;
 
     public function __CONSTRUCT() {
         $this->model = new Usuario();
@@ -22,24 +22,28 @@ class UsuarioController {
         $this->bitacora = new Bitacora();
         $this->llave = pack('H*',"bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
         $this->item = 'usuario';
-        $fachada = new Fachada();
-        $this->menu = $fachada->Obtener_Privilegio($_SESSION['usuario']->fkcargo);
+        $fachada = new Permiso();
+        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {
         $lista = $this->model->Listar();
-        $this->vista->View($lista,$this->menu);
+        $this->vista->View($lista,$this->permiso);
     }
 
     public function Nuevo() {
         $cargos=$this->cargo->Listar();
-        $this->vista->Nuevo($cargos,$this->menu);
+        $this->vista->Nuevo($cargos,$this->permiso);
     }
 
     public function Editar() {
-        $personal= $this->model->Obtener($_REQUEST['pkusuario']);
+        $usuario = $this->model->Obtener($_REQUEST['pkusuario']);
+        $aux = $this->model->Login($usuario->ci);
+        $nombre_archivo = 'resources/users/'.$aux->archivo;
+        $arrayDesencriptado = $this->desencriptar($nombre_archivo,$this->llave);
+        $pass = $arrayDesencriptado[1];
         $cargos= $this->cargo->Listar();
-        $this->vista->Editar($personal,$cargos,$this->menu);
+        $this->vista->Editar($usuario,$cargos,$pass,$this->permiso);
     }
 
     public function Guardar() {
@@ -61,9 +65,8 @@ class UsuarioController {
             $tarea = 'modificar';
             if ($exito){
                 //Eliminar el archivo antiguo y crear nuevo
-                $arrayDesencriptado = $this->desencriptar($nombre_archivo_antiguo,$this->llave);
                 unlink($nombre_archivo_antiguo);
-                $texto = $_POST['username'].'#'.$arrayDesencriptado[1].'#'.$_POST['ci'];
+                $texto = $_POST['username'].'#'.$_POST['pass'].'#'.$_POST['ci'];
                 $this->encriptar('resources/users/'.$nombre_archivo_nuevo,$this->llave,$texto);
             }
         }else{
@@ -102,7 +105,7 @@ class UsuarioController {
         $nombre_archivo = 'resources/users/'.$usuario->archivo;
         $arrayDesencriptado = $this->desencriptar($nombre_archivo,$this->llave);
         $pass = $arrayDesencriptado[1];
-        $this->vista->Profile($usuario,$pass,$this->menu);
+        $this->vista->Profile($usuario,$pass,$this->permiso);
     }
 
     public function Modificar_Perfil() {

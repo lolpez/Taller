@@ -1,20 +1,20 @@
 <?php
 require_once 'view/notificacion/notificacion.view.php';
-require_once 'model/fachada/fachada.php';
+require_once 'model/fachada/permiso.php';
 
 class NotificacionController {
 
     private $vista;
-    private $menu;
+    private $permiso;
 
     public function __CONSTRUCT() {
         $this->vista = new NotificacionView();
-        $fachada = new Fachada();
-        $this->menu = $fachada->Obtener_Privilegio($_SESSION['usuario']->fkcargo);
+        $fachada = new Permiso();
+        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {
-        $this->vista->View($this->menu);
+        $this->vista->View($this->permiso);
     }
 
 }
