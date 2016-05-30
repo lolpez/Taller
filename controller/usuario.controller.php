@@ -148,6 +148,7 @@ class UsuarioController {
             $texto = $this->desencriptar($nombre_archivo, $llave);
             if ($texto != ''){
                 if (($_POST['username']== $texto[0]) && ($_POST['password'] == $texto[1])) {
+                    session_start();
                     $usuario = $this->model->Login((int)$texto[2]);
                     $_SESSION['usuario'] = $usuario;
                     $DescripcionBitacora = 'Inicio de sesion';
@@ -158,6 +159,31 @@ class UsuarioController {
             }
         }
         header('Location: login.php?hell');
+    }
+
+    public function Recuperar() {
+        echo 'yolo';
+        exit;
+
+        if ((isset($_POST['correo']) && !empty($_POST['correo']))){
+            $usuario = $this->model->Obtener_Por_Correo($_POST['correo']);
+            var_dump($usuario);
+            exit;
+            /*$nombre_archivo = 'resources/users/'.$_POST['username'].'.crip';
+            $llave = pack('H*', "bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
+            $texto = $this->desencriptar($nombre_archivo, $llave);
+            if ($texto != ''){
+                if (($_POST['username']== $texto[0]) && ($_POST['password'] == $texto[1])) {
+                    $usuario = $this->model->Login((int)$texto[2]);
+                    $_SESSION['usuario'] = $usuario;
+                    $DescripcionBitacora = 'Inicio de sesion';
+                    $this->bitacora->GuardarBitacora($DescripcionBitacora);
+                    header('Location: ?k&c=notificacion');
+                    return;
+                }
+            }*/
+        }
+      //  header('Location: login.php?hell');
     }
 
     public function Logout() {

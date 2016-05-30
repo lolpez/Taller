@@ -1,15 +1,3 @@
-<?php
-$accion = "k";
-if (isset($_REQUEST['hell'])) {
-    $accion = "error";
-}
-if (isset($_REQUEST['pass'])) {
-    $accion = "password";
-}
-if (isset($_REQUEST['no'])) {
-    $accion = "no";
-}
-?>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -51,24 +39,18 @@ if (isset($_REQUEST['no'])) {
                     <label class="panel-title" style="font-size: 30" id="cabezal"> TITBOL</label>
                 </div>
                 <div class="panel-body">
-                    <form role="form" action="index.php?c=usuario&a=Login" method="POST" onsubmit="return confSubmit()">
+                    <form role="form" action="index.php?c=usuario&a=recuperar&correo" method="POST" onsubmit="return confSubmit()">
                         <fieldset>
-                            <div class="input-group" style="margin-bottom: 40px">
-                                <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                                <input class="form-control" type="text" placeholder="Usuario" name="username" autocomplete="off">
+                            <div class="input-group">
+                                <span class="input-group-addon"><i class="fa fa-envelope fa-fw"></i></span>
+                                <input class="form-control" type="email" placeholder="correo" name="correo" autocomplete="off">
                             </div>
-                            <div class="input-group" style="margin-bottom: 40px">
-                                <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-                                <input class="form-control" type="password" placeholder="Contraseña" name="password">
+                            <div class="input-group">
+                                <p>Para recuperar su password, inserte su correo electronico con la que fue registrado y recibira un email con su usuario y password.</p>
                             </div>
-                            <?php
-                            if (isset($_REQUEST['hell'])) {
-                                print "<p style='color:red'>Error de datos personales</p>";
-                            }
-                            ?>
-                            <button type="submit" class="btn btn-lg btn-success btn-block btn-outline" id="aceptar">Iniciar Sesion</button>
+                            <button type="submit" class="btn btn-lg btn-success btn-block btn-outline" id="aceptar">Aceptar</button>
                             <div style="text-align: center">
-                                <a href="recuperar.php" style="text-align: center">¿Olvido su contraseña?</a>
+                                <a href="index.php" style="text-align: center">Volver</a>
                             </div>
                         </fieldset>
                     </form>
@@ -79,17 +61,6 @@ if (isset($_REQUEST['no'])) {
 </div>
 </body>
 <script>
-    $(document).ready(function() {
-        if ("<?php echo $accion;?>" == "error") {
-            swal('ERROR', "Datos incorrectos", 'error');
-        }
-        if ("<?php echo $accion;?>" == "password") {
-            swal('Operacion completada', 'se envio su password a su correo', 'success');
-        }
-        if ("<?php echo $accion;?>" == "no") {
-            swal('ERROR', "El correo no esta registrado", 'error');
-        }
-    });
     function confSubmit() {
         $('#aceptar').html("<i class='fa fa-spinner fa-spin'></i> Iniciando sesion");
         $('#aceptar').attr("disabled","disabled");

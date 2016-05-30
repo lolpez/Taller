@@ -22,7 +22,7 @@
 </head>
 <style type="text/css" id="estilo">
 </style>
-<body style="padding: 10%">
+<body style="padding: 10%; overflow: hidden">
 <div class="row">
     <div class="jumbotron" style="background-color: rgba(0, 0, 0, 0); color: #FFFFFF; text-align: center; left: 50%">
         <img src='resources/img/titbollogotipo.png' style="width:50px; height:50px;"/>
@@ -31,6 +31,24 @@
         <p class="lead">
             <a href="index.php" class="btn btn-lg btn-success btn-outline ">Volver</a>
         </p>
+        <h6 style="color: rgba(255, 249, 251, 0.30)">Mensaje de error:
+            <?php
+            switch ($_REQUEST['error']){
+                case 0:
+                    echo 'controlador no permitido por el sistema.';
+                    break;
+                case 1:
+                    echo 'controlador solicitado no existe o no es leible.';
+                    break;
+                case 2:
+                    echo 'accion solicitada no existe.';
+                    break;
+                case 3:
+                    echo 'usted no tiene acceso a este nivel del sistema.';
+                    break;
+            }
+            ?>
+        </h6>
         <h6 style="color: rgba(255, 249, 251, 0.30)">Si sigue viendo este mensaje de error, fuck you</h6>
     </div>
 </div>

@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 27-05-2016 a las 23:33:51
+-- Tiempo de generación: 30-05-2016 a las 23:29:47
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `bitacora` (
   `accion` varchar(100) NOT NULL,
   `fecha` varchar(10) NOT NULL,
   `hora` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `bitacora`
@@ -84,7 +84,83 @@ INSERT INTO `bitacora` (`pkbitacora`, `fkusuario`, `accion`, `fecha`, `hora`) VA
 (19, 2, 'se agrego un nuevo tipo de archivo que el sistema permitira (.mp4)', '27/05/2016', '05:19:35'),
 (20, 2, 'se dio de baja el cargo ', '27/05/2016', '05:20:19'),
 (21, 2, 'se dio de baja el cargo ', '27/05/2016', '05:21:30'),
-(22, 2, 'se dio de baja el tipo de archivo permitido por el sistema Archivos de video', '27/05/2016', '05:22:13');
+(22, 2, 'se dio de baja el tipo de archivo permitido por el sistema Archivos de video', '27/05/2016', '05:22:13'),
+(23, 2, 'Inicio de sesion', '28/05/2016', '09:29:16'),
+(24, 2, 'Cierre de sesion', '28/05/2016', '09:29:20'),
+(25, 2, 'Inicio de sesion', '28/05/2016', '09:29:47'),
+(26, 2, 'Cierre de sesion', '28/05/2016', '09:29:51'),
+(27, 2, 'Inicio de sesion', '28/05/2016', '09:34:06'),
+(28, 2, 'Cierre de sesion', '28/05/2016', '09:34:11'),
+(29, 2, 'Inicio de sesion', '28/05/2016', '09:34:31'),
+(30, 2, 'Cierre de sesion', '28/05/2016', '09:34:37'),
+(31, 2, 'Inicio de sesion', '28/05/2016', '09:51:56'),
+(32, 2, 'Cierre de sesion', '28/05/2016', '09:51:59'),
+(33, 2, 'Inicio de sesion', '28/05/2016', '10:02:21'),
+(34, 2, 'Cierre de sesion', '28/05/2016', '10:02:24'),
+(35, 2, 'Inicio de sesion', '28/05/2016', '10:03:34'),
+(36, 2, 'se modifico los permisos para el cargo Responsable de area', '28/05/2016', '10:03:50'),
+(37, 2, 'se modifico el usuario alejandro mollejas', '28/05/2016', '10:04:00'),
+(38, 2, 'Cierre de sesion', '28/05/2016', '10:04:03'),
+(39, 3, 'Inicio de sesion', '28/05/2016', '10:04:07'),
+(40, 3, 'Cierre de sesion', '28/05/2016', '10:15:25'),
+(41, 2, 'Inicio de sesion', '28/05/2016', '10:15:28'),
+(42, 2, 'se modifico los permisos para el cargo Responsable de area', '28/05/2016', '10:15:39'),
+(43, 2, 'Cierre de sesion', '28/05/2016', '10:15:42'),
+(44, 3, 'Inicio de sesion', '28/05/2016', '10:15:46'),
+(45, 3, 'Cierre de sesion', '28/05/2016', '10:28:35'),
+(46, 3, 'Inicio de sesion', '28/05/2016', '10:28:40'),
+(47, 2, 'Inicio de sesion', '29/05/2016', '12:31:10'),
+(48, 2, 'Inicio de sesion', '30/05/2016', '09:01:08'),
+(49, 2, 'Cierre de sesion', '30/05/2016', '09:01:12'),
+(50, 2, 'Cierre de sesion', '30/05/2016', '09:01:12'),
+(51, 2, 'Inicio de sesion', '30/05/2016', '09:02:13'),
+(52, 2, 'Cierre de sesion', '30/05/2016', '09:28:42'),
+(53, 2, 'Inicio de sesion', '30/05/2016', '10:27:34'),
+(54, 2, 'Cierre de sesion', '30/05/2016', '10:27:38'),
+(55, 2, 'Inicio de sesion', '30/05/2016', '10:29:14'),
+(56, 2, 'Cierre de sesion', '30/05/2016', '10:31:16'),
+(57, 2, 'Cierre de sesion', '30/05/2016', '10:31:16'),
+(58, 2, 'Inicio de sesion', '30/05/2016', '10:31:21'),
+(59, 2, 'Cierre de sesion', '30/05/2016', '10:31:29'),
+(60, 2, 'Cierre de sesion', '30/05/2016', '10:31:29'),
+(61, 2, 'Inicio de sesion', '30/05/2016', '10:33:30'),
+(62, 2, 'Cierre de sesion', '30/05/2016', '10:33:34'),
+(63, 2, 'Cierre de sesion', '30/05/2016', '10:33:34'),
+(64, 2, 'Inicio de sesion', '30/05/2016', '10:36:26'),
+(65, 2, 'Cierre de sesion', '30/05/2016', '10:36:40'),
+(66, 2, 'Cierre de sesion', '30/05/2016', '10:36:40'),
+(67, 2, 'Inicio de sesion', '30/05/2016', '10:37:02'),
+(68, 2, 'Cierre de sesion', '30/05/2016', '10:37:06'),
+(69, 2, 'Cierre de sesion', '30/05/2016', '10:37:06'),
+(70, 3, 'Inicio de sesion', '30/05/2016', '10:37:11'),
+(71, 3, 'Cierre de sesion', '30/05/2016', '10:37:35'),
+(72, 2, 'Inicio de sesion', '30/05/2016', '10:49:15'),
+(73, 2, 'Cierre de sesion', '30/05/2016', '10:49:51'),
+(74, 2, 'Cierre de sesion', '30/05/2016', '10:49:51'),
+(75, 2, 'Inicio de sesion', '30/05/2016', '10:49:55'),
+(76, 2, 'Inicio de sesion', '30/05/2016', '10:50:08'),
+(77, 2, 'Inicio de sesion', '30/05/2016', '10:50:08'),
+(78, 2, 'Cierre de sesion', '30/05/2016', '10:50:15'),
+(79, 2, 'Cierre de sesion', '30/05/2016', '10:50:15'),
+(80, 2, 'Inicio de sesion', '30/05/2016', '10:52:53'),
+(81, 2, 'Inicio de sesion', '30/05/2016', '10:54:51'),
+(82, 2, 'Inicio de sesion', '30/05/2016', '10:54:51'),
+(83, 2, 'Cierre de sesion', '30/05/2016', '10:57:35'),
+(84, 2, 'Cierre de sesion', '30/05/2016', '10:57:35'),
+(85, 2, 'Inicio de sesion', '30/05/2016', '11:04:14'),
+(86, 2, 'Cierre de sesion', '30/05/2016', '11:05:07'),
+(87, 2, 'Cierre de sesion', '30/05/2016', '11:05:07'),
+(88, 3, 'Inicio de sesion', '30/05/2016', '11:09:32'),
+(89, 3, 'Cierre de sesion', '30/05/2016', '11:18:55'),
+(90, 2, 'Inicio de sesion', '30/05/2016', '11:20:58'),
+(91, 2, 'Cierre de sesion', '30/05/2016', '11:21:04'),
+(92, 2, 'Cierre de sesion', '30/05/2016', '11:21:04'),
+(93, 3, 'Inicio de sesion', '30/05/2016', '11:21:09'),
+(94, 3, 'Cierre de sesion', '30/05/2016', '11:30:18'),
+(95, 2, 'Inicio de sesion', '30/05/2016', '11:30:22'),
+(96, 2, 'Cierre de sesion', '30/05/2016', '11:31:09'),
+(97, 2, 'Cierre de sesion', '30/05/2016', '11:31:09'),
+(98, 3, 'Inicio de sesion', '30/05/2016', '11:31:13');
 
 -- --------------------------------------------------------
 
@@ -218,7 +294,7 @@ CREATE TABLE IF NOT EXISTS `usuario` (
 
 INSERT INTO `usuario` (`pkusuario`, `ci`, `nombre`, `email`, `telefono`, `archivo`, `fkcargo`, `estado`) VALUES
 (2, 0, 'luis daniel', 'admin@hotmail.com', 78888777, 'luis.crip', 1, 1),
-(3, 1, 'alejandro mollejas', 'alejandro@hotmail.com', 123456, 'alejandro.crip', 1, 1);
+(3, 1, 'alejandro mollejas', 'alejandro@hotmail.com', 123456, 'alejandro.crip', 2, 1);
 
 --
 -- Índices para tablas volcadas
@@ -285,7 +361,7 @@ MODIFY `pkarchivo_config` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-MODIFY `pkbitacora` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=23;
+MODIFY `pkbitacora` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
 --
 -- AUTO_INCREMENT de la tabla `cargo`
 --

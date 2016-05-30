@@ -54,6 +54,16 @@ class Usuario {
         }
     }
 
+    public function Obtener_Por_Correo($email) {
+        try {
+            $sql = $this->pdo->prepare("SELECT * FROM usuario u WHERE u.email=?");
+            $sql->execute(array($email));
+            return $sql->fetch(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
     public function Login($ci){
         try {
             $sql = $this->pdo->prepare("SELECT u.pkusuario, u.nombre, u.ci, u.telefono, u.email, u.archivo, u.fkcargo, c.nombre as cargo FROM usuario u, cargo c WHERE u.fkcargo = c.pkcargo and u.ci= ? and u.estado = 1");
