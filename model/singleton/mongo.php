@@ -27,7 +27,7 @@ class ConexionMongo{
             $port = '27017';
             $database = 'taller';
             $url = 'mongodb://'.$username.':'.$password.'@'.$host.':'.$port.'/';
-            $url = 'localhost';
+            //$url = 'localhost';
             self::$mongo = new MongoClient($url);
             self::$mongo = self::$mongo->selectDB($database);
         }

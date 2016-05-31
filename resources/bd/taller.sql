@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-05-2016 a las 23:29:47
+-- Tiempo de generación: 31-05-2016 a las 15:28:25
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -47,6 +47,31 @@ INSERT INTO `archivo_config` (`pkarchivo_config`, `nombre`, `icono`, `extencion`
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `area`
+--
+
+CREATE TABLE IF NOT EXISTS `area` (
+`pkarea` int(11) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `sigla` varchar(10) NOT NULL,
+  `estado` tinyint(1) NOT NULL DEFAULT '1',
+  `fkarea_padre` int(11) NOT NULL
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `area`
+--
+
+INSERT INTO `area` (`pkarea`, `nombre`, `sigla`, `estado`, `fkarea_padre`) VALUES
+(100, 'General', 'GRAL', 1, 100),
+(101, 'Desarrollo de saftwere', 'DSW', 1, 100),
+(102, 'Redes', 'RDS', 1, 100),
+(107, 'Recursos humanos', 'RRHH', 1, 100),
+(109, 'Ventas', 'VNT', 1, 100);
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `bitacora`
 --
 
@@ -56,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `bitacora` (
   `accion` varchar(100) NOT NULL,
   `fecha` varchar(10) NOT NULL,
   `hora` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=99 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `bitacora`
@@ -160,7 +185,26 @@ INSERT INTO `bitacora` (`pkbitacora`, `fkusuario`, `accion`, `fecha`, `hora`) VA
 (95, 2, 'Inicio de sesion', '30/05/2016', '11:30:22'),
 (96, 2, 'Cierre de sesion', '30/05/2016', '11:31:09'),
 (97, 2, 'Cierre de sesion', '30/05/2016', '11:31:09'),
-(98, 3, 'Inicio de sesion', '30/05/2016', '11:31:13');
+(98, 3, 'Inicio de sesion', '30/05/2016', '11:31:13'),
+(99, 2, 'Inicio de sesion', '31/05/2016', '08:29:57'),
+(100, 2, 'Inicio de sesion', '31/05/2016', '08:54:12'),
+(101, 2, 'se modifico los permisos para el cargo Administrador', '31/05/2016', '08:54:23'),
+(102, 2, 'se modifico los permisos para el cargo Administrador', '31/05/2016', '08:54:23'),
+(103, 2, 'se modifico el area Desarrollo de saftwere', '31/05/2016', '08:56:31'),
+(104, 2, 'se modifico el area Desarrollo de saftwere', '31/05/2016', '08:56:31'),
+(105, 2, 'se modifico el area Desarrollo de saftwere', '31/05/2016', '08:56:39'),
+(106, 2, 'se modifico el area Desarrollo de saftwere', '31/05/2016', '08:56:39'),
+(107, 2, 'se agrego un nuevo area Recursos humanos', '31/05/2016', '09:04:54'),
+(108, 2, 'se agrego un nuevo area Recursos humanos', '31/05/2016', '09:04:54'),
+(109, 2, 'se agrego un nuevo area Ventas', '31/05/2016', '09:06:02'),
+(110, 2, 'se agrego un nuevo area Ventas', '31/05/2016', '09:06:02'),
+(111, 2, 'se agrego un nuevo cargo Supervisor de area', '31/05/2016', '09:06:48'),
+(112, 2, 'se agrego un nuevo cargo Supervisor de area', '31/05/2016', '09:06:48'),
+(113, 2, 'se agrego un nuevo cargo Emisor', '31/05/2016', '09:08:18'),
+(114, 2, 'se modifico los permisos para el cargo Administrador', '31/05/2016', '09:20:47'),
+(115, 2, 'se agrego un nuevo tipo documento PLAN', '31/05/2016', '09:21:22'),
+(116, 2, 'se agrego un nuevo tipo documento PERFIL', '31/05/2016', '09:21:39'),
+(117, 2, 'se modifico el tipo documento PRFL', '31/05/2016', '09:23:07');
 
 -- --------------------------------------------------------
 
@@ -184,7 +228,7 @@ CREATE TABLE IF NOT EXISTS `cargo` (
   `nombre` varchar(100) NOT NULL,
   `descripcion` varchar(150) DEFAULT NULL,
   `estado` int(11) DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=4 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `cargo`
@@ -193,7 +237,8 @@ CREATE TABLE IF NOT EXISTS `cargo` (
 INSERT INTO `cargo` (`pkcargo`, `nombre`, `descripcion`, `estado`) VALUES
 (1, 'Administrador', 'Encargado de la administracion del sistema', 1),
 (2, 'Responsable de area', 'encargado de elaboracion de documentos', 1),
-(3, 'Supervisor de area', 'encargado de la revision de documentos elaborados', 0);
+(3, 'Supervisor de area', 'encargado de la revision de documentos elaborados', 1),
+(6, 'Emisor', 'encargado de emitir los documentos', 1);
 
 -- --------------------------------------------------------
 
@@ -228,7 +273,7 @@ CREATE TABLE IF NOT EXISTS `menu_detalle` (
   `icono` varchar(50) NOT NULL,
   `controlador` varchar(30) NOT NULL,
   `fkmenu` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `menu_detalle`
@@ -242,7 +287,9 @@ INSERT INTO `menu_detalle` (`pkmenu_detalle`, `nombre`, `icono`, `controlador`, 
 (6, 'Cargo', 'fa fa-briefcase fa-fw ', 'cargo', 2),
 (7, 'Permisos', 'fa fa-ban fa-fw', 'privilegio', 3),
 (8, 'Calendario', 'fa fa-calendar fa-fw', 'calendario', 3),
-(9, 'Archivos permitidos', 'fa fa-file-o fa-fw', 'archivo_config', 3);
+(9, 'Archivos permitidos', 'fa fa-file-o fa-fw', 'archivo_config', 3),
+(10, 'Area', 'fa fa-sitemap fa-fw', 'area', 2),
+(11, 'Tipo Documento', 'fa fa-cubes fa-fw', 'tipo_documento', 2);
 
 -- --------------------------------------------------------
 
@@ -268,8 +315,31 @@ INSERT INTO `privilegio` (`fkcargo`, `fkmenu_detalle`) VALUES
 (1, 7),
 (1, 8),
 (1, 9),
+(1, 10),
+(1, 11),
 (2, 1),
 (2, 2);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `tipo_documento`
+--
+
+CREATE TABLE IF NOT EXISTS `tipo_documento` (
+`pktipo_documento` int(11) NOT NULL,
+  `sigla` varchar(10) NOT NULL,
+  `nombre` varchar(50) NOT NULL,
+  `estado` tinyint(1) NOT NULL DEFAULT '1'
+) ENGINE=InnoDB AUTO_INCREMENT=3 DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `tipo_documento`
+--
+
+INSERT INTO `tipo_documento` (`pktipo_documento`, `sigla`, `nombre`, `estado`) VALUES
+(1, 'PLAN', 'plan de negocio', 1),
+(2, 'PRFL', 'perfil de proyecto', 1);
 
 -- --------------------------------------------------------
 
@@ -305,6 +375,12 @@ INSERT INTO `usuario` (`pkusuario`, `ci`, `nombre`, `email`, `telefono`, `archiv
 --
 ALTER TABLE `archivo_config`
  ADD PRIMARY KEY (`pkarchivo_config`);
+
+--
+-- Indices de la tabla `area`
+--
+ALTER TABLE `area`
+ ADD PRIMARY KEY (`pkarea`);
 
 --
 -- Indices de la tabla `bitacora`
@@ -343,6 +419,12 @@ ALTER TABLE `privilegio`
  ADD PRIMARY KEY (`fkcargo`,`fkmenu_detalle`);
 
 --
+-- Indices de la tabla `tipo_documento`
+--
+ALTER TABLE `tipo_documento`
+ ADD PRIMARY KEY (`pktipo_documento`);
+
+--
 -- Indices de la tabla `usuario`
 --
 ALTER TABLE `usuario`
@@ -358,15 +440,20 @@ ALTER TABLE `usuario`
 ALTER TABLE `archivo_config`
 MODIFY `pkarchivo_config` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 --
+-- AUTO_INCREMENT de la tabla `area`
+--
+ALTER TABLE `area`
+MODIFY `pkarea` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=111;
+--
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-MODIFY `pkbitacora` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=99;
+MODIFY `pkbitacora` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=118;
 --
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
-MODIFY `pkcargo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
+MODIFY `pkcargo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --
@@ -376,7 +463,12 @@ MODIFY `pkmenu` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=4;
 -- AUTO_INCREMENT de la tabla `menu_detalle`
 --
 ALTER TABLE `menu_detalle`
-MODIFY `pkmenu_detalle` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=10;
+MODIFY `pkmenu_detalle` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=12;
+--
+-- AUTO_INCREMENT de la tabla `tipo_documento`
+--
+ALTER TABLE `tipo_documento`
+MODIFY `pktipo_documento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=3;
 --
 -- AUTO_INCREMENT de la tabla `usuario`
 --
