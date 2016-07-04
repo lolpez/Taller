@@ -131,7 +131,7 @@ class BackUp {
             $cmd = 'mongorestore --drop --db ' . $this->mongo->database . ' "' . $path . '"';
         }else{
             //RemoteServer
-            $cmd = 'mongorestore --drop --db ' . $this->mongo->database . ' --host ' . $this->mongo->host . ' --port ' . $this->mongo->port . ' --username ' . $this->mongo->username . ' --password ' . $this->mongo->password . ' "' . $path . '"';
+            $cmd = 'mongorestore --drop --db ' . $this->mongo->database . ' --host ' . $this->mongo->host . ' --port ' . $this->mongo->port . ' --username ' . $this->mongo->username . ' --password ' . $this->mongo->password . ' "' . $path .'"';
         }
         shell_exec($cmd);
     }
