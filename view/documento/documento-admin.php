@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="btn btn-outline btn-primary" href="?c=documento&a=nuevo"><i class="fa fa-plus"></i> Nuevo Documento</a>
+                <a class="btn btn-outline btn-primary agregar" href="?c=documento&a=nuevo"><i class="fa fa-plus"></i> Nuevo Documento</a>
             </div>
             <div class="panel-body" style="overflow: scroll; height: 500px">
                 <div class="dataTable_wrapper">
@@ -19,8 +19,8 @@
                             <tr>
                                 <td><?php echo $r->nombre ?></td>
                                 <td style="text-align: center">
-                                    <a href="?c=documento&a=descargar&pkdocumento=<?php echo $r->pkdocumento; ?>" class="btn btn-outline btn-info btn-circle"><i class="fa fa-download"></i></a>
-                                    <a href="#" onclick="Eliminar('<?php echo $r->pkdocumento; ?>','<?php echo $r->nombre;?>','documento')" class="btn btn-outline btn-danger btn-circle"><i class="fa fa-trash"></i></a>
+                                    <a href="?c=documento&a=descargar&pkdocumento=<?php echo $r->pkdocumento; ?>" class="btn btn-outline btn-info btn-circle"  data-toggle="tooltip" data-placement="top" title="Descargar Documento"><i class="fa fa-download"></i></a>
+                                    <a href="#" onclick="Eliminar('<?php echo $r->pkdocumento; ?>','<?php echo $r->nombre;?>','documento')" class="btn btn-outline btn-danger btn-circle eliminar"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach ?>

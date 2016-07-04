@@ -3,12 +3,19 @@ class ConexionMysql {
 
     private static $instance = null;
     private static $mysql;
+    private $configArray;
+    private $username;
+    private $pass;
+    private $host;
+    private $port;
+    private $database;
+
 
     final private function __construct() {
         try {
             self::obtenerConexion();
         } catch (PDOException $e) {
-
+			header('Location: 404.php?error=6'); //error en la conexion mysql
         }
     }
 
@@ -21,14 +28,14 @@ class ConexionMysql {
 
     public function obtenerConexion() {
         if (self::$mysql == null) {
-            $username = 'adminPWHHWUh';
-            $password = 'Tf_L3kbF1PX-';
-            $host = '127.12.74.130';
-            $port = '3306';
-            $database = 'taller';
-            $url = 'mysql:host='.$host.';port='.$port.';dbname='.$database;
-            $url = 'mysql:host=localhost;port=3306;dbname=taller';$username='root';$password='';
-            self::$mysql = new PDO($url, $username, $password);
+            $this->configArray = parse_ini_file("appconfig.ini", true)['conexion_mysql_local'];
+            $this->username = $this->configArray['username'];
+            $this->pass = $this->configArray['password'];
+            $this->host = $this->configArray['host'];
+            $this->port = $this->configArray['port'];
+            $this->database = $this->configArray['database'];
+            $url = 'mysql:host='.$this->host.';port='.$this->host.';dbname='.$this->database;
+            self::$mysql = new PDO($url, $this->username, $this->pass);
             self::$mysql->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
         return self::$mysql;

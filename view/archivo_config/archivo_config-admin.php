@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default">
             <div class="panel-heading">
-                <a class="btn btn-outline btn-primary" href="?c=archivo_config&a=nuevo"><i class="fa fa-plus"></i> Nuevo tipo de archivo permitido</a>
+                <a class="btn btn-outline btn-primary agregar" href="?c=archivo_config&a=nuevo"><i class="fa fa-plus"></i> Nuevo tipo de archivo permitido</a>
             </div>
             <div class="panel-body yolo" style="overflow: scroll; height: 500px">
                 <div class="dataTable_wrapper">
@@ -23,8 +23,8 @@
                                 <td style="text-align: center; font-size: 30px"><i class="<?php echo $r->icono; ?>"></i></td>
                                 <td><?php echo $r->extencion; ?></td>
                                 <td style="text-align: center">
-                                    <a href="?c=archivo_config&a=editar&pkarchivo_config=<?php echo $r->pkarchivo_config; ?>" class="btn btn-outline btn-info btn-circle"><i class="fa fa-pencil"></i></a>
-                                    <a href="#" onclick="Eliminar('<?php echo $r->pkarchivo_config; ?>','<?php echo $r->nombre;?>','archivo_config')" class="btn btn-outline btn-danger btn-circle"><i class="fa fa-trash"></i></a>
+                                    <a href="?c=archivo_config&a=editar&pkarchivo_config=<?php echo $r->pkarchivo_config; ?>" class="btn btn-outline btn-info btn-circle editar"><i class="fa fa-pencil"></i></a>
+                                    <a href="#" onclick="Eliminar('<?php echo $r->pkarchivo_config; ?>','<?php echo $r->nombre;?>','archivo_config')" class="btn btn-outline btn-danger btn-circle eliminar"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach ?>

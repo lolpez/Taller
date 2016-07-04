@@ -55,11 +55,11 @@ if (isset($_REQUEST['no'])) {
                         <fieldset>
                             <div class="input-group" style="margin-bottom: 40px">
                                 <span class="input-group-addon"><i class="fa fa-user fa-fw"></i></span>
-                                <input class="form-control" type="text" placeholder="Usuario" name="username" autocomplete="off">
+                                <input class="form-control" type="text" placeholder="Usuario" name="username" autocomplete="off" required>
                             </div>
                             <div class="input-group" style="margin-bottom: 40px">
                                 <span class="input-group-addon"><i class="fa fa-lock fa-fw"></i></span>
-                                <input class="form-control" type="password" placeholder="Contraseña" name="password">
+                                <input class="form-control" type="password" placeholder="Contraseña" name="password" required>
                             </div>
                             <?php
                             if (isset($_REQUEST['hell'])) {

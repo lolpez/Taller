@@ -49,6 +49,25 @@
         //Habilitar buscadores de tablas
         $('#dataTables-example').DataTable();
 
+        //Habilitar ToolTips
+        $('.agregar').tooltip({
+            toggle : 'tooltip',
+            placement : 'top',
+            title : 'Agregar nuevo'
+        });
+        $('.editar').tooltip({
+            toggle : 'tooltip',
+            placement : 'top',
+            title : 'Editar este registro'
+        });
+        $('.eliminar').tooltip({
+            toggle : 'tooltip',
+            placement : 'top',
+            title : 'Eliminar este registro'
+        });
+
+        $('[data-toggle="tooltip"]').tooltip();
+
         //Mensajes Sweet Alert
         <?php if (isset($_REQUEST['k'])) { ?>
             swal({

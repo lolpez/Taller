@@ -3,7 +3,7 @@
     <div class="col-lg-12">
         <div class="panel panel-default" style="overflow: scroll; height: 500px">
             <div class="panel-heading">
-                <a class="btn btn-outline btn-primary" href="?c=usuario&a=nuevo"><i class="fa fa-plus"></i> Nuevo usuario</a>
+                <a class="btn btn-outline btn-primary agregar" href="?c=usuario&a=nuevo"><i class="fa fa-plus"></i> Nuevo usuario</a>
             </div>
             <div class="panel-body">
                 <div class="dataTable_wrapper">
@@ -27,8 +27,8 @@
                                 <td><?php echo $r->telefono; ?></td>
                                 <td><?php echo $r->cargo; ?></td>
                                 <td style="text-align: center">
-                                    <a href="?c=usuario&a=editar&pkusuario=<?php echo $r->pkusuario; ?>" class="btn btn-outline btn-info btn-circle"><i class="fa fa-pencil"></i></a>
-                                    <a href="#" onclick="Eliminar('<?php echo $r->pkusuario; ?>','<?php echo $r->nombre;?>','usuario')" class="btn btn-outline btn-danger btn-circle"><i class="fa fa-trash"></i></a>
+                                    <a href="?c=usuario&a=editar&pkusuario=<?php echo $r->pkusuario; ?>" class="btn btn-outline btn-info btn-circle editar"><i class="fa fa-pencil"></i></a>
+                                    <a href="#" onclick="Eliminar('<?php echo $r->pkusuario; ?>','<?php echo $r->nombre;?>','usuario')" class="btn btn-outline btn-danger btn-circle eliminar"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach ?>

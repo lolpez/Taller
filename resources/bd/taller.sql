@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 31-05-2016 a las 15:28:25
+-- Tiempo de generación: 30-06-2016 a las 22:09:58
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -56,7 +56,7 @@ CREATE TABLE IF NOT EXISTS `area` (
   `sigla` varchar(10) NOT NULL,
   `estado` tinyint(1) NOT NULL DEFAULT '1',
   `fkarea_padre` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=110 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `area`
@@ -81,7 +81,7 @@ CREATE TABLE IF NOT EXISTS `bitacora` (
   `accion` varchar(100) NOT NULL,
   `fecha` varchar(10) NOT NULL,
   `hora` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=118 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=141 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `bitacora`
@@ -204,7 +204,30 @@ INSERT INTO `bitacora` (`pkbitacora`, `fkusuario`, `accion`, `fecha`, `hora`) VA
 (114, 2, 'se modifico los permisos para el cargo Administrador', '31/05/2016', '09:20:47'),
 (115, 2, 'se agrego un nuevo tipo documento PLAN', '31/05/2016', '09:21:22'),
 (116, 2, 'se agrego un nuevo tipo documento PERFIL', '31/05/2016', '09:21:39'),
-(117, 2, 'se modifico el tipo documento PRFL', '31/05/2016', '09:23:07');
+(117, 2, 'se modifico el tipo documento PRFL', '31/05/2016', '09:23:07'),
+(118, 2, 'Inicio de sesion', '31/05/2016', '04:34:44'),
+(119, 2, 'Cierre de sesion', '31/05/2016', '04:37:57'),
+(120, 2, 'Inicio de sesion', '06/06/2016', '11:24:35'),
+(121, 2, 'Cierre de sesion', '06/06/2016', '11:27:51'),
+(122, 2, 'Inicio de sesion', '13/06/2016', '05:39:47'),
+(123, 2, 'Cierre de sesion', '13/06/2016', '05:42:42'),
+(124, 2, 'Inicio de sesion', '14/06/2016', '09:08:29'),
+(125, 2, 'Cierre de sesion', '14/06/2016', '09:18:46'),
+(126, 2, 'Inicio de sesion', '14/06/2016', '09:55:29'),
+(127, 2, 'Cierre de sesion', '14/06/2016', '09:56:00'),
+(128, 2, 'Inicio de sesion', '14/06/2016', '09:56:04'),
+(129, 2, 'Cierre de sesion', '14/06/2016', '09:57:23'),
+(130, 2, 'Inicio de sesion', '14/06/2016', '10:10:26'),
+(131, 2, 'Cierre de sesion', '14/06/2016', '10:22:44'),
+(132, 2, 'Inicio de sesion', '14/06/2016', '08:51:35'),
+(133, 2, 'se agrego un nuevo cargo uno nuevo', '14/06/2016', '08:53:59'),
+(134, 2, 'Inicio de sesion', '15/06/2016', '10:21:24'),
+(135, 2, 'Cierre de sesion', '15/06/2016', '10:21:28'),
+(136, 2, 'Inicio de sesion', '17/06/2016', '08:47:01'),
+(137, 2, 'Cierre de sesion', '17/06/2016', '09:32:50'),
+(138, 2, 'Inicio de sesion', '29/06/2016', '10:54:03'),
+(139, 2, 'Inicio de sesion', '29/06/2016', '04:42:09'),
+(140, 2, 'Inicio de sesion', '30/06/2016', '03:46:57');
 
 -- --------------------------------------------------------
 
@@ -228,7 +251,7 @@ CREATE TABLE IF NOT EXISTS `cargo` (
   `nombre` varchar(100) NOT NULL,
   `descripcion` varchar(150) DEFAULT NULL,
   `estado` int(11) DEFAULT '1'
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `cargo`
@@ -238,7 +261,8 @@ INSERT INTO `cargo` (`pkcargo`, `nombre`, `descripcion`, `estado`) VALUES
 (1, 'Administrador', 'Encargado de la administracion del sistema', 1),
 (2, 'Responsable de area', 'encargado de elaboracion de documentos', 1),
 (3, 'Supervisor de area', 'encargado de la revision de documentos elaborados', 1),
-(6, 'Emisor', 'encargado de emitir los documentos', 1);
+(6, 'Emisor', 'encargado de emitir los documentos', 1),
+(7, 'uno nuevo', 'no', 1);
 
 -- --------------------------------------------------------
 
@@ -443,17 +467,17 @@ MODIFY `pkarchivo_config` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT de la tabla `area`
 --
 ALTER TABLE `area`
-MODIFY `pkarea` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=111;
+MODIFY `pkarea` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=110;
 --
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-MODIFY `pkbitacora` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=118;
+MODIFY `pkbitacora` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=141;
 --
 -- AUTO_INCREMENT de la tabla `cargo`
 --
 ALTER TABLE `cargo`
-MODIFY `pkcargo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `pkcargo` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=8;
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --

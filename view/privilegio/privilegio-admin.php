@@ -14,7 +14,7 @@
                             <div class="panel-heading">
                                 <a data-toggle="collapse" data-parent="#accordion" style="color:#337ab7; text-decoration: none" href="#<?php echo $c->pkcargo; ?>"><?php echo $c->nombre; ?> <i class="fa fa-angle-down"></i></a>
                                 <div class="pull-right">
-                                    <a href="?c=privilegio&a=editar&pkcargo=<?php echo $c->pkcargo; ?>" class="btn btn-outline btn-info btn-circle"><i class="fa fa-pencil"></i></a>
+                                    <a href="?c=privilegio&a=editar&pkcargo=<?php echo $c->pkcargo; ?>" class="btn btn-outline btn-info btn-circle editar"><i class="fa fa-pencil"></i></a>
                                 </div>
                             </div>
                             <div id="<?php echo $c->pkcargo; ?>" class="panel-collapse collapse">

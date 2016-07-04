@@ -1,11 +1,7 @@
 <?php
-
 require_once 'singleton/mysql.php';
-
 class Archivo_Config {
-
     private $pdo;
-
     public function __CONSTRUCT() {
         try {
             $this->pdo = ConexionMysql::getInstance()->obtenerConexion();
@@ -13,7 +9,6 @@ class Archivo_Config {
             die($e->getMessage());
         }
     }
-
     public function Listar() {
         try {
             $sql = $this->pdo->prepare("SELECT * FROM archivo_config WHERE estado=1");
@@ -23,7 +18,6 @@ class Archivo_Config {
             die($e->getMessage());
         }
     }
-
     public function Obtener($pk) {
         try {
             $sql = $this->pdo->prepare("SELECT * FROM archivo_config a WHERE a.pkarchivo_config= ? ");
@@ -33,7 +27,6 @@ class Archivo_Config {
             die($e->getMessage());
         }
     }
-
     public function Guardar($datos) {
         try {
             $sql = "INSERT INTO archivo_config (nombre,icono,extencion) VALUES (?,?,?)";
@@ -49,7 +42,6 @@ class Archivo_Config {
             return 0;
         }
     }
-
     public function Editar($datos) {
         try {
             $sql = "UPDATE archivo_config SET nombre=?, icono=?, extencion=? WHERE pkarchivo_config=? ";
@@ -66,7 +58,6 @@ class Archivo_Config {
             return false;
         }
     }
-
     public function Eliminar($pk) {
         try {
             $sql = $this->pdo->prepare("UPDATE archivo_config SET estado=0 WHERE pkarchivo_config = ?");
@@ -76,6 +67,5 @@ class Archivo_Config {
             return false;
         }
     }
-
 }
 ?>
