@@ -48,12 +48,14 @@
                     break;
 				case 4:
                     echo 'error al conectarse a la base de datos MySql.';
+                    echo '<br>';
+                    echo $_REQUEST['exc'];
 				break;
 				case 5:
                     echo 'error al conectarse a la base de datos MongoDB.';
 					echo '<br>';
 					echo $_REQUEST['exc'];
-				break;					
+				break;
             }
             ?>
         </h6>

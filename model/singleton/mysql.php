@@ -15,7 +15,7 @@ class ConexionMysql {
         try {
             self::obtenerConexion();
         } catch (PDOException $e) {
-			header('Location: 404.php?error=6'); //error en la conexion mysql
+            header('Location: 404.php?error=4&exc='.$e->getMessage()); //error en la conexion mysql
         }
     }
 
