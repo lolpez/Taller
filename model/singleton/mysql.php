@@ -28,7 +28,7 @@ class ConexionMysql {
 
     public function obtenerConexion() {
         if (self::$mysql == null) {
-            $this->configArray = parse_ini_file("appconfig.ini", true)['conexion_mysql_local'];
+            $this->configArray = parse_ini_file("appconfig.ini", true)['conexion_mysql'];
             $this->username = $this->configArray['username'];
             $this->pass = $this->configArray['password'];
             $this->host = $this->configArray['host'];
