@@ -2,15 +2,15 @@
 
 class BackUp {
 
-    private $configArray;
     private $mysql;
     private $mongo;
 
     public function __CONSTRUCT() {
-        $this->configArray = parse_ini_file("appconfig.ini", true);
+        $tipo_conexion = parse_ini_file("appconfig.ini", true)['tipo_conexion'];
+        $configArray = parse_ini_file("appconfig.ini", true);
         $mysql = new stdClass();
         //Datos Mysql
-        $datosMysql = $this->configArray['conexion_mysql_local'];
+        $datosMysql = $configArray['conexion_mysql_'.$tipo_conexion['mysql']];
         $mysql->username = $datosMysql['username'];
         $mysql->password = $datosMysql['password'];
         $mysql->host = $datosMysql['host'];
@@ -18,7 +18,7 @@ class BackUp {
         $mysql->database = $datosMysql['database'];
         $this->mysql = $mysql;
         //Datos Mongo
-        $datosMongo = $this->configArray['conexion_mongo_local'];
+        $datosMongo = $configArray['conexion_mongo_'.$tipo_conexion['mongo']];
         $mongo = new stdClass();
         $mongo->username = $datosMongo['username'];
         $mongo->password = $datosMongo['password'];
@@ -48,8 +48,15 @@ class BackUp {
             date_default_timezone_set("America/La_Paz");
             $now = new DateTime;
             $archivo = $now->format('d-m-Y_H-i-s');
-            $path = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/' . $archivo;
-            $path_dump = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/';
+            if ($this->mongo->host == 'localhost' && $this->mysql->host == 'localhost'){
+                //Localhost
+                $path = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/' . $archivo;
+                $path_dump = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/';
+            }else{
+                //RemoteServer
+                $path = $_SERVER['DOCUMENT_ROOT'] . 'resources/backup/' . $archivo;
+                $path_dump = $_SERVER['DOCUMENT_ROOT'] . 'resources/backup/';
+            }
             $this->BackupMongo($path);
             $this->BackupMysql($path, $archivo);
             $this->Zip($path, $path_dump, $archivo);
@@ -62,7 +69,13 @@ class BackUp {
 
     public function Restarurar($archivo){
         try{
-            $path = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/' . $archivo;
+            if ($this->mongo->host == 'localhost' && $this->mysql->host == 'localhost'){
+                //Localhost
+                $path = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/' . $archivo;
+            }else{
+                //RemoteServer
+                $path = $_SERVER['DOCUMENT_ROOT'] . 'resources/backup/' . $archivo;
+            }
             $path_dump = substr($path,0,-4);
             $this->UnZip($path,$path_dump);
             $this->RestaurarMongo($path_dump.'/'.$this->mongo->database);
@@ -76,7 +89,13 @@ class BackUp {
 
     public function Eliminar($archivo){
         try{
-            $path = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/' . $archivo;
+            if ($this->mongo->host == 'localhost' && $this->mysql->host == 'localhost'){
+                //Localhost
+                $path = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/' . $archivo;
+            }else{
+                //RemoteServer
+                $path = $_SERVER['DOCUMENT_ROOT'] . 'resources/backup/' . $archivo;
+            }
             unlink($path);
             return true;
         }catch (exception $e){
@@ -89,30 +108,40 @@ class BackUp {
             //Localhost
             $command = 'mongodump --db ' . $this->mongo->database . ' --out "' . $path . '"';
         }else{
-            //Remote host
-            $command = 'mongodump --host ' . $this->mongo->host . ' --port ' . $this->mongo->port . ' --username ' . $this->mongo->username . ' --password ' . $this->mongo->password . ' --db ' . $this->mongo->database . ' --out "' . $path . '/mongo"';
+            //RemoteServer
+            $command = 'mongodump -h ' . $this->mongo->host . ' --port ' . $this->mongo->port . ' --username ' . $this->mongo->username . ' --password ' . $this->mongo->password . ' --db ' . $this->mongo->database . ' --out "' . $path . '"';
         }
         shell_exec($command);
     }
 
     public function BackupMysql($path,$archivo){
-        $cmd  = 'c: & cd "c:/xampp/mysql/bin/" & mysqldump.exe --user=' . $this->mysql->username . ' --password=' . $this->mysql->password . ' --host=' . $this->mysql->host . ' ' . $this->mysql->database . ' > "' . $path . '/' . $archivo . '.sql"';
+        if ($this->mysql->host == "localhost") {
+            //Localhost
+            $cmd  = 'c: & cd "c:/xampp/mysql/bin/" & mysqldump.exe --user=' . $this->mysql->username . ' --password=' . $this->mysql->password . ' --host=' . $this->mysql->host . ' ' . $this->mysql->database . ' > "' . $path . '/' . $archivo . '.sql"';
+        }else{
+            //RemoteServer
+            $cmd  = 'mysqldump --opt -h '.$this->mysql->host.' -u ' .$this->mysql->username.' --password='.$this->mysql->password.' '.$this->mysql->database.' > "' . $path . '/' . $archivo . '.sql"';
+        }
         shell_exec($cmd);
     }
 
     public function RestaurarMongo($path){
         if ($this->mongo->host == "localhost") {
             //Localhost
-            $command = 'mongorestore --drop --db ' . $this->mongo->database . ' "' . $path . '"';
+            $cmd = 'mongorestore --drop --db ' . $this->mongo->database . ' "' . $path . '"';
         }else{
-            //Remote host
-            $command = 'mongorestore --drop --db ' . $this->mongo->database . ' --host ' . $this->mongo->host . ' --port ' . $this->mongo->port . ' --username ' . $this->mongo->username . ' --password ' . $this->mongo->password . ' "' . $path . '"';
+            //RemoteServer
+            $cmd = 'mongorestore --drop --db ' . $this->mongo->database . ' --host ' . $this->mongo->host . ' --port ' . $this->mongo->port . ' --username ' . $this->mongo->username . ' --password ' . $this->mongo->password . ' "' . $path . '"';
         }
-        shell_exec($command);
+        shell_exec($cmd);
     }
 
     public function RestaurarMysql($path,$archivo){
-        $cmd  = 'c: & cd "c:/xampp/mysql/bin/" & mysql.exe --user=' . $this->mysql->username . ' --password=' . $this->mysql->password . ' --host=' . $this->mysql->host . ' ' . $this->mysql->database . ' < "' . $path . '/' . $archivo . '.sql"';
+        if ($this->mysql->host == "localhost") {
+            $cmd  = 'c: & cd "c:/xampp/mysql/bin/" & mysql.exe --user=' . $this->mysql->username . ' --password=' . $this->mysql->password . ' --host=' . $this->mysql->host . ' ' . $this->mysql->database . ' < "' . $path . '/' . $archivo . '.sql"';
+        }else {
+            $cmd  = 'mysql -h '.$this->mysql->host.' -u ' .$this->mysql->username.' --password='.$this->mysql->password.' '.$this->mysql->database.' < "' . $path . '/' . $archivo . '.sql"';
+        }
         shell_exec($cmd);
     }
 
