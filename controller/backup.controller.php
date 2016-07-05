@@ -49,6 +49,9 @@ class BackupController {
             case 'Eliminar':
                 $icono = 'trash';
             break;
+            case 'Subir':
+                $icono = 'upload';
+            break;
             default:
                 $icono = '';
             break;
@@ -134,6 +137,32 @@ class BackupController {
             El usuario no cuenta con los permisos necesarios para la creacion de copias de seguridad (Solo el administrador de sistema tiene acceso a esta funcionalidad).<br>
             El servidor no cuenta con los permisos necesarios para la descargar archivos.<br>
             El archivo no existe en los registros del servidor.<br>
+            Si el problema consiste, por favor comunicarse con el administrador de sistema.';
+            $this->vista->Resultado($bd_accion,$alerta,$icono,$mensaje,$this->permiso,null);
+        }
+    }
+
+    public function Subir(){
+        if (isset($_POST['username']) && isset($_POST['password']) && $this->VerificarUsuario($_POST['username'],$_POST['password'])) {
+            $archivo = $_FILES['archivo'];
+            $exito = $this->model->Subir($archivo);
+        }else{
+            $exito = false;
+        }
+        if ($exito){
+            $bd_accion = 'Subir';
+            $alerta = 'success';
+            $icono = 'check';
+            $mensaje = 'La restauracion de la base de datos desde un archivo se realizo con exito.';
+            $this->vista->Resultado($bd_accion,$alerta,$icono,$mensaje,$this->permiso,null);
+        }else{
+            $bd_accion = 'Subir';
+            $alerta = 'danger';
+            $icono = 'times';
+            $mensaje = 'Hubo un error al subir su arhcivo para restaurar por los siguientes casos posibles:<br>
+            El usuario no cuenta con los permisos necesarios para subir de copias de seguridad (Solo el administrador de sistema tiene acceso a esta funcionalidad).<br>
+            El servidor no cuenta con los permisos necesarios para la subir archivos.<br>
+            El servidor no cuenta con los permisos necesarios para la subir archivos de gran tamaño.<br>
             Si el problema consiste, por favor comunicarse con el administrador de sistema.';
             $this->vista->Resultado($bd_accion,$alerta,$icono,$mensaje,$this->permiso,null);
         }

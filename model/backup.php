@@ -87,6 +87,31 @@ class BackUp {
         }
     }
 
+    public function Subir($archivo){
+        try{
+            if ($this->mongo->host == 'localhost' && $this->mysql->host == 'localhost'){
+                //Localhost
+                $path = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/'.$archivo['name'];
+            }else{
+                //RemoteServer
+                $path = $_SERVER['DOCUMENT_ROOT'] . 'resources/backup/'.$archivo['name'];
+            }
+            //Verificar que el archivo no existe para subir el archivo en vano
+            $ok = false;
+            if (file_exists($path)){
+                $ok = $this->Restarurar($archivo['name']);
+            }else{
+                //Tratar de subir archivo, restaurarlo y borrar el temporal
+                if (move_uploaded_file($archivo['tmp_name'], $path) && $this->Restarurar($archivo['name']) && $this->Eliminar($archivo['name'])){
+                    $ok = true;
+                }
+            }
+            return $ok;
+        }catch (exception $e){
+            return false;
+        }
+    }
+
     public function Eliminar($archivo){
         try{
             if ($this->mongo->host == 'localhost' && $this->mysql->host == 'localhost'){

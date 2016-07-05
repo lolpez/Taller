@@ -4,6 +4,7 @@
         <div class="panel panel-default">
             <div class="panel-heading">
                 <a class="btn btn-outline btn-primary agregar" href="?c=backup&a=verificacion&bd=Crear"><i class="fa fa-plus"></i> Realizar Copia de Seguridad</a>
+                <a class="btn btn-outline btn-success" href="?c=backup&a=verificacion&bd=Subir" data-toggle="tooltip" data-placement="top" title="Restaurar copia de seguridad subiendo un archivo de su maquina"><i class="fa fa-upload"></i> Restaurar copia de Seguridad desde archivo</a>
             </div>
             <div class="panel-body" style="overflow: scroll; height: 500px">
                 <div class="dataTable_wrapper">
