@@ -14,6 +14,7 @@
                             <th>Nombre</th>
                             <th>Correo</th>
                             <th>Telefono</th>
+                            <th>Area</th>
                             <th>Cargo</th>
                             <th>Acciones</th>
                         </tr>
@@ -25,6 +26,7 @@
                                 <td><?php echo $r->nombre; ?></td>
                                 <td><?php echo $r->email; ?></td>
                                 <td><?php echo $r->telefono; ?></td>
+                                <td><?php echo $r->area; ?></td>
                                 <td><?php echo $r->cargo; ?></td>
                                 <td style="text-align: center">
                                     <a href="?c=usuario&a=editar&pkusuario=<?php echo $r->pkusuario; ?>" class="btn btn-outline btn-info btn-circle editar"><i class="fa fa-pencil"></i></a>

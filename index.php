@@ -1,7 +1,7 @@
 <?php
 session_name("taller");
 session_start();
-$_controllers_permitidos = array("documento","notificacion","usuario","bitacora","usuario","cargo","privilegio","calendario","archivo_config","area","tipo_documento","backup");
+$_controllers_permitidos = array("documento","notificacion","usuario","bitacora","usuario","cargo","privilegio","calendario","archivo_config","area","tipo_documento","backup","estado_documento","plantilla");
 if (!isset($_REQUEST['c'])) {
     if (!isset($_SESSION['usuario'])) {
         header('Location: login.php');

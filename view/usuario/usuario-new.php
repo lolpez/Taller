@@ -10,50 +10,45 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>CI</label>
-                <input type="text" name="ci" class="form-control" 
-                       placeholder="Ingrese el numero de carnet" required >
+                <input type="text" name="ci" class="form-control" placeholder="Ingrese el numero de carnet" required >
             </div>
             <div class="form-group">
                 <label>Nombre</label>
-                <input type="text" name="nombre" class="form-control"  
-                       placeholder="Ingrese el nombre" required />
+                <input type="text" name="nombre" class="form-control" placeholder="Ingrese el nombre" required />
             </div>
             <div class="form-group">
                 <label>Telefono</label>
-                <input type="text" name="telefono" class="form-control"  
-                       placeholder="Ingrese el Telefono" required />
+                <input type="text" name="telefono" class="form-control" placeholder="Ingrese el Telefono" required />
+            </div>
+            <div class="form-group">
+                <label>Area</label>
+                <select class="form-control" name="area" >
+                    <?php foreach ($areas as $a): ?>
+                        <option value="<?php echo $a->pkarea; ?>"><?php echo $a->nombre; ?></option>
+                    <?php endforeach ?>
+                </select>
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label>Correo</label>
-                <input type="email" name="correo" class="form-control" 
-                       placeholder="Ingrese el Correo" required />
+                <input type="email" name="correo" class="form-control" placeholder="Ingrese el Correo" required />
             </div>
             <div class="form-group">
                 <label>Nombre de Usuario</label>
-                <input type="text" name="username" class="form-control"  
-                       placeholder="Ingrese el Nombre de Usuario" required />
+                <input type="text" name="username" class="form-control" placeholder="Ingrese el Nombre de Usuario" required />
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
-                <input type="password" name="pass" class="form-control"  
-                       placeholder="Ingrese Su Contraseña" required />
+                <input type="password" name="pass" class="form-control" placeholder="Ingrese Su Contraseña" required />
             </div>
-        </div>
-        <div class="row">
-            <div class="col-md-4">
-
-            </div>
-            <div class="col-md-4">
-                <div class="form-group">
-                    <label>Cargo</label>
-                    <select class="form-control" name="cargo" >
+            <div class="form-group">
+                <label>Cargo</label>
+                <select class="form-control" name="cargo" >
                     <?php foreach ($cargos as $c): ?>
                         <option value="<?php echo $c->pkcargo; ?>"><?php echo $c->nombre; ?></option>
                     <?php endforeach ?>
-                    </select>
-                </div>               
+                </select>
             </div>
         </div>
     </div>

@@ -33,6 +33,8 @@
     <link rel="stylesheet" href="resources/bower_components/datetime-picker/css/bootstrap-datetimepicker.css" />
     <!-- Switch Button -->
     <link rel="stylesheet" href="resources/bower_components/switch/css/bootstrap-switch.min.css"/>
+    <!-- Color Picker -->
+    <link rel="stylesheet" href="resources/bower_components/color-picker/css/minicolors.css"/>
     <!-- jQuery -->
     <script src="resources/bower_components/jquery/dist/jquery.min.js"></script>
 </head>

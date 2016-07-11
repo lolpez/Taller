@@ -1,15 +1,17 @@
 <?php
 require_once 'view/usuario/usuario.view.php';
 require_once 'model/usuario.php';
+require_once 'model/area.php';
 require_once 'model/cargo.php';
 require_once 'model/bitacora.php';
-require_once 'model/fachada/permiso.php';
+require_once 'model/permiso.php';
 
 class UsuarioController {
 
     private $model;
     private $vista;
     private $item;
+    private $area;
     private $cargo;
     private $bitacora;
     private $llave;
@@ -18,12 +20,13 @@ class UsuarioController {
     public function __CONSTRUCT() {
         $this->model = new Usuario();
         $this->vista = new UsuarioView();
+        $this->area = new Area();
         $this->cargo = new Cargo();
         $this->bitacora = new Bitacora();
         $this->llave = pack('H*',"bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
         $this->item = 'usuario';
-        $fachada = new Permiso();
-        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
+        $permiso = new Permiso();
+        $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {
@@ -32,8 +35,9 @@ class UsuarioController {
     }
 
     public function Nuevo() {
-        $cargos=$this->cargo->Listar();
-        $this->vista->Nuevo($cargos,$this->permiso);
+        $cargos = $this->cargo->Listar();
+        $areas = $this->area->Listar();
+        $this->vista->Nuevo($cargos,$areas,$this->permiso);
     }
 
     public function Editar() {
@@ -42,8 +46,9 @@ class UsuarioController {
         $nombre_archivo = 'resources/users/'.$aux->archivo;
         $arrayDesencriptado = $this->desencriptar($nombre_archivo,$this->llave);
         $pass = $arrayDesencriptado[1];
+        $areas= $this->area->Listar();
         $cargos= $this->cargo->Listar();
-        $this->vista->Editar($usuario,$cargos,$pass,$this->permiso);
+        $this->vista->Editar($usuario,$areas,$cargos,$pass,$this->permiso);
     }
 
     public function Guardar() {
@@ -58,10 +63,11 @@ class UsuarioController {
                 'email' => $_POST['correo'],
                 'telefono' => $_POST['telefono'],
                 'archivo' => $nombre_archivo_nuevo,
+                'fkarea' => $_POST['area'],
                 'fkcargo' => $_POST['cargo']
             );
             $exito = $this->model->Editar($datos);
-            $DescripcionBitacora = 'se modifico el usuario '.$_POST['nombre'];
+            $DescripcionBitacora = 'se modifico el '.$this->item.' '.$_POST['nombre'];
             $tarea = 'modificar';
             if ($exito){
                 //Eliminar el archivo antiguo y crear nuevo
@@ -77,10 +83,11 @@ class UsuarioController {
                     'email' => $_POST['correo'],
                     'telefono' => $_POST['telefono'],
                     'archivo' => $_POST['username'].'.crip',
+                    'fkarea' => $_POST['area'],
                     'fkcargo' => $_POST['cargo']
                 );
                 $exito = $this->model->Guardar($datos);
-                $DescripcionBitacora = 'se agrego un nuevo usuario '.$_POST['nombre'];
+                $DescripcionBitacora = 'se agrego un nuevo '.$this->item.' '.$_POST['nombre'];
                 $tarea = 'agregar';
                 if ($exito){
                     //Encriptar nuevo archivo
@@ -123,9 +130,9 @@ class UsuarioController {
         );
         $exito = $this->model->Editar($datos);
         if (substr($usuario->archivo,0,-5) != $_POST['username']){
-            $DescripcionBitacora = 'edito su nombre de usuario de '.substr($usuario->archivo,0,-5).' a '.$_POST['username'];
+            $DescripcionBitacora = 'edito su nombre de '.$this->item.' de '.substr($usuario->archivo,0,-5).' a '.$_POST['username'];
         }else{
-            $DescripcionBitacora = 'edito su perfil de usuario';
+            $DescripcionBitacora = 'edito su perfil de '.$this->item;
         }
         $tarea = 'modificar';
         if ($exito=='si'){

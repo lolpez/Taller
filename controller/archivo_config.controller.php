@@ -2,7 +2,7 @@
 require_once 'view/archivo_config/archivo_config.view.php';
 require_once 'model/archivo_config.php';
 require_once 'model/bitacora.php';
-require_once 'model/fachada/permiso.php';
+require_once 'model/permiso.php';
 
 class Archivo_ConfigController {
 
@@ -17,8 +17,8 @@ class Archivo_ConfigController {
         $this->vista = new Archivo_ConfigView();
         $this->bitacora = new Bitacora();
         $this->item = 'archivos permitidos';
-        $fachada = new Permiso();
-        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
+        $permiso = new Permiso();
+        $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {

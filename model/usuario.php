@@ -16,7 +16,7 @@ class Usuario {
 
     public function Listar() {
         try {
-            $sql = $this->pdo->prepare("select u.pkusuario,u.nombre,u.ci,u.telefono,u.email,c.nombre as cargo from usuario u, cargo c where u.fkcargo=c.pkcargo and u.estado=1 and c.estado=1;");
+            $sql = $this->pdo->prepare("select u.pkusuario,u.nombre,u.ci,u.telefono,u.email,a.nombre as area,c.nombre as cargo from usuario u, area a, cargo c where u.fkcargo=c.pkcargo and u.fkarea=a.pkarea and u.estado=1 and c.estado=1 and a.estado=1");
             $sql->execute();
             return $sql->fetchAll(PDO::FETCH_OBJ);
         } catch (Exception $e) {
@@ -34,7 +34,7 @@ class Usuario {
         }
     }
 
-    public function Obtener_Responsable($pkarea) {
+    public function Obtener_Ressponsable($pkarea) {
         try {
             $sql = $this->pdo->prepare("SELECT u.pkusuario, u.nombre as nombre, a.nombre as area FROM usuario u, cargo c, area a WHERE u.fkcargo=c.pkcargo AND c.fkarea=a.pkarea AND a.pkarea=?");
             $sql->execute(array($pkarea));
@@ -66,7 +66,7 @@ class Usuario {
 
     public function Login($ci){
         try {
-            $sql = $this->pdo->prepare("SELECT u.pkusuario, u.nombre, u.ci, u.telefono, u.email, u.archivo, u.fkcargo, c.nombre as cargo FROM usuario u, cargo c WHERE u.fkcargo = c.pkcargo and u.ci= ? and u.estado = 1");
+            $sql = $this->pdo->prepare("SELECT u.pkusuario, u.nombre, u.ci, u.telefono, u.email, u.archivo, u.fkcargo, c.nombre as cargo, u.fkarea, a.nombre as area FROM usuario u, cargo c, area a WHERE u.fkcargo = c.pkcargo and u.ci= ? and u.fkarea = a.pkarea and u.estado = 1");
             $sql->execute(array($ci));
             return $sql->fetch(PDO::FETCH_OBJ);
         } catch (Exception $e) {
@@ -76,7 +76,7 @@ class Usuario {
 
     public function Guardar($datos) {
         try {
-            $sql = $this->pdo->prepare("INSERT INTO usuario (ci,nombre,email,telefono,archivo,fkcargo) VALUES (?,?,?,?,?,?)");
+            $sql = $this->pdo->prepare("INSERT INTO usuario (ci,nombre,email,telefono,archivo,fkarea,fkcargo) VALUES (?,?,?,?,?,?,?)");
             $sql->execute(
                 array(
                     $datos['ci'],
@@ -84,6 +84,7 @@ class Usuario {
                     $datos['email'],
                     $datos['telefono'],
                     $datos['archivo'],
+                    $datos['fkarea'],
                     $datos['fkcargo']
                 )
             );
@@ -105,7 +106,7 @@ class Usuario {
 
     public function Editar($datos) {
         try {
-            $sql = "UPDATE usuario SET ci=? ,nombre=? ,email=? ,telefono=? ,archivo=? ,fkcargo=? WHERE pkusuario=? ";
+            $sql = "UPDATE usuario SET ci=?, nombre=?, email=?, telefono=?, archivo=?, fkarea=?, fkcargo=? WHERE pkusuario=? ";
             $this->pdo->prepare($sql)->execute(
                 array(
                     $datos['ci'],
@@ -113,6 +114,7 @@ class Usuario {
                     $datos['email'],
                     $datos['telefono'],
                     $datos['archivo'],
+                    $datos['fkarea'],
                     $datos['fkcargo'],
                     $datos['pk']
                 )

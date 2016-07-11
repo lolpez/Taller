@@ -46,7 +46,7 @@
                     <?php foreach ($menu->listaMenu as $m): ?>
                         <li>
                             <a href="#"><i class="<?php echo $m->icono ?>"></i> <?php echo $m->nombre ?><span class="fa arrow" style="margin-top: 10px"></span></a>
-                            <?php $i = 0; foreach ($menu->listaMenuDetalle as $md): ?>
+                            <?php foreach ($menu->listaMenuDetalle as $md): ?>
                                 <?php if ($md->fkmenu == $m->pkmenu){ ?>
                                     <ul class="nav nav-second-level">
                                         <ul class="nav nav-second-level">
@@ -55,7 +55,7 @@
                                             </li>
                                         </ul>
                                     </ul>
-                                <?php unset($menu->listaMenuDetalle[$i]); $i++; } ?>
+                                <?php array_diff_key($menu->listaMenuDetalle, ["pkmenu_detalle" => $md->pkmenu_detalle]); } ?>
                             <?php endforeach ?>
                         </li>
                     <?php endforeach ?>

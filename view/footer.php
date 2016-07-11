@@ -30,6 +30,9 @@
 <!--Switch Button -->
 <script type="text/javascript" src="resources/bower_components/switch/js/bootstrap-switch.min.js"></script>
 
+<!--JavaScript para Color Picker -->
+<script type="text/javascript" src="resources/bower_components/color-picker/js/minicolors.min.js"></script>
+
 <!-- JavaScript Reponsive -->
 <script src="resources/js/jsprincipal.js"></script>
 <script>

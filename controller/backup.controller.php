@@ -3,7 +3,7 @@ require_once 'view/backup/backup.view.php';
 require_once 'model/backup.php';
 require_once 'model/usuario.php';
 require_once 'model/bitacora.php';
-require_once 'model/fachada/permiso.php';
+require_once 'model/permiso.php';
 
 class BackupController {
 
@@ -20,8 +20,8 @@ class BackupController {
         $this->bitacora = new Bitacora();
         $this->usuario = new Usuario();
         $this->item = 'backup';
-        $fachada = new Permiso();
-        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
+        $permiso = new Permiso();
+        $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {
@@ -73,6 +73,8 @@ class BackupController {
             estan guardados en un archivo .zip que usted puede restaurarla cuando lo desee.
             Tambien tiene la opcion de poder descargar esta copia de seguridad, guardarlo donde lo desee y poder restaurarlo
             al sistema con la opcion "Restarurar copia de seguridad desde archivo".';
+            $DescripcionBitacora = 'Se realizo una nueva copia de seguridad';
+            $this->bitacora->GuardarBitacora($DescripcionBitacora);
             $this->vista->Resultado($bd_accion,$alerta,$icono,$mensaje,$this->permiso,null);
         }else{
             $bd_accion = 'Creacion';
@@ -102,6 +104,9 @@ class BackupController {
             $mensaje = 'Su archivo de copia de seguridad con todos sus datos (registros, documentos, etc)
             esta listo para la descarga. Este archivo puede guardarlo donde lo desee y poder restaurarlo al sistema
             con la opcion "Restarurar copia de seguridad desde archivo".';
+            $fecha_hora =  explode('_',substr($archivo,0,-4));
+            $DescripcionBitacora = 'Descarga de copia de seguridad de la fecha: '.$fecha_hora[0].', con hora: '.DateTime::createFromFormat('H-i-s', $fecha_hora[1])->format('H:i:s');
+            $this->bitacora->GuardarBitacora($DescripcionBitacora);
             $this->vista->Resultado($bd_accion,$alerta,$icono,$mensaje,$this->permiso,$archivo);
         }else{
             $bd_accion = 'Descargar';
@@ -128,6 +133,9 @@ class BackupController {
             $alerta = 'success';
             $icono = 'check';
             $mensaje = 'La restauracion de la base de datos se realizo con exito.';
+            $fecha_hora =  explode('_',substr($archivo,0,-4));
+            $DescripcionBitacora = 'Restauracion de la base de datos desde copia de seguridad realizada en fecha : '.$fecha_hora[0].', con hora: '.DateTime::createFromFormat('H-i-s', $fecha_hora[1])->format('H:i:s');
+            $this->bitacora->GuardarBitacora($DescripcionBitacora);
             $this->vista->Resultado($bd_accion,$alerta,$icono,$mensaje,$this->permiso,null);
         }else{
             $bd_accion = 'Restaurar';
@@ -154,6 +162,9 @@ class BackupController {
             $alerta = 'success';
             $icono = 'check';
             $mensaje = 'La restauracion de la base de datos desde un archivo se realizo con exito.';
+            $fecha_hora =  explode('_',substr($archivo['name'],0,-4));
+            $DescripcionBitacora = 'Restauracion de la base de datos desde archivo de copia de seguridad realizada en fecha : '.$fecha_hora[0].', con hora: '.DateTime::createFromFormat('H-i-s', $fecha_hora[1])->format('H:i:s');
+            $this->bitacora->GuardarBitacora($DescripcionBitacora);
             $this->vista->Resultado($bd_accion,$alerta,$icono,$mensaje,$this->permiso,null);
         }else{
             $bd_accion = 'Subir';
@@ -180,6 +191,9 @@ class BackupController {
             $alerta = 'success';
             $icono = 'check';
             $mensaje = 'La eliminacion de la copia de seguridad se realizo con exito.';
+            $fecha_hora =  explode('_',substr($archivo,0,-4));
+            $DescripcionBitacora = 'Se elimino una copia de seguridad realizada en fecha : '.$fecha_hora[0].', con hora: '.DateTime::createFromFormat('H-i-s', $fecha_hora[1])->format('H:i:s');
+            $this->bitacora->GuardarBitacora($DescripcionBitacora);
             $this->vista->Resultado($bd_accion,$alerta,$icono,$mensaje,$this->permiso,null);
         }else{
             $bd_accion = 'Eliminar';

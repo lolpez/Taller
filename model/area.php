@@ -78,5 +78,15 @@ class Area {
         }
     }
 
+    public function Obtener_Ultimo_ID() {
+        try {
+            $sql = $this->pdo->prepare("SELECT max(pkarea) as pkarea FROM area");
+            $sql->execute();
+            return $sql->fetch(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
 }
 ?>

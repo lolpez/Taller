@@ -2,7 +2,7 @@
 require_once 'view/cargo/cargo.view.php';
 require_once 'model/cargo.php';
 require_once 'model/bitacora.php';
-require_once 'model/fachada/permiso.php';
+require_once 'model/permiso.php';
 
 class CargoController {
 
@@ -17,8 +17,8 @@ class CargoController {
         $this->vista = new CargoView();
         $this->bitacora = new Bitacora();
         $this->item = 'cargo';
-        $fachada = new Permiso();
-        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
+        $permiso = new Permiso();
+        $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {
@@ -43,7 +43,7 @@ class CargoController {
                 'descripcion' => $_POST['descripcion']
             );
             $exito = $this->model->Editar($datos);
-            $DescripcionBitacora = 'se modifico el cargo '.$_POST['nombre'];
+            $DescripcionBitacora = 'se modifico el '.$this->item.' '.$_POST['nombre'];
             $tarea='modificar';
         }else{
             $datos = array(
@@ -51,7 +51,7 @@ class CargoController {
                 'descripcion' => $_POST['descripcion']
             );
             $exito = $this->model->Guardar($datos);
-            $DescripcionBitacora = 'se agrego un nuevo cargo ' . $_POST['nombre'];
+            $DescripcionBitacora = 'se agrego un nuevo '.$this->item.' ' . $_POST['nombre'];
             $tarea='agregar';
         }
         $this->bitacora->GuardarBitacora($DescripcionBitacora);
@@ -62,7 +62,7 @@ class CargoController {
         $tarea = 'eliminar';
         $cargo = $this->model->Obtener($_REQUEST['pk']);
         $exito = $this->model->Eliminar($_REQUEST['pk']);
-        $this->bitacora->GuardarBitacora('se dio de baja el cargo '.$cargo->nombre);
+        $this->bitacora->GuardarBitacora('se dio de baja el '.$this->item.' '.$cargo->nombre);
         header('Location: ?c=cargo&item='.$this->item.' '.$cargo->nombre.'&tarea='.$tarea.'&exito='.$exito);
     }
 }

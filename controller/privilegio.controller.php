@@ -5,7 +5,7 @@ require_once 'model/menu.php';
 require_once 'model/menu_detalle.php';
 require_once 'model/bitacora.php';
 require_once 'view/privilegio/privilegio.view.php';
-require_once 'model/fachada/permiso.php';
+require_once 'model/permiso.php';
 
 class PrivilegioController {
 
@@ -24,8 +24,8 @@ class PrivilegioController {
         $this->menu_detalle = new MenuDetalle();
         $this->vista = new PrivilegioView();
         $this->bitacora = new Bitacora();
-        $fachada = new Permiso();
-        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
+        $permiso = new Permiso();
+        $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {

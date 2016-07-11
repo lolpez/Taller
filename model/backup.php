@@ -10,7 +10,7 @@ class BackUp {
         $configArray = parse_ini_file("appconfig.ini", true);
         $mysql = new stdClass();
         //Datos Mysql
-        $datosMysql = $configArray['conexion_mysql_'.$tipo_conexion['mysql']];
+        $datosMysql = $configArray['conexion_mysql_' . $tipo_conexion['mysql']];
         $mysql->username = $datosMysql['username'];
         $mysql->password = $datosMysql['password'];
         $mysql->host = $datosMysql['host'];
@@ -18,7 +18,7 @@ class BackUp {
         $mysql->database = $datosMysql['database'];
         $this->mysql = $mysql;
         //Datos Mongo
-        $datosMongo = $configArray['conexion_mongo_'.$tipo_conexion['mongo']];
+        $datosMongo = $configArray['conexion_mongo_' . $tipo_conexion['mongo']];
         $mongo = new stdClass();
         $mongo->username = $datosMongo['username'];
         $mongo->password = $datosMongo['password'];
@@ -78,7 +78,7 @@ class BackUp {
             }
             $path_dump = substr($path,0,-4);
             $this->UnZip($path,$path_dump);
-            $this->RestaurarMongo($path_dump.'/'.$this->mongo->database);
+            $this->RestaurarMongo($path_dump . '/' . $this->mongo->database);
             $this->RestaurarMysql($path_dump, substr($archivo,0,-4));
             $this->EliminarResiduo($path_dump);
             return true;
@@ -91,10 +91,10 @@ class BackUp {
         try{
             if ($this->mongo->host == 'localhost' && $this->mysql->host == 'localhost'){
                 //Localhost
-                $path = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/'.$archivo['name'];
+                $path = $_SERVER['DOCUMENT_ROOT'] . '/taller/resources/backup/' . $archivo['name'];
             }else{
                 //RemoteServer
-                $path = $_SERVER['DOCUMENT_ROOT'] . 'resources/backup/'.$archivo['name'];
+                $path = $_SERVER['DOCUMENT_ROOT'] . 'resources/backup/' . $archivo['name'];
             }
             //Verificar que el archivo no existe para subir el archivo en vano
             $ok = false;
@@ -142,10 +142,10 @@ class BackUp {
     public function BackupMysql($path,$archivo){
         if ($this->mysql->host == "localhost") {
             //Localhost
-            $cmd  = 'c: & cd "c:/xampp/mysql/bin/" & mysqldump.exe --user=' . $this->mysql->username . ' --password=' . $this->mysql->password . ' --host=' . $this->mysql->host . ' ' . $this->mysql->database . ' > "' . $path . '/' . $archivo . '.sql"';
+            $cmd  = 'c: & cd "c:/xampp/mysql/bin/" & mysqldump.exe --user=' . $this->mysql->username . ' --password=' . $this->mysql->password . ' --host=' . $this->mysql->host . ' ' . $this->mysql->database . ' --ignore-table=' . $this->mysql->database . '.bitacora  > "' . $path . '/' . $archivo . '.sql"';
         }else{
             //RemoteServer
-            $cmd  = 'mysqldump --opt -h '.$this->mysql->host.' -u ' .$this->mysql->username.' --password='.$this->mysql->password.' '.$this->mysql->database.' > "' . $path . '/' . $archivo . '.sql"';
+            $cmd  = 'mysqldump --opt -h ' . $this->mysql->host.' -u ' . $this->mysql->username . ' --password=' . $this->mysql->password.' ' . $this->mysql->database . ' --ignore-table=' . $this->mysql->database.'.bitacora  > "' . $path . '/' . $archivo . '.sql"';
         }
         shell_exec($cmd);
     }
@@ -156,23 +156,25 @@ class BackUp {
             $cmd = 'mongorestore --drop --db ' . $this->mongo->database . ' "' . $path . '"';
         }else{
             //RemoteServer
-            $cmd = 'mongorestore --drop --db ' . $this->mongo->database . ' --host ' . $this->mongo->host . ' --port ' . $this->mongo->port . ' --username ' . $this->mongo->username . ' --password ' . $this->mongo->password . ' "' . $path .'"';
+            $cmd = 'mongorestore --drop --db ' . $this->mongo->database . ' --host ' . $this->mongo->host . ' --port ' . $this->mongo->port . ' --username ' . $this->mongo->username . ' --password ' . $this->mongo->password . ' "' . $path . '"';
         }
         shell_exec($cmd);
     }
 
     public function RestaurarMysql($path,$archivo){
         if ($this->mysql->host == "localhost") {
+            //Localhost
             $cmd  = 'c: & cd "c:/xampp/mysql/bin/" & mysql.exe --user=' . $this->mysql->username . ' --password=' . $this->mysql->password . ' --host=' . $this->mysql->host . ' ' . $this->mysql->database . ' < "' . $path . '/' . $archivo . '.sql"';
-        }else {
-            $cmd  = 'mysql -h '.$this->mysql->host.' -u ' .$this->mysql->username.' --password='.$this->mysql->password.' '.$this->mysql->database.' < "' . $path . '/' . $archivo . '.sql"';
+        }else{
+            //RemoteServer
+            $cmd  = 'mysql -h ' . $this->mysql->host . ' -u ' . $this->mysql->username . ' --password=' . $this->mysql->password . ' ' . $this->mysql->database . ' < "' . $path . '/' . $archivo . '.sql"';
         }
         shell_exec($cmd);
     }
 
     public function Zip($path,$path_dump,$archivo) {
         $zip = new ZipArchive();
-        $zip->open($path_dump.'/'.$archivo.'.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
+        $zip->open($path_dump . '/' . $archivo . '.zip', ZipArchive::CREATE | ZipArchive::OVERWRITE);
         $files = new RecursiveIteratorIterator(
             new RecursiveDirectoryIterator($path),
             RecursiveIteratorIterator::LEAVES_ONLY
@@ -199,10 +201,10 @@ class BackUp {
     //Esta funcion no es necesario, la descarga se hara por JavaScript
     public function Descargar($archivo){
         try{
-            $file = 'resources/backup/'.$archivo;
+            $file = 'resources/backup/' . $archivo;
             header('Content-Description: File Transfer');
             header('Content-Type: application/octet-stream');
-            header('Content-Disposition: attachment; filename="'.basename($file).'"');
+            header('Content-Disposition: attachment; filename="' . basename($file) . '"');
             header('Expires: 0');
             header('Cache-Control: must-revalidate');
             header('Pragma: public');

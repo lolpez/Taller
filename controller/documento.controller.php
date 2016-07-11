@@ -1,37 +1,57 @@
 <?php
 require_once 'view/documento/documento.view.php';
 require_once 'model/documento.php';
-require_once 'model/fachada/permiso.php';
+require_once 'model/tipo_documento.php';
+require_once 'model/estado_documento.php';
+require_once 'model/archivo_config.php';
+require_once 'model/area.php';
+require_once 'model/permiso.php';
 
 class DocumentoController {
 
     private $model;
     private $vista;
     private $item;
+    private $tipo_documento;
+    private $estado_documento;
+    private $archivo_config;
+    private $area;
     private $permiso;
 
     public function __CONSTRUCT() {
         $this->model = new Documento();
         $this->vista = new DocumentoView();
         $this->item = 'documento';
-        $fachada = new Permiso();
-        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
+        $permiso = new Permiso();
+        $this->tipo_documento = new Tipo_Documento();
+        $this->estado_documento = new Estado_Documento();
+        $this->archivo_config = new Archivo_Config();
+        $this->area = new Area();
+        $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {
-        $colleccion = $this->model->Listar();
+        $coleccion = $this->model->Listar();
         $lista = array();
-        foreach ($colleccion as $c){
+        foreach ($coleccion as $c){
             $objeto = new stdClass();
             $objeto->pkdocumento = $c['_id'];
-            $objeto->nombre = $c['nombre'];
+            $objeto->codigo = $c['codigo'];
+            $objeto->titulo = $c['titulo'];
+            $objeto->version = $c['version'];
+            $objeto->fecha = $c['fecha'];
+            $objeto->hora = $c['hora'];
+            $objeto->tipo_documento = $this->tipo_documento->Obtener($c['fktipo_documento'])->nombre;
+            $objeto->estado_documento = $this->estado_documento->Obtener($c['fkestado_documento']);
             $lista[] = $objeto;
         }
         $this->vista->View($lista,$this->permiso);
     }
 
     public function Nuevo() {
-        $this->vista->Nuevo($this->permiso);
+        $tipo_documento = $this->tipo_documento->Listar();
+        $archivos_permitidos = $this->archivo_config->Listar();
+        $this->vista->Nuevo($tipo_documento,$archivos_permitidos,$this->permiso);
     }
 
     public function Descargar(){
@@ -39,11 +59,29 @@ class DocumentoController {
     }
 
     public function Guardar(){
+        date_default_timezone_set("America/La_Paz");
         $tarea = 'agregar';
         $ext = $this->ObtenerExtencion($_FILES["documento"]["name"]);
+        $area_sigla = $this->area->Obtener($_SESSION['usuario']->fkarea)->sigla;
+        $tipo_documento_sigla = $this->tipo_documento->Obtener($_POST['fktipo_documento'])->sigla;
+        $datos = array(
+            'fktipo_documento' => (int)$_POST['fktipo_documento'],
+            'fkarea' => (int)$_SESSION['usuario']->fkarea
+        );
+        $numero = $this->model->Obtener_Numero($datos);
+        $codigo = $area_sigla.'-'.$tipo_documento_sigla.'-'.$numero;
         $datos = array(
             'documento' => $_FILES['documento']['tmp_name'],
-            'nombre' => $_POST['nombre'].'.'.$ext
+            'nombre_archivo' => $codigo.'.'.$ext,
+            'codigo' => $codigo,
+            'titulo' => $_POST['nombre'],
+            'fecha' => date("d/m/Y"),
+            'hora' => date("h:i:s"),
+            'version' => 1, //Al crearse, su version sera 1
+            'fktipo_documento' => (int)$_POST['fktipo_documento'],
+            'fkarea' => (int)$_SESSION['usuario']->fkarea,
+            'fkusuario' => (int)$_SESSION['usuario']->pkusuario,
+            'fkestado_documento' => 1 //Estado 1 = Elaboracion (cuando el documento fue creado)
         );
         $exito = $this->model->Guardar($datos);
         header('Location: ?c=documento&item='.$this->item.'&tarea='.$tarea.'&exito='.$exito);

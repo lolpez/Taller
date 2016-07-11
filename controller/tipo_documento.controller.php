@@ -2,7 +2,7 @@
 require_once 'view/tipo_documento/tipo_documento.view.php';
 require_once 'model/tipo_documento.php';
 require_once 'model/bitacora.php';
-require_once 'model/fachada/permiso.php';
+require_once 'model/permiso.php';
 
 class Tipo_DocumentoController {
 
@@ -17,8 +17,8 @@ class Tipo_DocumentoController {
         $this->vista = new Tipo_DocumentoView();
         $this->bitacora = new Bitacora();
         $this->item = 'tipo documento';
-        $fachada = new Permiso();
-        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
+        $permiso = new Permiso();
+        $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {
@@ -43,7 +43,7 @@ class Tipo_DocumentoController {
                 'nombre' => $_POST['sigla']
             );
             $exito = $this->model->Editar($datos);
-            $DescripcionBitacora = 'se modifico el tipo documento '.$_POST['nombre'];
+            $DescripcionBitacora = 'se modifico el '.$this->item.' '.$_POST['nombre'];
             $tarea='modificar';
         }else{
             $datos = array(
@@ -51,7 +51,7 @@ class Tipo_DocumentoController {
                 'nombre' => $_POST['sigla']
             );
             $exito = $this->model->Guardar($datos);
-            $DescripcionBitacora = 'se agrego un nuevo tipo documento ' . $_POST['nombre'];
+            $DescripcionBitacora = 'se agrego un nuevo '.$this->item.' ' . $_POST['nombre'];
             $tarea='agregar';
         }
         $this->bitacora->GuardarBitacora($DescripcionBitacora);
@@ -62,8 +62,8 @@ class Tipo_DocumentoController {
         $tarea = 'eliminar';
         $tipo_documento = $this->model->Obtener($_REQUEST['pk']);
         $exito = $this->model->Eliminar($_REQUEST['pk']);
-        $this->bitacora->GuardarBitacora('se dio de baja el tipo documento '.$tipo_documento->nombre);
-        header('Location: ?c=tipo_documento&item='.$this->item.' '.$area->nombre.'&tarea='.$tarea.'&exito='.$exito);
+        $this->bitacora->GuardarBitacora('se dio de baja el '.$this->item.' '.$tipo_documento->nombre);
+        header('Location: ?c=tipo_documento&item='.$this->item.' '.$tipo_documento->nombre.'&tarea='.$tarea.'&exito='.$exito);
     }
 }
 ?>

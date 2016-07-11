@@ -6,6 +6,15 @@
 <form action="?c=usuario&a=guardar" method="post" autocomplete="off" onsubmit="return confSubmit()">
     <input type="hidden" name="pk" value="<?php echo $usuario->pkusuario; ?>">
     <div class="row">
+        <div class="col-md-12">
+            <div class="alert alert-danger alert-dismissable">
+                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
+                <p>En la seccion de Contraseña, al dar click en el icono "<i class="fa fa-eye"></i>", el password de este usuario sera revelado en letras legibles.</p>
+                <p>Por motivos de seguridad, asegurese que SOLO USTED y el USUARIO al que esta modificando sus datos esten viendo esta pantalla.</p>
+            </div>
+        </div>
+    </div>
+    <div class="row">
         <div class="col-md-6">
             <div class="form-group">
                 <label>CI</label>
@@ -19,6 +28,18 @@
                 <label>Telefono</label>
                 <input type="text" name="telefono" class="form-control" placeholder="Ingrese el Telefono" value="<?php echo $usuario->telefono; ?>"required />
             </div>
+            <div class="form-group">
+                <label>Area</label>
+                <select class="form-control" name="area" >
+                    <?php foreach ($areas as $a): ?>
+                        <option
+                            <?php if ($usuario->fkarea == $a->pkarea) { ?>
+                                selected="selected"
+                            <?php } ?>
+                            value="<?php echo $a->pkarea; ?>"><?php echo $a->nombre; ?></option>
+                    <?php endforeach ?>
+                </select>
+            </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
@@ -28,6 +49,13 @@
             <div class="form-group">
                 <label>Nombre de Usuario</label>
                 <input type="text" name="username" class="form-control" placeholder="Ingrese el Nombre de Usuario" value="<?php echo substr($usuario->archivo,0,-5); ?>" required />
+            </div>
+            <div class="form-group">
+                <label>Contraseña</label>
+                <div class="form-group input-group">
+                    <input type="password" name="pass" id="pass" class="form-control" value="<?php echo $pass; ?>"/>
+                    <a class="input-group-addon" href="#" onclick="VerPass()"><i class="fa fa-eye"></i></a>
+                </div>
             </div>
             <div class="form-group">
                 <label>Cargo</label>
@@ -40,24 +68,6 @@
                             value="<?php echo $c->pkcargo; ?>"><?php echo $c->nombre; ?></option>
                     <?php endforeach ?>
                 </select>
-            </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-6">
-            <div class="form-group">
-                <label>Contraseña</label>
-                <div class="form-group input-group">
-                    <input type="password" name="pass" id="pass" class="form-control" value="<?php echo $pass; ?>"/>
-                    <a class="input-group-addon" href="#" onclick="VerPass()"><i class="fa fa-eye"></i></a>
-                </div>
-            </div>
-        </div>
-        <div class="col-md-6">
-            <div class="alert alert-danger alert-dismissable">
-                <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                <p>En la seccion de Contraseña, al dar click en el icono "<i class="fa fa-eye"></i>", el password de este usuario sera revelado en letras legibles.</p>
-                <p>Por motivos de seguridad, asegurese que SOLO USTED y el USUARIO al que esta modificando sus datos esten viendo esta pantalla.</p>
             </div>
         </div>
     </div>

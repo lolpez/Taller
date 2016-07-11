@@ -22,7 +22,7 @@
             <div class="form-group">
                 <label>Extencion e icono(opcional)</label>
                 <div class="form-group input-group">
-                    <input type="text" name="extencion" placeholder="Ingrese la extencion ejemplo .pdf .docx" class="form-control" required >
+                    <input type="text" name="extencion" placeholder="Ingrese la extencion ejemplo pdf docx" class="form-control" required >
                     <a href="#" class="dropdown-toggle btn btn-default input-group-addon" data-toggle="dropdown"><i class="fa fa-file-o fa-fw" id="iconodibujo"></i><span class="caret"></span></a>
                     <div class="dropdown-menu" style="max-width: 180px;">
                         <a class="icono" href="#" onclick="CambiarIcono(this)"><i class ="fa fa-file-o fa-fw"></i></a>

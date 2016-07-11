@@ -15,42 +15,40 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>CI</label>
-                <input type="text" name="ci" class="form-control" value="<?php echo $user->ci ?>" required >
+                <input type="text" name="ci" class="form-control" value="<?php echo $user->ci ?>" readonly>
             </div>
             <div class="form-group">
                 <label>Nombre</label>
-                <input type="text" name="nombre" class="form-control" value="<?php echo $user->nombre ?>" />
+                <input type="text" name="nombre" class="form-control" value="<?php echo $user->nombre ?>" required/>
             </div>
             <div class="form-group">
                 <label>Telefono</label>
-                <input type="text" name="telefono" class="form-control" value="<?php echo $user->telefono ?>" />
+                <input type="text" name="telefono" class="form-control" value="<?php echo $user->telefono ?>" required/>
+            </div>
+            <div class="form-group">
+                <label>Area</label>
+                <input type="text" name="noname1" class="form-control" value="<?php echo $user->area; ?>" readonly />
             </div>
         </div>
         <div class="col-md-6">
             <div class="form-group">
                 <label>Correo</label>
-                <input type="email" name="correo" class="form-control" value="<?php echo $user->email ?>" />
+                <input type="email" name="correo" class="form-control" value="<?php echo $user->email ?>" required/>
             </div>
             <div class="form-group">
                 <label>Nombre de Usuario</label>
-                <input type="text" name="username" class="form-control" value="<?php echo substr($user->archivo,0,-5) ?>" />
+                <input type="text" name="username" class="form-control" value="<?php echo substr($user->archivo,0,-5) ?>" required/>
             </div>
             <div class="form-group">
                 <label>Contraseña</label>
                 <div class="form-group input-group">
-                    <input type="password" name="pass" id="pass" class="form-control" value="<?php echo $pass; ?>"/>
+                    <input type="password" name="pass" id="pass" class="form-control" value="<?php echo $pass; ?>" required/>
                     <a class="input-group-addon" href="#" onclick="VerPass()"><i class="fa fa-eye"></i></a>
                 </div>
             </div>
-        </div>
-    </div>
-    <div class="row">
-        <div class="col-md-4">
-        </div>
-        <div class="col-md-4">
             <div class="form-group">
                 <label>Cargo</label>
-                <input type="text" name="noname" class="form-control" value="<?php echo $user->cargo; ?>" readonly />
+                <input type="text" name="noname2" class="form-control" value="<?php echo $user->cargo; ?>" readonly />
             </div>
         </div>
     </div>

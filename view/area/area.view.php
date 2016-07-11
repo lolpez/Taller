@@ -20,6 +20,12 @@ class AreaView{
         require_once 'view/footer.php';
     }
 
+    public function Flujo($area,$area_flujo,$menu){
+        require_once 'view/header.php';
+        require_once 'view/area/area-flujo.php';
+        require_once 'view/footer.php';
+    }
+
 
 }
 

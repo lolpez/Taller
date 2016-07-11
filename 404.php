@@ -50,12 +50,15 @@
                     echo 'error al conectarse a la base de datos MySql.';
                     echo '<br>';
                     echo $_REQUEST['exc'];
-				break;
+				    break;
 				case 5:
                     echo 'error al conectarse a la base de datos MongoDB.';
 					echo '<br>';
 					echo $_REQUEST['exc'];
-				break;
+				    break;
+                case 6:
+                    echo 'el archivo no esta permitido por el administrador de sistema o esta corrupto.';
+                    break;
             }
             ?>
         </h6>

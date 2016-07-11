@@ -16,7 +16,7 @@ class Permiso
         $this->privilegio = new Privilegio();
     }
 
-    public function Obtener_Permiso($fkcargo){
+    public function Obtener($fkcargo){
         $listaP = $this->privilegio->Obtener($fkcargo);
         $listaMenuDetalle = array();
         foreach ($listaP as $p):

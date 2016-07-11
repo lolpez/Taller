@@ -8,13 +8,13 @@ class UsuarioView{
         require_once 'view/footer.php';
     }
     
-    public function Nuevo($cargos,$menu){
+    public function Nuevo($cargos,$areas,$menu){
         require_once 'view/header.php';
         require_once 'view/usuario/usuario-new.php';
         require_once 'view/footer.php';
     }
     
-     public function Editar($usuario,$cargos,$pass,$menu){
+     public function Editar($usuario,$areas,$cargos,$pass,$menu){
         require_once 'view/header.php';
         require_once 'view/usuario/usuario-editar.php';
         require_once 'view/footer.php';

@@ -2,7 +2,7 @@
 require_once 'model/calendario.php';
 require_once 'model/bitacora.php';
 require_once 'view/calendario/calendario.view.php';
-require_once 'model/fachada/permiso.php';
+require_once 'model/permiso.php';
 
 class CalendarioController {
 
@@ -15,8 +15,8 @@ class CalendarioController {
         $this->model = new Calendario();
         $this->vista = new CalendarioView();
         $this->bitacora = new Bitacora();
-        $fachada = new Permiso();
-        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
+        $permiso = new Permiso();
+        $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {

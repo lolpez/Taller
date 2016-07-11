@@ -23,7 +23,7 @@
                 <label>Area padre</label>
                 <select class="form-control" name="fkarea_padre" style="color: #000000">
                     <?php foreach ($listaA as $r): ?>
-                        <option value="<?php print $r->pkarea; ?>"><?php print $r->nombre; ?> </option>
+                        <option value="<?php echo $r->pkarea; ?>"><?php echo $r->nombre; ?> </option>
                     <?php endforeach ?>
                 </select>
             </div>

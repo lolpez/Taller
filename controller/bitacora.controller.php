@@ -1,7 +1,7 @@
 <?php
 require_once 'model/bitacora.php';
 require_once 'view/bitacora/bitacora.view.php';
-require_once 'model/fachada/permiso.php';
+require_once 'model/permiso.php';
 
 class BitacoraController {
 
@@ -12,8 +12,8 @@ class BitacoraController {
     public function __CONSTRUCT() {
         $this->model = new Bitacora();
         $this->vista = new BitacoraView();
-        $fachada = new Permiso();
-        $this->permiso = $fachada->Obtener_Permiso($_SESSION['usuario']->fkcargo);
+        $permiso = new Permiso();
+        $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
 
     public function Index() {

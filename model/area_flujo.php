@@ -2,7 +2,7 @@
 
 require_once 'singleton/mysql.php';
 
-class Tipo_Documento {
+class Area_Flujo {
 
     private $pdo;
 
@@ -16,8 +16,7 @@ class Tipo_Documento {
 
     public function Listar() {
         try {
-            //Excluir el tipo de documento 0 porque es el tipo plantilla
-            $sql = $this->pdo->prepare("SELECT * FROM tipo_documento t WHERE t.estado=1 AND NOT t.pktipo_documento = 0");
+            $sql = $this->pdo->prepare("SELECT a.pkarea_flujo, a.nombre, a.sigla, b.nombre as padre FROM area_flujo a, area_flujo b WHERE a.fkarea_flujo_padre = b.pkarea_flujo AND a.estado=1");
             $sql->execute();
             return $sql->fetchAll(PDO::FETCH_OBJ);
         } catch (Exception $e) {
@@ -27,9 +26,8 @@ class Tipo_Documento {
 
     public function Obtener($pk) {
         try {
-            $sql = $this->pdo->prepare("SELECT * FROM tipo_documento a WHERE a.pktipo_documento= ? ");
+            $sql = $this->pdo->prepare("SELECT * FROM area_flujo a WHERE a.fkarea= ?");
             $sql->execute(array($pk));
-
             return $sql->fetch(PDO::FETCH_OBJ);
         } catch (Exception $e) {
             die($e->getMessage());
@@ -38,11 +36,11 @@ class Tipo_Documento {
 
     public function Guardar($datos) {
         try {
-            $sql = "INSERT INTO tipo_documento (sigla,nombre) VALUES (?,?)";
+            $sql = "INSERT INTO area_flujo (flujo,fkarea) VALUES (?,?)";
             $this->pdo->prepare($sql)->execute(
                 array(
-                    $datos['sigla'],
-                    $datos['nombre']
+                    $datos['flujo'],
+                    $datos['fkarea']
                 )
             );
             return true;
@@ -53,11 +51,12 @@ class Tipo_Documento {
 
     public function Editar($datos) {
         try {
-            $sql = "UPDATE tipo_documento SET sigla=?, nombre=? WHERE pktipo_documento=? ";
+            $sql = "UPDATE area_flujo SET nombre=?, sigla=?, fkarea_flujo_padre=? WHERE pkarea_flujo=? ";
             $this->pdo->prepare($sql)->execute(
                 array(
-                    $datos['sigla'],
                     $datos['nombre'],
+                    $datos['sigla'],
+                    $datos['fkarea_flujo_padre'],
                     $datos['pk']
                 )
             );
@@ -69,7 +68,7 @@ class Tipo_Documento {
 
     public function Eliminar($pk) {
         try {
-            $sql = $this->pdo->prepare("UPDATE tipo_documento SET estado=0 WHERE pktipo_documento = ?");
+            $sql = $this->pdo->prepare("UPDATE area_flujo SET estado=0 WHERE pkarea_flujo = ?");
             $sql->execute(array($pk));
             return true;
         } catch (Exception $e) {
