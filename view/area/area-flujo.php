@@ -176,7 +176,7 @@
                         <form action="?c=area&a=guardar_flujo" method="post" autocomplete="off" onsubmit="return Guardar_Grafo()">
                             <input type="hidden" name="pk" value="<?php echo $area_flujo->pkarea_flujo; ?>">
                             <input type="hidden" name="area_nombre" value="<?php echo $area->nombre; ?>">
-                            <textarea id="mySavedModel" style="width:100%;height:300px" class="" name="flujo">
+                            <textarea id="mySavedModel" style="width:100%;height:300px" class="hidden" name="flujo">
                                 <?php echo $area_flujo->flujo ?>
                             </textarea>
                             <br>
