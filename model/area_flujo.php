@@ -24,7 +24,7 @@ class Area_Flujo {
         }
     }
 
-    public function Obtener($pk) {
+    public function Obtener_Por_Area($pk) {
         try {
             $sql = $this->pdo->prepare("SELECT * FROM area_flujo a WHERE a.fkarea= ?");
             $sql->execute(array($pk));
@@ -51,12 +51,10 @@ class Area_Flujo {
 
     public function Editar($datos) {
         try {
-            $sql = "UPDATE area_flujo SET nombre=?, sigla=?, fkarea_flujo_padre=? WHERE pkarea_flujo=? ";
+            $sql = "UPDATE area_flujo SET flujo=? WHERE pkarea_flujo=? ";
             $this->pdo->prepare($sql)->execute(
                 array(
-                    $datos['nombre'],
-                    $datos['sigla'],
-                    $datos['fkarea_flujo_padre'],
+                    $datos['flujo'],
                     $datos['pk']
                 )
             );

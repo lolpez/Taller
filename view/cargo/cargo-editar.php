@@ -1,6 +1,6 @@
 <h1 class="page-header">Editar Cargo</h1>
 <ol class="breadcrumb" style="background-color: white;">
-    <li><a href="?c=area" style="color:#0016b0;">Cargo</a></li>
+    <li><a href="?c=cargo" style="color:#0016b0;">Cargo</a></li>
     <li class="active">Editar Cargo</li>
 </ol>
 

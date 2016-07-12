@@ -54,6 +54,16 @@ class Usuario {
         }
     }
 
+    public function Obtener_Por_Cargo_Y_Area($pkcargo,$pkarea) {
+        try {
+            $sql = $this->pdo->prepare("SELECT u.pkusuario FROM usuario u, cargo c, area a WHERE u.fkcargo=c.pkcargo AND u.fkarea=a.pkarea AND c.pkcargo=? AND a.pkarea=?");
+            $sql->execute(array($pkcargo,$pkarea));
+            return $sql->fetch(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
     public function Obtener_Por_Correo($email) {
         try {
             $sql = $this->pdo->prepare("SELECT * FROM usuario u WHERE u.email=?");

@@ -28,7 +28,16 @@ class Estado_Documento {
         try {
             $sql = $this->pdo->prepare("SELECT * FROM estado_documento e WHERE e.pkestado_documento= ? ");
             $sql->execute(array($pk));
+            return $sql->fetch(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
 
+    public function Obtener_Por_Nomenglatura($nomenglatura) {
+        try {
+            $sql = $this->pdo->prepare("SELECT * FROM estado_documento e WHERE e.nomenglatura= ? ");
+            $sql->execute(array($nomenglatura));
             return $sql->fetch(PDO::FETCH_OBJ);
         } catch (Exception $e) {
             die($e->getMessage());

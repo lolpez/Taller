@@ -28,7 +28,6 @@ class Area {
         try {
             $sql = $this->pdo->prepare("SELECT * FROM area a WHERE a.pkarea= ? ");
             $sql->execute(array($pk));
-
             return $sql->fetch(PDO::FETCH_OBJ);
         } catch (Exception $e) {
             die($e->getMessage());

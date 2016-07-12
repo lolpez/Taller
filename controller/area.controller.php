@@ -1,6 +1,8 @@
 <?php
 require_once 'view/area/area.view.php';
 require_once 'model/area.php';
+require_once 'model/cargo.php';
+require_once 'model/estado_documento.php';
 require_once 'model/area_flujo.php';
 require_once 'model/bitacora.php';
 require_once 'model/permiso.php';
@@ -11,6 +13,8 @@ class AreaController {
     private $vista;
     private $item;
     private $area_flujo;
+    private $estado_documento;
+    private $cargo;
     private $bitacora;
     private $permiso;
 
@@ -19,7 +23,9 @@ class AreaController {
         $this->vista = new AreaView();
         $this->bitacora = new Bitacora();
         $this->item = 'area';
+        $this->estado_documento = new Estado_Documento();
         $this->area_flujo = new Area_Flujo();
+        $this->cargo = new Cargo();
         $permiso = new Permiso();
         $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
@@ -42,8 +48,10 @@ class AreaController {
 
     public function Flujo() {
         $area = $this->model->Obtener($_REQUEST['pkarea']);
-        $area_flujo = $this->area_flujo->Obtener($_REQUEST['pkarea']);
-        $this->vista->Flujo($area,$area_flujo,$this->permiso);
+        $area_flujo = $this->area_flujo->Obtener_Por_Area($_REQUEST['pkarea']);
+        $estado_documentos = $this->estado_documento->Listar();
+        $flujo_default = $this->Obtener_Flujo_JSON();
+        $this->vista->Flujo($area,$area_flujo,$estado_documentos,$flujo_default,$this->permiso);
     }
 
     public function Guardar() {
@@ -79,6 +87,24 @@ class AreaController {
         header('Location: ?c=area&item='.$this->item.' '.$_POST['nombre'].'&tarea='.$tarea.'&exito='.$exito);
     }
 
+    public function Guardar_Flujo() {
+        $flujo = json_decode($_POST['flujo'],true);
+        for ($i=0; $i<count($flujo['linkDataArray']);$i++){
+            $estado_documento = $this->estado_documento->Obtener_Por_Nomenglatura($flujo['linkDataArray'][$i]['text']);
+            $flujo['linkDataArray'][$i]['pkestado_documento'] = $estado_documento->pkestado_documento;
+            $flujo['linkDataArray'][$i]['nombre_estado_documento'] = $estado_documento->nombre;
+        }
+        $datos = array(
+            'pk' => $_POST['pk'],
+            'flujo' => json_encode($flujo)
+        );
+        $exito = $this->area_flujo->Editar($datos);
+        $DescripcionBitacora = 'se modifico el flujo de documentos del area '.$_POST['area_nombre'];
+        $tarea='modificar';
+        $this->bitacora->GuardarBitacora($DescripcionBitacora);
+        header('Location: ?c=area&item=flujo&tarea='.$tarea.'&exito='.$exito);
+    }
+
     public function Eliminar() {
         $tarea = 'eliminar';
         $area = $this->model->Obtener($_REQUEST['pk']);
@@ -88,22 +114,19 @@ class AreaController {
     }
 
     public function Obtener_Flujo_JSON(){
-        return '{
-                    "class": "go.GraphLinksModel",
-                    "nodeKeyProperty": "id",
-                    "linkKeyProperty": "id",
-                    "nodeDataArray": [
-                        {"id":1, "loc":"-647.204174859376 205.3818282812499", "text":"Responsable de area"},
-                        {"id":2, "loc":"-418.21268702262677 329.79056922703256", "text":"Supervisor de area"},
-                        {"id":3, "loc":"-256.7424588096812 186.78730085621473", "text":"Director de area"},
-                        {"id":4, "loc":"-64.51079628125011 331.8114768750002", "text":"Emisor"}
-                    ],
-                    "linkDataArray": [
-                        {"from":1, "to":2, "id":-1, "points":[-510.595074496538,243.74476761327517,-472.9807123096858,257.6992671524351,-421.0781764544813,286.58879993048686,-365.16094065241816,329.9825695190597], "text":"elaborado"},
-                        {"from":2, "to":3, "id":-2, "points":[-328.3174298858477,329.8696212197939,-299.9494522192109,284.9416164153528,-263.9692658297334,250.17809245385814,-221.3185911588322,225.23424619363476], "text":"revisado"},
-                        {"from":3, "to":4, "id":-3, "points":[-157.4985853559002,225.2367813921834,-118.15886045644787,248.76918771694824,-78.18385910768801,284.63340244707365,-42.64701145567301,331.91396443844326], "text":"aprobado"}
-                    ]
-                }';
+        //Cargar los datos para el grafo por defecto
+        $arrayCargos = '{';
+        $arrayCargos .= '"class": "go.GraphLinksModel","nodeKeyProperty": "id","linkKeyProperty": "id",';
+        $arrayCargos .= '"nodeDataArray": [';
+        $x = 0;
+        $y = 100;
+        foreach ($this->cargo->Listar() as $c){
+            $arrayCargos .= '{"id":'.$c->pkcargo.', "loc":"'.$x.' '.$y.'", "text":"'.$c->nombre.'"},';
+            $x = $x + 200;
+        }
+        $arrayCargos = substr($arrayCargos,0,-1); //Eliminar la ultima coma
+        $arrayCargos .= ']}';
+        return $arrayCargos;
     }
 }
 ?>

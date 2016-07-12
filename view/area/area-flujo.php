@@ -1,23 +1,7 @@
 <script src="resources/bower_components/gojs/go.js"></script>
     <script id="code">
+
         function init() {
-
-            var customEditor = document.createElement("select");
-            var op;
-            var list = ["Alpha", "Beta", "Gamma", "Theta"];
-            var l = list.length;
-            for (var i = 0; i < l; i++) {
-                op = document.createElement("option");
-                op.text = list[i];
-                op.value = list[i];
-                customEditor.add(op, null);
-            }
-
-
-
-
-
-
             var $ = go.GraphObject.make;  // for conciseness in defining templates
             myDiagram =
                 $(go.Diagram, "myDiagramDiv",  // must name or refer to the DIV HTML element
@@ -27,7 +11,7 @@
                         // Inicializar eventos del mouse para zoom
                         "toolManager.mouseWheelBehavior": go.ToolManager.WheelZoom,
                         // Habilitar doble click para crear nuevos nodos
-                        "clickCreatingTool.archetypeNodeData": { text: "new node" },
+                        //"clickCreatingTool.archetypeNodeData": { text: "new node" },
                         // Habilitar deshacer, rehacer
                         "undoManager.isEnabled": true
                     });
@@ -121,7 +105,7 @@
                                     { 0: "rgb(240, 240, 240)", 0.3: "rgb(240, 240, 240)", 1: "rgba(240, 240, 240, 0)" }),
                                 stroke: null
                             }),
-                        $(go.TextBlock, "escriba el nombre del estado de documento",  // the label text
+                        $(go.TextBlock, "escriba la nomengaltura exacta del estado de documento",  // the label text
                             {
                                 textAlign: "center",
                                 font: "9pt helvetica, arial, sans-serif",
@@ -146,23 +130,78 @@
     </script>
 
 <body onload="init()">
-<div id="sample">
     <h1 class="page-header">Flujo de documentos Area <?php echo $area->nombre ?></h1>
     <ol class="breadcrumb" style="background-color: white;">
         <li><a href="?c=area" style="color:#0016b0;">Area</a></li>
         <li class="active">Flujo de documentos Area <?php echo $area->nombre ?></li>
     </ol>
-    <div id="myDiagramDiv" style="border: solid 1px black; width: 100%; height: 400px"></div>
-
-    <div>
-        <div>
-            <button id="SaveButton" onclick="save()">Save</button>
-            <button onclick="load()">Load</button>
-            Diagram Model saved in JSON format:
+    <div class="row">
+        <div class="col-lg-12">
+            <div class="panel panel-default">
+                <div class="panel-heading">
+                    <a href="#" onclick="Reiniciar()" class="btn btn-outline btn-success" data-toggle="tooltip" data-placement="top" title="Reiniciar Flujo"><i class="fa fa-refresh"></i> Reiniciar flujo</a>
+                </div>
+                <div class="panel-body">
+                    <div class="row">
+                        <div class="col-md-8">
+                            <div id="myDiagramDiv" style="border: solid 1px black; width: 100%; height: 400px"></div>
+                        </div>
+                        <div class="col-md-4">
+                            Estados de documentos
+                            <div class="dataTable_wrapper" style="overflow-y: scroll; height: 380px">
+                                <table class="table table-striped">
+                                    <thead>
+                                    <tr>
+                                        <th>Nombre</th>
+                                        <th>Nomenglatura</th>
+                                        <th>Descripcion</th>
+                                        <th>Color</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <?php foreach ($estado_documentos as $r): ?>
+                                        <tr>
+                                            <td><?php echo $r->nombre ?></td>
+                                            <td><?php echo $r->nomenglatura ?></td>
+                                            <td><?php echo $r->descripcion ?></td>
+                                            <td><span class="badge" style="background-color: <?php echo $r->color; ?>"><?php echo $r->color; ?></span></td>
+                                        </tr>
+                                    <?php endforeach ?>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="row">
+                        <form action="?c=area&a=guardar_flujo" method="post" autocomplete="off" onsubmit="return Guardar_Grafo()">
+                            <input type="hidden" name="pk" value="<?php echo $area_flujo->pkarea_flujo; ?>">
+                            <input type="hidden" name="area_nombre" value="<?php echo $area->nombre; ?>">
+                            <textarea id="mySavedModel" style="width:100%;height:300px" class="" name="flujo">
+                                <?php echo $area_flujo->flujo ?>
+                            </textarea>
+                            <br>
+                            <div class="text-center">
+                                <button type="submit" class="btn btn-success btn-lg" id="guardar"><i class="fa fa-floppy-o"></i> Guardar</button>
+                            </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
         </div>
-        <textarea id="mySavedModel" style="width:100%;height:300px" class="hidden">
-            <?php echo $area_flujo->flujo ?>
-        </textarea>
     </div>
-</div>
 </body>
+
+<script>
+    function Guardar_Grafo(){
+        $('#guardar').html("<i class='fa fa-spinner fa-spin'></i> Guardando por favor espere");
+        $('#guardar').attr("disabled","disabled");
+        save();
+        return true;
+    }
+
+    function Reiniciar(){
+        var inicio = '<?php echo $flujo_default; ?>';
+        $("#mySavedModel").html(inicio);
+        load();
+    }
+</script>
