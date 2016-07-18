@@ -3,6 +3,7 @@ class ConexionMongo{
 
     private static $instance = null;
     private static $mongo;
+    private static $metodo;
 
     final private function __construct() {
         try {
@@ -12,8 +13,9 @@ class ConexionMongo{
         }
     }
 
-    public static function getInstance() {
+    public static function getInstance($metodo = false) {   //Si el metodo es Post para operaciones Ajax o no
         if (self::$instance === null) {
+            self::$metodo = $metodo;
             self::$instance = new self();
         }
         return self::$instance;
@@ -21,8 +23,13 @@ class ConexionMongo{
 
     public function obtenerConexion() {
         if (self::$mongo == null) {
-            $tipo_conexion = parse_ini_file("appconfig.ini", true)['tipo_conexion'];
-            $configArray = parse_ini_file("appconfig.ini", true)['conexion_mongo_'.$tipo_conexion['mongo']];
+            if (self::$metodo){ //Si el metodo es true entonces es Post
+                $tipo_conexion = parse_ini_file("../appconfig.ini", true)['tipo_conexion'];
+                $configArray = parse_ini_file("../appconfig.ini", true)['conexion_mongo_'.$tipo_conexion['mongo']];
+            }else{
+                $tipo_conexion = parse_ini_file("appconfig.ini", true)['tipo_conexion'];
+                $configArray = parse_ini_file("appconfig.ini", true)['conexion_mongo_'.$tipo_conexion['mongo']];
+            }
             $username = $configArray['username'];
             $pass = $configArray['password'];
             $host = $configArray['host'];
@@ -38,6 +45,7 @@ class ConexionMongo{
         }
         return self::$mongo;
     }
+
 
     final protected function __clone() {
 

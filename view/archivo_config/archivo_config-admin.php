@@ -21,7 +21,7 @@
                             <tr>
                                 <td><?php echo $r->nombre; ?></td>
                                 <td style="text-align: center; font-size: 30px"><i class="<?php echo $r->icono; ?>"></i></td>
-                                <td><?php echo $r->extencion; ?></td>
+                                <td><?php echo $r->extension; ?></td>
                                 <td style="text-align: center">
                                     <a href="?c=archivo_config&a=editar&pkarchivo_config=<?php echo $r->pkarchivo_config; ?>" class="btn btn-outline btn-info btn-circle editar"><i class="fa fa-pencil"></i></a>
                                     <a href="#" onclick="Eliminar('<?php echo $r->pkarchivo_config; ?>','<?php echo $r->nombre;?>','archivo_config')" class="btn btn-outline btn-danger btn-circle eliminar"><i class="fa fa-trash"></i></a>

@@ -40,7 +40,7 @@
                             stroke: null,
                             portId: "",  // this Shape is the Node's port, not the whole Node
                             fromLinkable: true,
-                            fromLinkableSelfNode: false,	//Permitir que no sea linkeable a si mismo
+                            fromLinkableSelfNode: true,	//Permitir que no sea linkeable a si mismo
                             fromLinkableDuplicates: false,	//Permitir que pueda haber un link dos veces a la misma direccion
                             toLinkable: true,
                             toLinkableSelfNode: true,

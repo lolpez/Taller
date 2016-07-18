@@ -7,9 +7,9 @@ class Documento {
     private $mongo;
     private $mongo_tabla = 'fs.files';
 
-    public function __CONSTRUCT() {
+    public function __CONSTRUCT($metodo = false) {
         try {
-            $this->mongo = ConexionMongo::getInstance()->obtenerConexion();
+            $this->mongo = ConexionMongo::getInstance($metodo)->obtenerConexion();
         } catch (MongoException $e) {
             die($e->getMessage());
         }
@@ -19,6 +19,26 @@ class Documento {
         try {
             $consulta = array('fktipo_documento' => array('$ne' => 0));    //Buscar todos los documento con tipo de de documento diferente a 0 (0=tipo plantilla)
             $mongo = $this->mongo->selectCollection($this->mongo_tabla)->find($consulta);
+            return $mongo;
+        } catch (MongoException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function Obtener($pkdocumento,$fkarea){
+        try {
+            $consulta = array('_id' => new MongoId($pkdocumento),"fkarea" => $fkarea);
+            $mongo = $this->mongo->selectCollection($this->mongo_tabla)->findOne($consulta);
+            return $mongo;
+        } catch (MongoException $e) {
+            die($e->getMessage());
+        }
+    }
+
+    public function Obtener_Simple($pkdocumento){
+        try {
+            $consulta = array('_id' => new MongoId($pkdocumento));
+            $mongo = $this->mongo->selectCollection($this->mongo_tabla)->findOne($consulta);
             return $mongo;
         } catch (MongoException $e) {
             die($e->getMessage());
@@ -52,22 +72,22 @@ class Documento {
     public function Guardar($datos){
         try {
             $mongo = $this->mongo->getGridFS();
+            $id_doc = new MongoId();
             $mongo->storeFile(
                 $datos['documento'],
                 array(
+                    '_id' => $id_doc,
                     'nombre_archivo' => $datos['nombre_archivo'],
                     'codigo' => $datos['codigo'],
                     'titulo' => $datos['titulo'],
                     'fecha' => $datos['fecha'],
                     'hora' => $datos['hora'],
                     'version' => $datos['version'],
-                    'fkusuario' => $datos['fkusuario'],
                     'fkarea' => $datos['fkarea'],
-                    'fktipo_documento' => $datos['fktipo_documento'],
-                    'fkestado_documento' => $datos['fkestado_documento']
+                    'fktipo_documento' => $datos['fktipo_documento']
                 )
             );
-            return true;
+            return array('pkdocumento' => $id_doc->{'$id'} , 'exito' => true);
         } catch (MongoException $e) {
             return false;
         }
@@ -100,6 +120,14 @@ class Documento {
               die($e->getMessage());
         }
     }
-}
 
+    public function Verificar_Duplicados($archivo){
+        try {
+            $mongo = $this->mongo->selectCollection($this->mongo_tabla)->find(array('fktipo_documento' => array('$ne' => 0),"length" => $archivo));
+            return $mongo;
+        } catch (MongoException $e) {
+            die($e->getMessage());
+        }
+    }
+}
 ?>

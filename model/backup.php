@@ -1,5 +1,4 @@
 <?php
-
 class BackUp {
 
     private $mysql;

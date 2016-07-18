@@ -24,7 +24,7 @@
                                 <td><?php echo $r->padre; ?></td>
                                 <td style="text-align: center">
                                     <a href="?c=area&a=editar&pkarea=<?php echo $r->pkarea; ?>" class="btn btn-outline btn-info btn-circle editar"><i class="fa fa-pencil"></i></a>
-                                    <a href="?c=area&a=flujo&pkarea=<?php echo $r->pkarea; ?>" class="btn btn-outline btn-success btn-circle"  data-toggle="tooltip" data-placement="top" title="Flujo de documentos"><i class="fa fa-road"></i></a>
+                                    <a href="?c=area&a=flujo&pkarea=<?php echo $r->pkarea; ?>" class="btn btn-outline btn-success btn-circle"  data-toggle="tooltip" data-placement="top" title="Flujo de documentos"><i class="fa fa-chain"></i></a>
                                     <a href="#" onclick="Eliminar('<?php echo $r->pkarea; ?>','<?php echo $r->nombre;?>','area')" class="btn btn-outline btn-danger btn-circle eliminar"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>

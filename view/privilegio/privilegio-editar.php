@@ -6,7 +6,9 @@
 <h1 class="page-header"><i class="fa fa-ban fa-fw fa-2x"></i> Editar permisos para el cargo <?php echo $cargo->nombre ?></h1>
 <div class="alert alert-danger alert-dismissable">
     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-    <p>Esta seccion debe ser solamente manipulada por el administrador de sistema. Los cambios a realizar deben ser cuidadosamente revisadas ya que pueden traer consecuencias no deseadas.</p><p>Al marcar "SI", se le estara otrogando permiso al cargo <?php echo $cargo->nombre ?> para poder realizar dicha accion.</p></div>
+    <p>Esta seccion debe ser solamente manipulada por el administrador de sistema. Los cambios a realizar deben ser cuidadosamente revisadas ya que pueden traer consecuencias no deseadas.</p>
+    <p>Al marcar "SI", se le estara otrogando permiso al cargo <?php echo $cargo->nombre ?> para poder realizar dicha accion.</p>
+</div>
 <form action="?c=privilegio&a=guardar" method="post" autocomplete="off" onsubmit="return confSubmit()">
     <input type="hidden" name="pk" value="<?php echo $cargo->pkcargo; ?>">
     <div class="row">

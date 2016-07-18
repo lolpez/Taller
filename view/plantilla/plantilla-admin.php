@@ -10,19 +10,25 @@
                     <table class="table table-striped table-bordered table-hover" id="dataTables-example">
                         <thead>
                         <tr>
-                            <th>Sigla</th>
-                            <th>Nombre</th>
+                            <th>Codigo</th>
+                            <th>Titulo</th>
+                            <th>Version</th>
+                            <th>Fecha</th>
+                            <th>Hora</th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php foreach ($lista as $r): ?>
                             <tr>
-                                <td><?php echo $r->sigla ?></td>
-                                <td><?php echo $r->nombre ?></td>
+                                <td><?php echo $r->codigo ?></td>
+                                <td><?php echo $r->titulo ?></td>
+                                <td><?php echo $r->version ?></td>
+                                <td><?php echo $r->fecha ?></td>
+                                <td><?php echo $r->hora ?></td>
                                 <td style="text-align: center">
                                     <a href="?c=plantilla&a=descargar&pkplantilla=<?php echo $r->pkplantilla; ?>" class="btn btn-outline btn-info btn-circle"  data-toggle="tooltip" data-placement="top" title="Descargar Plantilla"><i class="fa fa-download"></i></a>
-                                    <a href="#" onclick="Eliminar('<?php echo $r->pkplantilla; ?>','<?php echo $r->nombre;?>','plantilla')" class="btn btn-outline btn-danger btn-circle eliminar"><i class="fa fa-trash"></i></a>
+                                    <a href="#" onclick="Eliminar('<?php echo $r->pkplantilla; ?>','<?php echo $r->titulo;?>','plantilla')" class="btn btn-outline btn-danger btn-circle eliminar"><i class="fa fa-trash"></i></a>
                                 </td>
                             </tr>
                         <?php endforeach ?>

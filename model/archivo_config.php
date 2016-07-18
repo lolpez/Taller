@@ -29,12 +29,12 @@ class Archivo_Config {
     }
     public function Guardar($datos) {
         try {
-            $sql = "INSERT INTO archivo_config (nombre,icono,extencion) VALUES (?,?,?)";
+            $sql = "INSERT INTO archivo_config (nombre,icono,extension) VALUES (?,?,?)";
             $this->pdo->prepare($sql)->execute(
                 array(
                     $datos['nombre'],
                     $datos['icono'],
-                    $datos['extencion']
+                    $datos['extension']
                 )
             );
             return true;
@@ -44,12 +44,12 @@ class Archivo_Config {
     }
     public function Editar($datos) {
         try {
-            $sql = "UPDATE archivo_config SET nombre=?, icono=?, extencion=? WHERE pkarchivo_config=? ";
+            $sql = "UPDATE archivo_config SET nombre=?, icono=?, extension=? WHERE pkarchivo_config=? ";
             $this->pdo->prepare($sql)->execute(
                 array(
                     $datos['nombre'],
                     $datos['icono'],
-                    $datos['extencion'],
+                    $datos['extension'],
                     $datos['pk']
                 )
             );

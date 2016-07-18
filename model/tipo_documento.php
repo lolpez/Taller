@@ -6,9 +6,9 @@ class Tipo_Documento {
 
     private $pdo;
 
-    public function __CONSTRUCT() {
+    public function __CONSTRUCT($metodo = false) {
         try {
-            $this->pdo = ConexionMysql::getInstance()->obtenerConexion();
+            $this->pdo = ConexionMysql::getInstance($metodo)->obtenerConexion();
         } catch (Exception $e) {
             die($e->getMessage());
         }

@@ -8,12 +8,11 @@ class PlantillaView{
         require_once 'view/footer.php';
     }
 
-    public function Nuevo($menu){
+    public function Nuevo($archivo_config,$menu){
         require_once 'view/header.php';
         require_once 'view/plantilla/plantilla-new.php';
         require_once 'view/footer.php';
     }
-
 }
 
 ?>

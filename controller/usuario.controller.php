@@ -126,6 +126,7 @@ class UsuarioController {
             'email' => $_POST['correo'],
             'telefono' => $_POST['telefono'],
             'archivo' => $nombre_archivo_nuevo,
+            'fkarea' => $_SESSION['usuario']->fkarea,
             'fkcargo' => $_POST['cargo']
         );
         $exito = $this->model->Editar($datos);

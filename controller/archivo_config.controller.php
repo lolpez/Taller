@@ -41,19 +41,19 @@ class Archivo_ConfigController {
                 'pk' => $_POST['pk'],
                 'nombre' => $_POST['nombre'],
                 'icono' => $_POST['icono'],
-                'extencion' => $_POST['extencion']
+                'extension' => $_POST['extension']
             );
             $exito = $this->model->Editar($datos);
-            $DescripcionBitacora = 'se modifico el tipo de archivo que el sistema permitira ('.$_POST['extencion'].')';
+            $DescripcionBitacora = 'se modifico el tipo de archivo que el sistema permitira ('.$_POST['extension'].')';
             $tarea='modificar';
         }else{
             $datos = array(
                 'nombre' => $_POST['nombre'],
                 'icono' => $_POST['icono'],
-                'extencion' => $_POST['extencion']
+                'extension' => $_POST['extension']
             );
             $exito = $this->model->Guardar($datos);
-            $DescripcionBitacora = 'se agrego un nuevo tipo de archivo que el sistema permitira (' .$_POST['extencion'].')';
+            $DescripcionBitacora = 'se agrego un nuevo tipo de archivo que el sistema permitira (' .$_POST['extension'].')';
             $tarea='agregar';
         }
         if ($exito){
