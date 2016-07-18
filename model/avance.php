@@ -34,6 +34,16 @@ class Avance {
         }
     }
 
+    public function Obtener_Ultimo_Estado($pkdocumento) {
+        try {
+            $sql = $this->pdo->prepare("SELECT * FROM avance WHERE fkdocumento = ? and pkavance = (SELECT MAX(pkavance) FROM avance) ");
+            $sql->execute(array($pkdocumento));
+            return $sql->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
     public function Listar_Por_Documento($pkdocumento) {
         try {
             $sql = $this->pdo->prepare("SELECT * FROM avance a WHERE a.fkdocumento = ?");

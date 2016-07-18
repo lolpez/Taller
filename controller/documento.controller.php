@@ -106,7 +106,7 @@ class DocumentoController {
         $aprobados = $this->emision->Listar($_SESSION['usuario']->fkarea);
         foreach ($aprobados as $a){
             $objeto = new stdClass();
-            $documento =   $this->model->Obtener($a->fkdocumento,(int)$_SESSION['usuario']->fkarea);
+            $documento = $this->model->Obtener_Simple($a->fkdocumento);
             if (!is_null($documento)) {
                 $objeto->pkdocumento = $documento['_id'];
                 $objeto->codigo = $documento['codigo'];
