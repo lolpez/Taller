@@ -13,9 +13,6 @@ if(isset($_POST['archivo'])) {
     $CargoModel = new Cargo(true);  //True cuando es un metodo post
     $TipoDocumentoModel = new Tipo_Documento(true);  //True cuando es un metodo post
     $EstadoDocumentoModel = new Estado_Documento(true);  //True cuando es un metodo post
-    //$datos = $DocumentoModel->Verificar_Duplicados((int)$_POST['archivo']);
-    //echo json_encode(iterator_to_array($datos));
-
     $coleccion = $DocumentoModel->Verificar_Duplicados((int)$_POST['archivo']);
     $lista = array();
     foreach ($coleccion as $c){
@@ -115,6 +112,8 @@ class DocumentoController {
                 $objeto->codigo = $documento['codigo'];
                 $objeto->titulo = $documento['titulo'];
                 $objeto->version = $documento['version'];
+                $objeto->usuario_nombre = $this->usuario->Obtener($a->fkusuario)->nombre;
+                $objeto->usuario_cargo = $this->cargo->Obtener($this->usuario->Obtener($a->fkusuario)->fkcargo)->nombre;
                 $objeto->tipo_documento = $this->tipo_documento->Obtener($documento['fktipo_documento'])->nombre;
                 $lista_aprobados[] = $objeto;
             }
@@ -170,7 +169,7 @@ class DocumentoController {
         $area_flujo = json_decode($area_flujo->flujo, true);
 
         //Buscar el nodo en el que se encuentra el usuario (en este caso el nodo cargo Elaborador)
-        $llave = array_search($_SESSION['usuario']->fkcargo, array_column($area_flujo['linkDataArray'], 'from'));
+        $llave = array_search($_SESSION['usuario']->fkcargo, $this->array_column($area_flujo['linkDataArray'], 'from'));
         $estado_documento = $area_flujo['linkDataArray'][$llave]['pkestado_documento'];
         $de_cargo = $area_flujo['linkDataArray'][$llave]['from'];
         $para_cargo = $area_flujo['linkDataArray'][$llave]['to'];
@@ -221,7 +220,7 @@ class DocumentoController {
         //Buscar el nodo en el que se encuentra el usuario
         $area_flujo = $this->area_flujo->Obtener_Por_Area($_SESSION['usuario']->fkarea);
         $area_flujo = json_decode($area_flujo->flujo, true);
-        $llave = array_search($pkestadodocumento_nuevo, array_column($area_flujo['linkDataArray'], 'pkestado_documento'));
+        $llave = array_search($pkestadodocumento_nuevo, $this->array_column($area_flujo['linkDataArray'], 'pkestado_documento'));
         $de_cargo = $area_flujo['linkDataArray'][$llave]['from'];
         $para_cargo = $area_flujo['linkDataArray'][$llave]['to'];
         $usuario_origen = $this->usuario->Obtener_Por_Cargo_Y_Area($de_cargo, $_SESSION['usuario']->fkarea);
@@ -268,7 +267,6 @@ class DocumentoController {
         $pkestadodocumento_nuevo =  $_POST['pkestadodocumento_nuevo'];
         $areas = $_POST['multiselectArea'];
 
-
         foreach ($areas as $a){
             $datos = array(
                 'fkusuario' => $_SESSION['usuario']->pkusuario,
@@ -285,17 +283,17 @@ class DocumentoController {
         );
         $this->notificacion->Visto($this->notificacion->Obtener_Por_Avance($datos)->pknotificacion);
 
-//        //Insertar tabla avance como Historial de documento
-//        $datos = array(
-//            'fecha' => date("d/m/Y"),
-//            'hora' => date("h:i:s"),
-//            'fkusuario' => $_SESSION['usuario']->pkusuario,
-//            'fkdocumento' => $pkdocumento,
-//            'fkestado_documento' => $pkestadodocumento_nuevo
-//        );
-//        $x = $this->avance->Guardar($datos);
-//        $tarea = 'agregar';
-//        $exito = true;
+        //Insertar tabla avance como Historial de documento
+        $datos = array(
+            'fecha' => date("d/m/Y"),
+            'hora' => date("h:i:s"),
+            'fkusuario' => $_SESSION['usuario']->pkusuario,
+            'fkdocumento' => $pkdocumento,
+            'fkestado_documento' => $pkestadodocumento_nuevo
+        );
+        $x = $this->avance->Guardar($datos);
+        $tarea = 'agregar';
+        $exito = true;
         header('Location: ?c=documento&item='.$this->item.'&tarea='.$tarea.'&exito='.$exito);
     }
 
@@ -313,7 +311,7 @@ class DocumentoController {
         //Obtener el estado actual del docuemento al ser creado
         $area_flujo = $this->area_flujo->Obtener_Por_Area($_SESSION['usuario']->fkarea);
         $area_flujo = json_decode($area_flujo->flujo, true);
-        $llaves = array_keys(array_column($area_flujo['linkDataArray'], 'from'),$_SESSION['usuario']->fkcargo);
+        $llaves = array_keys($this->array_column($area_flujo['linkDataArray'], 'from'),$_SESSION['usuario']->fkcargo);
         $botones = array();
         foreach ($llaves as $llave) {
             $objeto = new stdClass();
@@ -371,6 +369,34 @@ class DocumentoController {
         }
         return $botones;
     }
+
+
+
+    private function array_column(array $input, $columnKey, $indexKey = null) {
+        $array = array();
+        foreach ($input as $value) {
+            if ( ! isset($value[$columnKey])) {
+                trigger_error("Key \"$columnKey\" does not exist in array");
+                return false;
+            }
+            if (is_null($indexKey)) {
+                $array[] = $value[$columnKey];
+            }
+            else {
+                if ( ! isset($value[$indexKey])) {
+                    trigger_error("Key \"$indexKey\" does not exist in array");
+                    return false;
+                }
+                if ( ! is_scalar($value[$indexKey])) {
+                    trigger_error("Key \"$indexKey\" does not contain scalar value");
+                    return false;
+                }
+                $array[$value[$indexKey]] = $value[$columnKey];
+            }
+        }
+        return $array;
+    }
+
 
 }
 

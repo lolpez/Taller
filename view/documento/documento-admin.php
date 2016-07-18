@@ -1,3 +1,8 @@
+<style>
+    form{
+        display: -webkit-inline-box;
+    }
+</style>
 <h1 class="page-header"><i class="fa fa-file fa-fw fa-2x"></i> Documentos</h1>
 <div class="row">
     <div class="col-lg-12">
@@ -50,8 +55,7 @@
                                                 <input type="hidden" name="pkdocumento" value="<?php echo $r->pkdocumento ?>">
                                                 <button type="submit" class="btn btn-outline btn-info btn-circle" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><i class="fa fa-download"></i></button>
                                             </form>
-                                            <a href="?c=documento&a=detalle&pkdocumento=<?php echo $r->pkdocumento; ?>&pkavance=<?php echo $r->pkavance; ?>" class="btn btn-outline btn-success btn-circle"  data-toggle="tooltip" data-placement="top" title="Ver detalle"><i class="fa fa-history"></i></a>
-                                            <a href="#" onclick="Eliminar('<?php echo $r->pkdocumento; ?>','<?php echo $r->codigo;?>','documento')" class="btn btn-outline btn-danger btn-circle eliminar"><i class="fa fa-trash"></i></a>
+                                            <a href="?c=documento&a=detalle&pkdocumento=<?php echo $r->pkdocumento; ?>&pkavance=<?php echo $r->pkavance; ?>" class="btn btn-outline btn-success btn-circle"  data-toggle="tooltip" data-placement="top" title="Ver detalle"><i class="fa fa-tasks"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>
@@ -71,6 +75,7 @@
                                     <th>Titulo</th>
                                     <th>Tipo documento</th>
                                     <th>Version</th>
+                                    <th>Emitido por:</th>
                                     <th>Acciones</th>
                                 </tr>
                                 </thead>
@@ -81,9 +86,9 @@
                                         <td><?php echo $r->titulo ?></td>
                                         <td><?php echo $r->tipo_documento ?></td>
                                         <td><?php echo $r->version ?></td>
+                                        <td><?php echo $r->usuario_nombre.' ('.$r->usuario_cargo.')' ?></td>
                                         <td style="text-align: center">
                                             <a href="?c=documento&a=descargar&pkdocumento=<?php echo $r->pkdocumento; ?>" class="btn btn-outline btn-info btn-circle"  data-toggle="tooltip" data-placement="top" title="Descargar Documento"><i class="fa fa-download"></i></a>
-                                            <a href="#" onclick="Eliminar('<?php echo $r->pkdocumento; ?>','<?php echo $r->codigo;?>','documento')" class="btn btn-outline btn-danger btn-circle eliminar"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>
