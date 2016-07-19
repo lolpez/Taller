@@ -79,7 +79,7 @@ class Notificacion {
 
     public function Obtener_Por_Avance($datos){
         try {
-            $sql = $this->pdo->prepare("SELECT n.pknotificacion FROM notificacion n, avance a WHERE n.fkavance=a.pkavance AND a.pkavance=? AND n.fkusuario_destino=?");
+            $sql = $this->pdo->prepare("SELECT n.pknotificacion, n.terminado FROM notificacion n, avance a WHERE n.fkavance=a.pkavance AND a.pkavance=? AND n.fkusuario_destino=?");
             $sql->execute(
                 array(
                     $datos['fkavance'],

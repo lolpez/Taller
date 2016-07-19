@@ -26,7 +26,8 @@ class Avance {
 
     public function Listar_Por_Usuario($pkusuario) {
         try {
-            $sql = $this->pdo->prepare("SELECT a1.pkavance, a1.fecha, a1.hora, a1.fkdocumento, a1.fkusuario, (SELECT MAX(a2.fkestado_documento) FROM avance a2 WHERE a2.fkdocumento = a1.fkdocumento) as fkestado_documento FROM avance a1 WHERE a1.fkusuario = ?");
+            $sql = $this->pdo->prepare("SELECT a1.pkavance, a1.fecha, a1.hora, a1.fkdocumento, a1.fkusuario, a1.fkdocumento as fkestado_documento FROM avance a1 WHERE a1.fkusuario = ? GROUP BY a1.fkdocumento");
+            //$sql = $this->pdo->prepare("SELECT a1.pkavance, a1.fecha, a1.hora, a1.fkdocumento, a1.fkestado_documento, a1.fkusuario FROM avance a1 WHERE a1.pkavance IN ( SELECT MAX(a2.pkavance) FROM avance a2 WHERE a2.fkusuario = ? GROUP BY a2.fkdocumento)");
             $sql->execute(array($pkusuario));
             return $sql->fetchAll(PDO::FETCH_OBJ);
         } catch (Exception $e) {
@@ -76,7 +77,7 @@ class Avance {
 
     public function Obtener_Estado_Documento($pkdocumento) {
         try {
-            $sql = $this->pdo->prepare("SELECT MAX(fkestado_documento) as fkestado_documento FROM avance a WHERE a.fkdocumento=?");
+            $sql = $this->pdo->prepare("SELECT * FROM avance a1 WHERE a1.fkdocumento = ? and a1.pkavance = (SELECT MAX(a2.pkavance) FROM avance a2 WHERE a1.fkdocumento = a2.fkdocumento )");
             $sql->execute(array($pkdocumento));
             return $sql->fetch(PDO::FETCH_OBJ);
         } catch (Exception $e) {

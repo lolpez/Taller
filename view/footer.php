@@ -109,6 +109,14 @@
                         correcto = false;
                     }
                     break;
+                default :
+                    if (<?php echo $_REQUEST['exito'];?>) {
+                        mensaje = '<?php echo $_REQUEST['tarea'] ?>';
+                    } else {
+                        mensaje = '<?php echo $_REQUEST['tarea'] ?>';
+                        correcto = false;
+                    }
+                    break;
             }
             mensaje = mensaje + "<?php echo $_REQUEST['item'];?>";
             ShowMessage(mensaje, correcto);

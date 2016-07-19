@@ -1,7 +1,7 @@
 <h1 class="page-header"><img src="" style="max-width: 10%"/> Sistema de gestion documental TITBOL</h1>
 <div class="row">
     <div class="col-md-3">
-        <div class="panel panel-primary">
+        <div class="panel panel-<?php if (count($lista) >= 0){?>primary<?php }else{ ?>danger<?php } ?>">
             <div class="panel-heading">
                 <div class="row">
                     <div class="col-xs-3">

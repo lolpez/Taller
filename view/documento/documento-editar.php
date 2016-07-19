@@ -1,7 +1,7 @@
-<h1 class="page-header">Nuevo Documento</h1>
+<h1 class="page-header">Actualizar Documento</h1>
 <ol class="breadcrumb" style="background-color: white;">
     <li><a href="?c=documento" style="color:#0016b0;">Documentos</a></li>
-    <li class="active">Nuevo Documento</li>
+    <li class="active">Actualizar Documento</li>
 </ol>
 <div class="row">
     <div class="col-md-12" id="alerta">
@@ -22,12 +22,15 @@
         </div>
     </div>
 </div>
-<form action="?c=documento&a=guardar" method="post" autocomplete="off" onsubmit="return confSubmit()" enctype="multipart/form-data">
+<form action="?c=documento&a=actualizar_documento" method="post" autocomplete="off" onsubmit="return confSubmit()" enctype="multipart/form-data">
+    <input type="text" name="pkdocumento" value="<?php echo $documento ['_id'] ?>">
+    <input type="text" name="pkavance" value="<?php echo $pkavance ?>">
+    <input type="text" name="pkestadodocumento_nuevo" value="<?php echo $pkestadodocumento_nuevo ?>">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
                 <label>Nombre</label>
-                <input type="text" name="nombre" class="form-control" placeholder="Ingrese el nombre" required >
+                <input type="text" name="nombre" class="form-control" placeholder="Ingrese el nombre" value="<?php echo $documento ['titulo'] ?>" required >
             </div>
         </div>
         <div class="col-md-4">
@@ -35,7 +38,11 @@
                 <label>Tipo de documento</label>
                 <select class="form-control" name="fktipo_documento" style="color: #000000">
                     <?php foreach ($tipo_documento as $t): ?>
-                        <option value="<?php echo $t->pktipo_documento; ?>"><?php echo $t->nombre; ?> </option>
+                        <option value="<?php echo $t->pktipo_documento; ?>"
+                            <?php if ($t->pktipo_documento == $documento['fktipo_documento'] ){ ?>
+                                selected="selected"
+                            <?php } ?>
+                        ><?php echo $t->nombre; ?> </option>
                     <?php endforeach ?>
                 </select>
             </div>

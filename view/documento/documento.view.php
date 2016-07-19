@@ -14,6 +14,12 @@ class DocumentoView{
         require_once 'view/footer.php';
     }
 
+    public function Editar($documento,$pkavance,$pkestadodocumento_nuevo,$tipo_documento,$archivos_permitidos,$menu){
+        require_once 'view/header.php';
+        require_once 'view/documento/documento-editar.php';
+        require_once 'view/footer.php';
+    }
+
     public function Detalle($documento,$pkavance,$historial,$botones,$menu){
         require_once 'view/header.php';
         require_once 'view/documento/documento-detalle.php';

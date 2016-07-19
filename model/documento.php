@@ -93,6 +93,30 @@ class Documento {
         }
     }
 
+    public function Actualizar($datos){
+        try {
+            $mongo = $this->mongo->getGridFS();
+            $id_doc = new MongoId($datos['_id']);
+            $mongo->storeFile(
+                $datos['documento'],
+                array(
+                    '_id' => $id_doc,
+                    'nombre_archivo' => $datos['nombre_archivo'],
+                    'codigo' => $datos['codigo'],
+                    'titulo' => $datos['titulo'],
+                    'fecha' => $datos['fecha'],
+                    'hora' => $datos['hora'],
+                    'version' => $datos['version'],
+                    'fkarea' => $datos['fkarea'],
+                    'fktipo_documento' => $datos['fktipo_documento']
+                )
+            );
+            return array('pkdocumento' => $id_doc->{'$id'} , 'exito' => true);
+        } catch (MongoException $e) {
+            return false;
+        }
+    }
+
     public function Editar(){
 
     }

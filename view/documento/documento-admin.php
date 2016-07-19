@@ -33,7 +33,7 @@
                                     <th>Codigo</th>
                                     <th>Titulo</th>
                                     <th>Tipo documento</th>
-                                    <th>Estado</th>
+                                    <th>Estado del documento</th>
                                     <th>Fecha (de creacion)</th>
                                     <th>Hora (de creacion)</th>
                                     <th>Version</th>
@@ -56,6 +56,7 @@
                                                 <button type="submit" class="btn btn-outline btn-info btn-circle" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><i class="fa fa-download"></i></button>
                                             </form>
                                             <a href="?c=documento&a=detalle&pkdocumento=<?php echo $r->pkdocumento; ?>&pkavance=<?php echo $r->pkavance; ?>" class="btn btn-outline btn-success btn-circle"  data-toggle="tooltip" data-placement="top" title="Ver detalle"><i class="fa fa-tasks"></i></a>
+                                            <a href="#" onclick="Eliminar('<?php echo $r->pkdocumento; ?>','<?php echo $r->titulo;?>','documento')" class="btn btn-outline btn-danger btn-circle eliminar"><i class="fa fa-trash"></i></a>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>

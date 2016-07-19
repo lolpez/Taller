@@ -22,7 +22,7 @@
                         <tr>
                             <th>Fecha</th>
                             <th>Hora</th>
-                            <th>Estado documento</th>
+                            <th>Estado del documento</th>
                             <th>Realzado por</th>
                         </tr>
                         </thead>
@@ -31,7 +31,7 @@
                             <tr>
                                 <td><?php echo $r->fecha; ?></td>
                                 <td><?php echo $r->hora; ?></td>
-                                <td><?php echo $r->estado_documento; ?></td>
+                                <td><span class="badge" style="background-color: <?php echo $r->estado_documento->color ?>; cursor:pointer;" data-toggle="tooltip" data-placement="top" title="<?php echo $r->estado_documento->descripcion ?>"><?php echo $r->estado_documento->nombre ?></span></td>
                                 <td><?php echo $r->usuario_nombre.' ('.$r->usuario_cargo.')'; ?></td>
                             </tr>
                         <?php endforeach ?>
@@ -50,6 +50,13 @@
                                 <input type="hidden" name="pkavance" value="<?php echo $pkavance ?>">
                                 <input type="hidden" name="pkestado_documento_nuevo" value="<?php echo $b->pkestado_documento_nuevo ?>">
                                 <button type="submit" class="btn btn-outline btn-<?php echo $b->clase ?> btn-circle btn-xl" data-toggle="tooltip" data-placement="top" title="<?php echo $b->ayuda ?>"><i class="<?php echo $b->icono ?>"></i></button>
+                            </form>
+                        <?php }else{ ?>
+                            <form action="?c=documento&a=editar" method="post" autocomplete="off">
+                                <input type="hidden" name="pkdocumento" value="<?php echo $documento['_id'] ?>">
+                                <input type="hidden" name="pkavance" value="<?php echo $pkavance ?>">
+                                <input type="hidden" name="pkestado_documento_nuevo" value="<?php echo $b->pkestado_documento_nuevo ?>">
+                                <button type="submit" class="btn btn-outline btn-info btn-circle btn-xl" data-toggle="tooltip" data-placement="top" title="Actualizar documento con correcciones para continuar con el flujo"><i class="fa fa-upload"></i></button>
                             </form>
                         <?php } ?>
                     <?php } ?>

@@ -5,12 +5,14 @@ if(isset($_POST['archivo'])) {
     require_once '../model/avance.php';
     require_once '../model/usuario.php';
     require_once '../model/cargo.php';
+    require_once '../model/area.php';
     require_once '../model/tipo_documento.php';
     require_once '../model/estado_documento.php';
     $DocumentoModel = new Documento(true);  //True cuando es un metodo post
     $AvanceModel = new Avance(true);  //True cuando es un metodo post
     $UsuarioModel = new Usuario(true);  //True cuando es un metodo post
     $CargoModel = new Cargo(true);  //True cuando es un metodo post
+    $AreaModel = new Area(true);  //True cuando es un metodo post
     $TipoDocumentoModel = new Tipo_Documento(true);  //True cuando es un metodo post
     $EstadoDocumentoModel = new Estado_Documento(true);  //True cuando es un metodo post
     $coleccion = $DocumentoModel->Verificar_Duplicados((int)$_POST['archivo']);
@@ -21,6 +23,7 @@ if(isset($_POST['archivo'])) {
         $usuario = $UsuarioModel->Obtener($AvanceModel->Obtener_Origen_Documento($c['_id'])->fkusuario);
         $objeto->usuario_nombre = $usuario->nombre;
         $objeto->usuario_cargo = $CargoModel->Obtener($usuario->fkcargo)->nombre;
+        $objeto->area = $AreaModel->Obtener($c['fkarea'])->nombre;
         $objeto->nombre_archivo = $c['nombre_archivo'];
         $objeto->titulo = $c['titulo'];
         $objeto->version = $c['version'];
@@ -46,6 +49,7 @@ require_once 'model/archivo_config.php';
 require_once 'model/area.php';
 require_once 'model/cargo.php';
 require_once 'model/emision.php';
+require_once 'model/bitacora.php';
 require_once 'model/permiso.php';
 
 class DocumentoController {
@@ -63,6 +67,7 @@ class DocumentoController {
     private $area;
     private $cargo;
     private $emision;
+    private $bitacora;
     private $permiso;
 
     public function __CONSTRUCT() {
@@ -80,6 +85,7 @@ class DocumentoController {
         $this->area = new Area();
         $this->cargo = new Cargo();
         $this->emision = new Emision();
+        $this->bitacora = new Bitacora();
         $this->permiso = $permiso->Obtener($_SESSION['usuario']->fkcargo);
     }
 
@@ -98,7 +104,7 @@ class DocumentoController {
                 $objeto->fecha = $a->fecha;
                 $objeto->hora = $a->hora;
                 $objeto->tipo_documento = $this->tipo_documento->Obtener($documento['fktipo_documento'])->nombre;
-                $objeto->estado_documento = $this->estado_documento->Obtener($a->fkestado_documento);
+                $objeto->estado_documento = $this->estado_documento->Obtener($this->avance->Obtener_Estado_Documento($documento['_id'])->fkestado_documento);
                 $lista[] = $objeto;
             }
         }
@@ -127,6 +133,16 @@ class DocumentoController {
         $this->vista->Nuevo($tipo_documento,$archivos_permitidos,$this->permiso);
     }
 
+    public function Editar() {
+        $pkdocumento = $_POST['pkdocumento'];
+        $pkavance = $_POST['pkavance'];
+        $pkestadodocumento_nuevo = $_POST['pkestado_documento_nuevo'];
+        $documento = $this->model->Obtener_Simple($pkdocumento);
+        $tipo_documento = $this->tipo_documento->Listar();
+        $archivos_permitidos = $this->archivo_config->Listar();
+        $this->vista->Editar($documento,$pkavance,$pkestadodocumento_nuevo,$tipo_documento,$archivos_permitidos,$this->permiso);
+    }
+
     public function Detalle() {
         $pkavance = $_REQUEST['pkavance'];
         $documento =  $this->model->Obtener_Simple($_REQUEST['pkdocumento']);
@@ -136,13 +152,28 @@ class DocumentoController {
             $objeto = new stdClass();
             $objeto->fecha = $a->fecha;
             $objeto->hora = $a->hora;
-            $objeto->estado_documento = $this->estado_documento->Obtener($a->fkestado_documento)->nombre;
+            $objeto->estado_documento = $this->estado_documento->Obtener($a->fkestado_documento);
             $usuario = $this->usuario->Obtener($a->fkusuario);
             $objeto->usuario_nombre = $usuario->nombre;
             $objeto->usuario_cargo = $this->cargo->Obtener($usuario->fkcargo)->nombre;
             $historial[] = $objeto;
         }
-        $this->vista->Detalle($documento,$pkavance,$historial,$this->Obtener_Acciones(),$this->permiso);
+
+        $datos = array(
+            'fkavance' => $pkavance,
+            'fkusuario_destino' => $_SESSION['usuario']->pkusuario
+        );
+
+        if (!$this->notificacion->Obtener_Por_Avance($datos)){
+            $acciones = array();
+        }else{
+            if (!$this->notificacion->Obtener_Por_Avance($datos)->terminado){
+                $acciones = $this->Obtener_Acciones();
+            }else{
+                $acciones = array();
+            }
+        }
+        $this->vista->Detalle($documento,$pkavance,$historial,$acciones,$this->permiso);
     }
 
     public function Descargar(){
@@ -190,7 +221,69 @@ class DocumentoController {
 
         //Si se tuvo exito al guardar, entonces guardar en la tabla avance y notificar al siguiente usuario
         if ($arrayExito['exito']) {
-           // $usuario_origen = $_SESSION['usuario']->pkusuario;
+            $usuario_origen = $this->usuario->Obtener_Por_Cargo_Y_Area($de_cargo, $_SESSION['usuario']->fkarea);
+            $usuario_destino = $this->usuario->Obtener_Por_Cargo_Y_Area($para_cargo, $_SESSION['usuario']->fkarea);
+            //Insertar tabla avance como Historial de documento
+            $datos = array(
+                'fecha' => date("d/m/Y"),
+                'hora' => date("h:i:s"),
+                'fkusuario' => $usuario_origen->pkusuario,
+                'fkdocumento' => $arrayExito['pkdocumento'],
+                'fkestado_documento' => $estado_documento
+            );
+            $pkavance = $this->avance->Guardar($datos);
+            //Insertar tabla notificacion
+            $datos = array(
+                'fkavance' => $pkavance,
+                'fkusuario_destino' => $usuario_destino->pkusuario
+            );
+            $this->notificacion->Guardar($datos);
+        }
+        header('Location: ?c=documento&item='.$this->item.'&tarea='.$tarea.'&exito='.$arrayExito['exito']);
+    }
+
+
+    public function Actualizar_Documento(){
+        date_default_timezone_set("America/La_Paz");
+        $documento = $this->model->Obtener_Simple($_POST['pkdocumento']);
+        $tarea = 'agregar';
+        $ext = $this->ObtenerExtencion($_FILES["documento"]["name"]);
+        $this->model->Eliminar($_POST['pkdocumento']);
+
+        //Obtener el estado actual del docuemento al ser creado
+        $area_flujo = $this->area_flujo->Obtener_Por_Area($_SESSION['usuario']->fkarea);
+        $area_flujo = json_decode($area_flujo->flujo, true);
+
+        //Buscar el nodo en el que se encuentra el usuario (en este caso el nodo cargo Elaborador)
+        $llave = array_search($_SESSION['usuario']->fkcargo, $this->array_column($area_flujo['linkDataArray'], 'from'));
+        $estado_documento = $_POST['pkestadodocumento_nuevo'];
+        $de_cargo = $area_flujo['linkDataArray'][$llave]['from'];
+        $para_cargo = $area_flujo['linkDataArray'][$llave]['to'];
+
+        //Preparar datos para actualizar el documento en Mongo
+        $datos = array(
+            '_id' => $_POST['pkdocumento'],
+            'documento' => $_FILES['documento']['tmp_name'],
+            'nombre_archivo' => $documento['codigo'].'.'.$ext,
+            'codigo' => $documento['codigo'],
+            'titulo' => $_POST['nombre'],
+            'fecha' => date("d/m/Y"),
+            'hora' => date("h:i:s"),
+            'version' => (int)($documento['version'])+1, //Aumentar su version
+            'fktipo_documento' => (int)$_POST['fktipo_documento'],
+            'fkarea' => (int)$documento['fkarea']
+        );
+        $arrayExito = $this->model->Actualizar($datos);
+
+        //Poner en visto la notificacion
+        $datos = array(
+            'fkavance' => $_POST['pkavance'],
+            'fkusuario_destino' => $_SESSION['usuario']->pkusuario
+        );
+        $this->notificacion->Visto($this->notificacion->Obtener_Por_Avance($datos)->pknotificacion);
+
+        //Si se tuvo exito al guardar, entonces guardar en la tabla avance y notificar al siguiente usuario
+        if ($arrayExito['exito']) {
             $usuario_origen = $this->usuario->Obtener_Por_Cargo_Y_Area($de_cargo, $_SESSION['usuario']->fkarea);
             $usuario_destino = $this->usuario->Obtener_Por_Cargo_Y_Area($para_cargo, $_SESSION['usuario']->fkarea);
             //Insertar tabla avance como Historial de documento
@@ -255,9 +348,10 @@ class DocumentoController {
                 'fkusuario_destino' => $usuario_destino->pkusuario
             );
             $this->notificacion->Guardar($datos);
-            $tarea = 'agregar';
+            $tarea = 'se ha '.$this->estado_documento->Obtener($pkestadodocumento_nuevo)->nombre.' el documento '.$this->model->Obtener_Simple($pkdocumento)['codigo'];
             $exito = true;
-            header('Location: ?c=documento&item='.$this->item.'&tarea='.$tarea.'&exito='.$exito);
+            $this->bitacora->GuardarBitacora($tarea);
+            header('Location: ?c=documento&item=&tarea='.$tarea.'&exito='.$exito);
         }
     }
 
@@ -291,10 +385,11 @@ class DocumentoController {
             'fkdocumento' => $pkdocumento,
             'fkestado_documento' => $pkestadodocumento_nuevo
         );
-        $x = $this->avance->Guardar($datos);
-        $tarea = 'agregar';
+        $this->avance->Guardar($datos);
+        $tarea = 'se ha '.$this->estado_documento->Obtener($pkestadodocumento_nuevo)->nombre.' el documento '.$this->model->Obtener_Simple($pkdocumento)['codigo'];
         $exito = true;
-        header('Location: ?c=documento&item='.$this->item.'&tarea='.$tarea.'&exito='.$exito);
+        $this->bitacora->GuardarBitacora($tarea);
+        header('Location: ?c=documento&item=&tarea='.$tarea.'&exito='.$exito);
     }
 
     public function Eliminar(){
