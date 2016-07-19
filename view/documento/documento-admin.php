@@ -64,7 +64,7 @@
                             </table>
                         </div>
                     </div>
-                    <div class="tab-pane fade in active" id="aprobados" style="overflow: scroll; height: 500px" >
+                    <div class="tab-pane fade" id="aprobados" style="overflow: scroll; height: 500px" >
                         <h4>
                             Documentos aprobados mi area <?php echo $_SESSION['usuario']->area ?>
                         </h4>

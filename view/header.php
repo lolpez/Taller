@@ -18,6 +18,8 @@
     <link href="resources/bower_components/datatables-plugins/integration/bootstrap/3/dataTables.bootstrap.css" rel="stylesheet">
     <!-- CSS Principal -->
     <link href="resources/css/cssprincipal.css" rel="stylesheet">
+    <!-- Timeline -->
+    <link href="resources/css/timeline.css" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="resources/bower_components/font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
     <!-- Sweet alert -->

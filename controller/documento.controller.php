@@ -465,8 +465,6 @@ class DocumentoController {
         return $botones;
     }
 
-
-
     private function array_column(array $input, $columnKey, $indexKey = null) {
         $array = array();
         foreach ($input as $value) {
