@@ -54,6 +54,14 @@
             </div>
         </div>
     </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label>Comentario</label>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Comentario" name="comentario" style="resize: vertical"></textarea>
+            </div>
+        </div>
+    </div>
     <br>
     <div class="text-center">
         <button type="submit" class="btn btn-success btn-lg" id="guardar"><i class="fa fa-floppy-o"></i> Guardar</button>

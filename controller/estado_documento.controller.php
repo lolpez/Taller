@@ -37,7 +37,8 @@ class Estado_DocumentoController {
             'nombre' => $_POST['nombre'],
             'nomenglatura' => $_POST['nomenglatura'],
             'descripcion' => $_POST['descripcion'],
-            'color' => $_POST['color']
+            'color' => $_POST['color'],
+            'icono' => $_POST['icono']
         );
         $exito = $this->model->Editar($datos);
         $DescripcionBitacora = 'se modifico el '.$this->item.' '.$_POST['nombre'];

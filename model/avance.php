@@ -87,14 +87,15 @@ class Avance {
 
     public function Guardar($datos) {
         try {
-            $sql = $this->pdo->prepare("INSERT INTO avance(fecha,hora,fkusuario,fkdocumento,fkestado_documento) VALUES (?,?,?,?,?)");
+            $sql = $this->pdo->prepare("INSERT INTO avance(fecha,hora,fkusuario,fkdocumento,fkestado_documento,comentario) VALUES (?,?,?,?,?,?)");
             $sql->execute(
                 array(
                     $datos['fecha'],
                     $datos['hora'],
                     $datos['fkusuario'],
                     $datos['fkdocumento'],
-                    $datos['fkestado_documento']
+                    $datos['fkestado_documento'],
+                    $datos['comentario']
                 )
             );
             $sql = $this->pdo->prepare("SELECT max(pkavance) as pkavance FROM avance");

@@ -50,6 +50,7 @@ class NotificacionController {
             $objeto->documento = $this->documento->Obtener($avance->fkdocumento,(int)$usuario->fkarea);
             $objeto->estado_documento = $this->estado_documento->Obtener($avance->fkestado_documento);
             $objeto->mensaje = 'El usuario ' . $objeto->usuario_creador. ' (' . $objeto->usuario_creador_cargo . ') ha '.$objeto->estado_documento->nombre.' el documento '.$objeto->documento['codigo'].' ('.$objeto->documento['titulo'].' v.'.$objeto->documento['version'].')';
+            $objeto->comentario = $avance->comentario;
             $objeto->url = '?c=documento&a=detalle&pkdocumento='.$objeto->documento['_id'].'&pkavance='.$objeto->pkavance;
             $lista[] = $objeto;
         endforeach;

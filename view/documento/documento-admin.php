@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-lg-12">
         <div class="panel panel-default">
-            <div class="panel-body" style="overflow: scroll; height: 500px">
+            <div class="panel-body">
                 <ul class="nav nav-tabs">
                     <li class="active" id="pestaña_mis_documentos">
                         <a href="#mis_documentos" data-toggle="tab" style="color: #263340">Mis documentos</a>
@@ -21,8 +21,8 @@
                         <h4>
                             Mis documentos
                             <?php foreach ($botones as $b) {
-                                if ($b->id_boton == 1) { ?>
-                                    <a class="btn btn-outline btn-<?php echo $b->clase ?>" href="?c=documento&a=nuevo" data-toggle="tooltip" data-placement="top" title="<?php echo $b->ayuda ?>"><i class="<?php echo $b->icono ?>"></i> <?php echo $b->nombre ?></a>
+                                if ($b->estado_documento_nuevo->pkestado_documento == 1) { ?>
+                                    <a class="btn btn-outline btn-primary" href="?c=documento&a=nuevo" data-toggle="tooltip" data-placement="top" title="crea un nuevo documento para iniciar con el flujo"><i class="<?php echo $b->estado_documento_nuevo->icono ?>"></i> Nuevo documento</a>
                                 <?php }
                             } ?>
                         </h4>
@@ -89,7 +89,10 @@
                                         <td><?php echo $r->version ?></td>
                                         <td><?php echo $r->usuario_nombre.' ('.$r->usuario_cargo.')' ?></td>
                                         <td style="text-align: center">
-                                            <a href="?c=documento&a=descargar&pkdocumento=<?php echo $r->pkdocumento; ?>" class="btn btn-outline btn-info btn-circle"  data-toggle="tooltip" data-placement="top" title="Descargar Documento"><i class="fa fa-download"></i></a>
+                                            <form action="?c=documento&a=descargar" method="post" autocomplete="off">
+                                                <input type="hidden" name="pkdocumento" value="<?php echo $r->pkdocumento ?>">
+                                                <button type="submit" class="btn btn-outline btn-info btn-circle" data-toggle="tooltip" data-placement="top" title="Descargar Documento"><i class="fa fa-download"></i></button>
+                                            </form>
                                         </td>
                                     </tr>
                                 <?php endforeach ?>

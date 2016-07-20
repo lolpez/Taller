@@ -23,9 +23,9 @@
     </div>
 </div>
 <form action="?c=documento&a=actualizar_documento" method="post" autocomplete="off" onsubmit="return confSubmit()" enctype="multipart/form-data">
-    <input type="text" name="pkdocumento" value="<?php echo $documento ['_id'] ?>">
-    <input type="text" name="pkavance" value="<?php echo $pkavance ?>">
-    <input type="text" name="pkestadodocumento_nuevo" value="<?php echo $pkestadodocumento_nuevo ?>">
+    <input type="hidden" name="pkdocumento" value="<?php echo $documento ['_id'] ?>">
+    <input type="hidden" name="pkavance" value="<?php echo $pkavance ?>">
+    <input type="hidden" name="pkestadodocumento_nuevo" value="<?php echo $pkestadodocumento_nuevo ?>">
     <div class="row">
         <div class="col-md-4">
             <div class="form-group">
@@ -58,6 +58,14 @@
                     ?>" required />
                     <a class="input-group-addon" id="icono_verificar"><i class="fa fa-upload"></i></a>
                 </div>
+            </div>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-md-12">
+            <label>Comentario</label>
+            <div class="form-group">
+                <textarea class="form-control" placeholder="Comentario" name="comentario" style="resize: vertical"></textarea>
             </div>
         </div>
     </div>

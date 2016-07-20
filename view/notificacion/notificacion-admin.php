@@ -41,8 +41,9 @@
                     <div class="list-group">
                         <?php foreach ($lista as $l) : ?>
                             <a href="<?php echo $l->url?>" class="list-group-item">
-                                <p class="text-muted small"><em><?php echo $l->fecha ?></em></p>
+                                <p class="text-muted small"><em><i class="fa fa-clock-o"></i> <?php echo $l->fecha ?> <?php echo $l->hora ?></em></p>
                                 <p><?php echo $l->mensaje ?></p>
+                                <p><small><?php echo $l->comentario ?></small></p>
                             </a>
                         <?php endforeach ?>
                     </div>

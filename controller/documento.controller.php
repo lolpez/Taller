@@ -156,14 +156,13 @@ class DocumentoController {
             $usuario = $this->usuario->Obtener($a->fkusuario);
             $objeto->usuario_nombre = $usuario->nombre;
             $objeto->usuario_cargo = $this->cargo->Obtener($usuario->fkcargo)->nombre;
+            $objeto->comentario = $a->comentario;
             $historial[] = $objeto;
         }
-
         $datos = array(
             'fkavance' => $pkavance,
             'fkusuario_destino' => $_SESSION['usuario']->pkusuario
         );
-
         if (!$this->notificacion->Obtener_Por_Avance($datos)){
             $acciones = array();
         }else{
@@ -229,7 +228,8 @@ class DocumentoController {
                 'hora' => date("h:i:s"),
                 'fkusuario' => $usuario_origen->pkusuario,
                 'fkdocumento' => $arrayExito['pkdocumento'],
-                'fkestado_documento' => $estado_documento
+                'fkestado_documento' => $estado_documento,
+                'comentario' => $_POST['comentario']
             );
             $pkavance = $this->avance->Guardar($datos);
             //Insertar tabla notificacion
@@ -241,7 +241,6 @@ class DocumentoController {
         }
         header('Location: ?c=documento&item='.$this->item.'&tarea='.$tarea.'&exito='.$arrayExito['exito']);
     }
-
 
     public function Actualizar_Documento(){
         date_default_timezone_set("America/La_Paz");
@@ -292,7 +291,8 @@ class DocumentoController {
                 'hora' => date("h:i:s"),
                 'fkusuario' => $usuario_origen->pkusuario,
                 'fkdocumento' => $arrayExito['pkdocumento'],
-                'fkestado_documento' => $estado_documento
+                'fkestado_documento' => $estado_documento,
+                'comentario' => $_POST['comentario']
             );
             $pkavance = $this->avance->Guardar($datos);
             //Insertar tabla notificacion
@@ -306,6 +306,11 @@ class DocumentoController {
     }
 
     public function Cambiar_Estado(){
+        if ($_POST['comentario'] == ''){
+            $comentario = 'sin comentarios';
+        }else{
+            $comentario = $_POST['comentario'];
+        }
         $pkdocumento = $_POST['pkdocumento'];
         $pkavance = $_POST['pkavance'];
         $pkestadodocumento_nuevo = $_POST['pkestado_documento_nuevo'];
@@ -338,7 +343,8 @@ class DocumentoController {
                 'hora' => date("h:i:s"),
                 'fkusuario' => $usuario_origen->pkusuario,
                 'fkdocumento' => $pkdocumento,
-                'fkestado_documento' => $pkestadodocumento_nuevo
+                'fkestado_documento' => $pkestadodocumento_nuevo,
+                'comentario' => $comentario
             );
             $pkavance = $this->avance->Guardar($datos);
 
@@ -356,6 +362,11 @@ class DocumentoController {
     }
 
     public function Emitir(){
+        if ($_POST['comentario'] == ''){
+            $comentario = 'sin comentarios';
+        }else{
+            $comentario = $_POST['comentario'];
+        }
         $pkdocumento = $_POST['pkdocumento'];
         $pkavance = $_POST['pkavance'];
         $pkestadodocumento_nuevo =  $_POST['pkestadodocumento_nuevo'];
@@ -383,7 +394,8 @@ class DocumentoController {
             'hora' => date("h:i:s"),
             'fkusuario' => $_SESSION['usuario']->pkusuario,
             'fkdocumento' => $pkdocumento,
-            'fkestado_documento' => $pkestadodocumento_nuevo
+            'fkestado_documento' => $pkestadodocumento_nuevo,
+            'comentario' => $comentario
         );
         $this->avance->Guardar($datos);
         $tarea = 'se ha '.$this->estado_documento->Obtener($pkestadodocumento_nuevo)->nombre.' el documento '.$this->model->Obtener_Simple($pkdocumento)['codigo'];
@@ -410,56 +422,7 @@ class DocumentoController {
         $botones = array();
         foreach ($llaves as $llave) {
             $objeto = new stdClass();
-            switch ($area_flujo['linkDataArray'][$llave]['pkestado_documento']) {
-                case 1:
-                    $objeto->id_boton = 1;
-                    $objeto->pkestado_documento_nuevo = 1;
-                    $objeto->nombre = 'Nuevo documento';
-                    $objeto->ayuda = 'crea un nuevo documento para iniciar con el flujo';
-                    $objeto->clase = 'primary';
-                    $objeto->icono = 'fa fa-plus';
-                    break;
-                case 2:
-                    $objeto->id_boton = 2;
-                    $objeto->pkestado_documento_nuevo = 2;
-                    $objeto->nombre = 'Revisar documento';
-                    $objeto->ayuda = 'el documento cambiara de estado a revisado y estara listo para su aprobacion';
-                    $objeto->clase = 'success';
-                    $objeto->icono = 'fa fa-check';
-                    break;
-                case 3:
-                    $objeto->id_boton = 3;
-                    $objeto->pkestado_documento_nuevo = 3;
-                    $objeto->nombre = 'Aprobar documento';
-                    $objeto->ayuda = 'el documento cambiara de estado a aprobado y estara listo para su emision.';
-                    $objeto->clase = 'success';
-                    $objeto->icono = 'fa fa-check';
-                    break;
-                case 4:
-                    $objeto->id_boton = 4;
-                    $objeto->pkestado_documento_nuevo = 4;
-                    $objeto->nombre = 'Emitir';
-                    $objeto->ayuda = 'emita el documento a las diferentes areas';
-                    $objeto->clase = 'info';
-                    $objeto->icono = 'fa fa-paper-plane';
-                    break;
-                case 5:
-                    $objeto->id_boton = 5;
-                    $objeto->pkestado_documento_nuevo = 5;
-                    $objeto->nombre = 'Rechazar';
-                    $objeto->ayuda = 'rechaze este documento para volver al flujo correspondiente';
-                    $objeto->clase = 'danger';
-                    $objeto->icono = 'fa fa-times';
-                    break;
-                case 6:
-                    $objeto->id_boton = 6;
-                    $objeto->pkestado_documento_nuevo = 6;
-                    $objeto->nombre = 'Devolver';
-                    $objeto->ayuda = 'rechaze este documento para volver al flujo correspondiente';
-                    $objeto->clase = 'danger';
-                    $objeto->icono = 'fa fa-times';
-                    break;
-            }
+            $objeto->estado_documento_nuevo = $this->estado_documento->Obtener($area_flujo['linkDataArray'][$llave]['pkestado_documento']);
             $botones[] = $objeto;
         }
         return $botones;
@@ -489,8 +452,5 @@ class DocumentoController {
         }
         return $array;
     }
-
-
 }
-
 ?>

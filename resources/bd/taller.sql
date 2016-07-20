@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 19-07-2016 a las 17:43:21
+-- Tiempo de generación: 20-07-2016 a las 21:23:18
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -108,7 +108,8 @@ CREATE TABLE IF NOT EXISTS `avance` (
   `hora` varchar(10) NOT NULL,
   `fkusuario` int(11) NOT NULL,
   `fkdocumento` varchar(50) NOT NULL,
-  `fkestado_documento` int(11) NOT NULL
+  `fkestado_documento` int(11) NOT NULL,
+  `comentario` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -123,18 +124,14 @@ CREATE TABLE IF NOT EXISTS `bitacora` (
   `accion` varchar(100) NOT NULL,
   `fecha` varchar(10) NOT NULL,
   `hora` varchar(10) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
--- --------------------------------------------------------
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
 
 --
--- Estructura de tabla para la tabla `calendario`
+-- Volcado de datos para la tabla `bitacora`
 --
 
-CREATE TABLE IF NOT EXISTS `calendario` (
-  `fecha` varchar(10) NOT NULL,
-  `nombre` varchar(50) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+INSERT INTO `bitacora` (`pkbitacora`, `fkusuario`, `accion`, `fecha`, `hora`) VALUES
+(1, 2, 'Cierre de sesion', '20/07/2016', '03:20:19');
 
 -- --------------------------------------------------------
 
@@ -184,20 +181,21 @@ CREATE TABLE IF NOT EXISTS `estado_documento` (
   `nomenglatura` varchar(10) NOT NULL,
   `nombre` varchar(30) NOT NULL,
   `descripcion` varchar(100) NOT NULL,
-  `color` varchar(7) NOT NULL
+  `color` varchar(7) NOT NULL,
+  `icono` varchar(50) NOT NULL
 ) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `estado_documento`
 --
 
-INSERT INTO `estado_documento` (`pkestado_documento`, `nomenglatura`, `nombre`, `descripcion`, `color`) VALUES
-(1, 'ela', 'Elaborado', 'El documento fue creado y esta listo para ser revisado', '#ddff00'),
-(2, 'rev', 'Revisado', 'El documento fue revisado y esta listo para ser aprobado', '#0033ff'),
-(3, 'apr', 'Aprobado', 'El documento fue aprobado y esta listo para ser emitido', '#047a00'),
-(4, 'emi', 'Emitido', 'El documento fue emitido', '#c400ff'),
-(5, 'rec', 'Rechazado', 'El documento fue rechazado', '#d10000'),
-(6, 'dev', 'Devuelto', 'El documento fue devuelto', '#ffcc00');
+INSERT INTO `estado_documento` (`pkestado_documento`, `nomenglatura`, `nombre`, `descripcion`, `color`, `icono`) VALUES
+(1, 'ela', 'Elaborado', 'El documento fue creado y esta listo para ser revisado', '#ddff00', 'fa fa-upload'),
+(2, 'rev', 'Revisado', 'El documento fue revisado y esta listo para ser aprobado', '#0033ff', 'fa fa-paperclip'),
+(3, 'apr', 'Aprobado', 'El documento fue aprobado y esta listo para ser emitido', '#047a00', 'fa fa-check'),
+(4, 'emi', 'Emitido', 'El documento fue emitido', '#c400ff', 'fa fa-send'),
+(5, 'rec', 'Rechazado', 'El documento fue rechazado', '#d10000', 'fa fa-times'),
+(6, 'dev', 'Devuelto', 'El documento fue devuelto', '#ffcc00', 'fa fa-mail-reply');
 
 -- --------------------------------------------------------
 
@@ -390,12 +388,6 @@ ALTER TABLE `bitacora`
  ADD PRIMARY KEY (`pkbitacora`);
 
 --
--- Indices de la tabla `calendario`
---
-ALTER TABLE `calendario`
- ADD PRIMARY KEY (`fecha`);
-
---
 -- Indices de la tabla `cargo`
 --
 ALTER TABLE `cargo`
@@ -477,7 +469,7 @@ MODIFY `pkavance` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-MODIFY `pkbitacora` int(11) NOT NULL AUTO_INCREMENT;
+MODIFY `pkbitacora` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
 --
 -- AUTO_INCREMENT de la tabla `cargo`
 --

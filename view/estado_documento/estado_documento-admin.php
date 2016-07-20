@@ -11,6 +11,7 @@
                             <th>Nomenglatura</th>
                             <th>Descripcion</th>
                             <th>Color de estado</th>
+                            <th>Icono para la accion</th>
                             <th>Acciones</th>
                         </tr>
                         </thead>
@@ -21,6 +22,7 @@
                                 <td><?php echo $r->nomenglatura; ?></td>
                                 <td><?php echo $r->descripcion; ?></td>
                                 <td><span class="badge" style="background-color: <?php echo $r->color; ?>"><?php echo $r->color; ?></span></td>
+                                <td style="text-align: center; font-size: 30px; color: <?php echo $r->color; ?>" ><i class="<?php echo $r->icono; ?>"></i>
                                 <td style="text-align: center">
                                     <a href="?c=estado_documento&a=editar&pkestado_documento=<?php echo $r->pkestado_documento; ?>" class="btn btn-outline btn-info btn-circle editar"><i class="fa fa-pencil"></i></a>
                                 </td>

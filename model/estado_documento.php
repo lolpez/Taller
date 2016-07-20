@@ -46,13 +46,14 @@ class Estado_Documento {
 
     public function Editar($datos) {
         try {
-            $sql = "UPDATE estado_documento SET nomenglatura=?, nombre=?, descripcion=?, color=? WHERE pkestado_documento=? ";
+            $sql = "UPDATE estado_documento SET nomenglatura=?, nombre=?, descripcion=?, color=?, icono=? WHERE pkestado_documento=? ";
             $this->pdo->prepare($sql)->execute(
                 array(
                     $datos['nomenglatura'],
                     $datos['nombre'],
                     $datos['descripcion'],
                     $datos['color'],
+                    $datos['icono'],
                     $datos['pk']
                 )
             );
