@@ -80,12 +80,6 @@
     var $icono_verificar = $("#icono_verificar");
     $('#documento').bind('change', function() {
         tamano = this.files[0].size;
-        /*var reader = new FileReader();
-         reader.onload = function(event) {
-         array_bytes = event.target.result;
-         //console.log("File contents: " + array_bytes);
-         };
-         reader.readAsText(this.files[0]);*/
         var datos = {
             archivo: tamano
         };

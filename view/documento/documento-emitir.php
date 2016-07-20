@@ -23,7 +23,15 @@
         </div>
     </div>
     <div class="row">
-        <div class="col-md-offset-4 col-md-4">
+        <div class="col-md-6">
+            <div class="form-group">
+                <label>Comentario</label>
+                <div class="form-group">
+                    <textarea class="form-control" placeholder="Comentario" name="comentario" style="resize: vertical"><?php echo $comentario; ?></textarea>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-6">
             <div class="form-group">
                 <label>Emitir a areas:</label>
                 <select class="parcmb" name="multiselectArea[]" multiple="multiple">

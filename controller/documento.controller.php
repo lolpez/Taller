@@ -328,7 +328,7 @@ class DocumentoController {
         if ($usuario_origen == $usuario_destino){
             $areas = $this->area->Listar();
             $documento = $this->model->Obtener_Simple($pkdocumento);
-            $this->vista->Emitir($documento,$pkavance,$pkestadodocumento_nuevo,$areas,$this->permiso);
+            $this->vista->Emitir($documento,$pkavance,$pkestadodocumento_nuevo,$comentario,$areas,$this->permiso);
         }else{
             //Poner en visto la notificacion
             $datos = array(

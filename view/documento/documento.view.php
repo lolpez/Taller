@@ -26,7 +26,7 @@ class DocumentoView{
         require_once 'view/footer.php';
     }
 
-    public function Emitir($documento,$pkavance,$pkestadodocumento_nuevo,$areas,$menu){
+    public function Emitir($documento,$pkavance,$pkestadodocumento_nuevo,$comentario,$areas,$menu){
         require_once 'view/header.php';
         require_once 'view/documento/documento-emitir.php';
         require_once 'view/footer.php';
