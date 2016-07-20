@@ -110,10 +110,5 @@
         //Habilitar buscadores de tablas
         $('#tabla_mis_documentos').DataTable();
         $('#tabla_documentos_aprobados').DataTable();
-        <?php if (!count($lista)>0 && $botones[0]->id_boton !=1){ ?>
-            $("#mis_documentos").remove();
-            $("#pestaña_mis_documentos").remove();
-            $("#pestaña_aprobados").attr('class','active');
-        <?php } ?>
     });
 </script>
