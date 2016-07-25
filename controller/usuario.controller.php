@@ -1,4 +1,58 @@
 <?php
+if ((isset($_POST['username_movil']) && isset($_POST['password_movil'])) && (!empty($_POST['username_movil']) && !empty($_POST['password_movil']))) {
+    require_once '../model/usuario.php';
+    require_once '../model/notificacion.php';
+    require_once '../model/avance.php';
+    require_once '../model/cargo.php';
+    require_once '../model/documento.php';
+    require_once '../model/estado_documento.php';
+    $UsuarioModel = new Usuario(true);  //True cuando es un metodo post
+    $NotificacionModel = new Notificacion(true);
+    $AvanceModel = new Avance(true);
+    $CargoModel = new Cargo(true);
+    $DocumentoModel = new Documento(true);
+    $EstadoDocumentoModel = new Estado_Documento(true);
+    $nombre_archivo = '../resources/users/'.$_POST['username_movil'].'.crip';
+    $llave = pack('H*', "bcb04b7e103a0cd8b54763051cef08bc55abe029fdebae5e1d417e2ffb2a00a3");
+    $myfile = fopen($nombre_archivo, "r") or die("El archivo que contiene la informacion confidencial del usuario se encuentra corrupto. Por favor reporte inmediatamente al administrador de sistema de EPSAS.");
+    $contenido = fread($myfile,filesize($nombre_archivo));
+    fclose($myfile);
+    $texto_encriptado = $contenido;
+    $iv_size = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
+    $texto_encriptado = base64_decode($texto_encriptado);
+    $iv_dec = substr($texto_encriptado, 0, $iv_size);
+    $texto_encriptado = substr($texto_encriptado, $iv_size);
+    $texto_desencriptado = mcrypt_decrypt(MCRYPT_RIJNDAEL_128, $llave, $texto_encriptado, MCRYPT_MODE_CBC, $iv_dec);
+    $array = explode('#', $texto_desencriptado);
+    $texto = $array;
+    if (($_POST['username_movil'] == $texto[0]) && ($_POST['password_movil'] == $texto[1])) {
+        $usuario = $UsuarioModel->Login((int)$texto[2]);
+        //Login correcto
+        $lista = array();
+        $notif = $NotificacionModel->Obtener_NoVisto($usuario->pkusuario);
+        foreach ($notif as $n):
+            $avance = $AvanceModel->Obtener($n->fkavance);
+            $usuario_creador = $UsuarioModel->Obtener($avance->fkusuario);
+            $objeto = new stdClass();
+            $objeto->pkavance = $avance->pkavance;
+            $objeto->fecha = $avance->fecha;
+            $objeto->hora = $avance->hora;
+            $objeto->usuario_creador = $UsuarioModel->Obtener($avance->fkusuario)->nombre;
+            $objeto->usuario_creador_cargo = $CargoModel->Obtener($usuario_creador->fkcargo)->nombre;
+            $objeto->documento = $DocumentoModel->Obtener($avance->fkdocumento,(int)$usuario->fkarea);
+            $objeto->estado_documento = $EstadoDocumentoModel->Obtener($avance->fkestado_documento);
+            $objeto->mensaje = 'El usuario ' . $objeto->usuario_creador. ' (' . $objeto->usuario_creador_cargo . ') ha '.$objeto->estado_documento->nombre.' el documento '.$objeto->documento['codigo'].' ('.$objeto->documento['titulo'].' v.'.$objeto->documento['version'].')';
+            $objeto->comentario = $avance->comentario;
+            //$objeto->url = '?c=documento&a=detalle&pkdocumento='.$objeto->documento['_id'].'&pkavance='.$objeto->pkavance;
+            $lista[] = $objeto;
+        endforeach;
+        echo json_encode($lista);
+    }else{
+        echo -1;
+    }
+    return;
+}
+
 require_once 'view/usuario/usuario.view.php';
 require_once 'model/usuario.php';
 require_once 'model/area.php';

@@ -37,6 +37,12 @@ if(isset($_POST['archivo'])) {
     return;
 }
 
+if(isset($_POST['descargar_movil']) && isset($_POST['pkdocumento'])) {
+    require_once '../model/documento.php';
+    $DocumentoModel = new Documento(true);  //True cuando es un metodo post
+    $DocumentoModel->Descargar($_POST['pkdocumento']);
+}
+
 require_once 'view/documento/documento.view.php';
 require_once 'model/documento.php';
 require_once 'model/tipo_documento.php';
@@ -238,6 +244,9 @@ class DocumentoController {
                 'fkusuario_destino' => $usuario_destino->pkusuario
             );
             $this->notificacion->Guardar($datos);
+			
+            $tarea = 'se ha creado un nuevo docuemento '.$this->model->Obtener_Simple($arrayExito['pkdocumento'])['codigo'];
+            $this->bitacora->GuardarBitacora($tarea);
         }
         header('Location: ?c=documento&item='.$this->item.'&tarea='.$tarea.'&exito='.$arrayExito['exito']);
     }
