@@ -24,6 +24,16 @@ class Usuario {
         }
     }
 
+    public function Listar_Por_Area($pk) {
+        try {
+            $sql = $this->pdo->prepare("select u.pkusuario,u.nombre,u.ci,u.telefono,u.email,a.nombre as area,c.nombre as cargo from usuario u, area a, cargo c where u.fkcargo=c.pkcargo and u.fkarea=a.pkarea and u.estado=1 and c.estado=1 and a.estado=1 and u.fkarea=?");
+            $sql->execute(array($pk));
+            return $sql->fetchAll(PDO::FETCH_OBJ);
+        } catch (Exception $e) {
+            die($e->getMessage());
+        }
+    }
+
     public function Obtener($pk) {
         try {
             $sql = $this->pdo->prepare("SELECT * FROM usuario u WHERE u.pkusuario= ? ");

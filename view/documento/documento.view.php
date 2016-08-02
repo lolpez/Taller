@@ -32,6 +32,12 @@ class DocumentoView{
         require_once 'view/footer.php';
     }
 
+    public function Actualizacion($documento,$usuarios,$menu){
+        require_once 'view/header.php';
+        require_once 'view/documento/documento-actualizacion.php';
+        require_once 'view/footer.php';
+    }
+
 }
 
 ?>

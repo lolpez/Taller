@@ -35,7 +35,7 @@ class Emision {
     }
 
     public function Guardar($datos) {
-        try {
+        try {	
             $sql = "INSERT INTO emision (fkusuario,fkdocumento,fkarea) VALUES (?,?,?)";
             $this->pdo->prepare($sql)->execute(
                 array(
@@ -45,6 +45,20 @@ class Emision {
                 )
             );
             return true;
+        } catch (Exception $e) {
+            return false;
+        }
+    }
+	
+	public function Eliminar($datos) {
+        try {	
+			$sql = "DELETE FROM emision WHERE fkusuario=? AND fkdocumento=?";
+            $this->pdo->prepare($sql)->execute(
+                array(
+                    $datos['fkusuario'],
+                    $datos['fkdocumento']
+                )
+            );
         } catch (Exception $e) {
             return false;
         }

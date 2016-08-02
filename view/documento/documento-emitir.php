@@ -34,11 +34,13 @@
         <div class="col-md-6">
             <div class="form-group">
                 <label>Emitir a areas:</label>
-                <select class="parcmb" name="multiselectArea[]" multiple="multiple">
-                    <?php foreach ($areas as $a): ?>
-                        <option value="<?php echo $a->pkarea; ?>"><?php echo $a->nombre; ?></option>
-                    <?php endforeach ?>
-                </select>
+                <div class="form-group">
+                    <select class="parcmb" name="multiselectArea[]" multiple="multiple" required>
+                        <?php foreach ($areas as $a): ?>
+                            <option value="<?php echo $a->pkarea; ?>"><?php echo $a->nombre; ?></option>
+                        <?php endforeach ?>
+                    </select>
+                </div>
             </div>
         </div>
     </div>

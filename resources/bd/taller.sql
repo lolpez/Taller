@@ -3,7 +3,7 @@
 -- http://www.phpmyadmin.net
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 20-07-2016 a las 21:23:18
+-- Tiempo de generación: 02-08-2016 a las 16:27:08
 -- Versión del servidor: 5.6.21
 -- Versión de PHP: 5.6.3
 
@@ -108,7 +108,7 @@ CREATE TABLE IF NOT EXISTS `avance` (
   `hora` varchar(10) NOT NULL,
   `fkusuario` int(11) NOT NULL,
   `fkdocumento` varchar(50) NOT NULL,
-  `fkestado_documento` int(11) NOT NULL,
+  `fkestado_documento` int(11) DEFAULT NULL,
   `comentario` text NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
@@ -124,14 +124,7 @@ CREATE TABLE IF NOT EXISTS `bitacora` (
   `accion` varchar(100) NOT NULL,
   `fecha` varchar(10) NOT NULL,
   `hora` varchar(10) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `bitacora`
---
-
-INSERT INTO `bitacora` (`pkbitacora`, `fkusuario`, `accion`, `fecha`, `hora`) VALUES
-(1, 2, 'Cierre de sesion', '20/07/2016', '03:20:19');
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
 
@@ -183,7 +176,7 @@ CREATE TABLE IF NOT EXISTS `estado_documento` (
   `descripcion` varchar(100) NOT NULL,
   `color` varchar(7) NOT NULL,
   `icono` varchar(50) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `estado_documento`
@@ -195,7 +188,9 @@ INSERT INTO `estado_documento` (`pkestado_documento`, `nomenglatura`, `nombre`, 
 (3, 'apr', 'Aprobado', 'El documento fue aprobado y esta listo para ser emitido', '#047a00', 'fa fa-check'),
 (4, 'emi', 'Emitido', 'El documento fue emitido', '#c400ff', 'fa fa-send'),
 (5, 'rec', 'Rechazado', 'El documento fue rechazado', '#d10000', 'fa fa-times'),
-(6, 'dev', 'Devuelto', 'El documento fue devuelto', '#ffcc00', 'fa fa-mail-reply');
+(6, 'dev', 'Devuelto', 'El documento fue devuelto', '#ffcc00', 'fa fa-mail-reply'),
+(7, 'act', 'Actualizar', 'Actualizar documento', '#001799', 'fa fa-refresh'),
+(8, 'ord', 'Orden de actualizacion', 'Se ordeno actualizacion para el documento', '#000000', 'fa fa-info');
 
 -- --------------------------------------------------------
 
@@ -231,7 +226,7 @@ CREATE TABLE IF NOT EXISTS `menu_detalle` (
   `icono` varchar(50) NOT NULL,
   `controlador` varchar(30) NOT NULL,
   `fkmenu` int(11) NOT NULL
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=16 DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `menu_detalle`
@@ -244,12 +239,12 @@ INSERT INTO `menu_detalle` (`pkmenu_detalle`, `nombre`, `icono`, `controlador`, 
 (5, 'Usuario', 'fa fa-user fa-fw', 'usuario', 3),
 (6, 'Cargo', 'fa fa-briefcase fa-fw ', 'cargo', 2),
 (7, 'Permisos', 'fa fa-ban fa-fw', 'privilegio', 3),
-(8, 'Calendario', 'fa fa-calendar fa-fw', 'calendario', 3),
 (9, 'Archivos permitidos', 'fa fa-file-o fa-fw', 'archivo_config', 3),
 (10, 'Area', 'fa fa-sitemap fa-fw', 'area', 2),
 (11, 'Tipo documento', 'fa fa-cubes fa-fw', 'tipo_documento', 2),
 (12, 'Copia de seguridad', 'fa fa-database fa-fw', 'backup', 3),
-(14, 'Estado de documento', 'fa fa-clock-o fa-fw', 'estado_documento', 2);
+(14, 'Estado de documento', 'fa fa-clock-o fa-fw', 'estado_documento', 2),
+(15, 'Lista maestra', 'fa fa-file fa-fw', 'reporte', 4);
 
 -- --------------------------------------------------------
 
@@ -286,12 +281,12 @@ INSERT INTO `privilegio` (`fkcargo`, `fkmenu_detalle`) VALUES
 (1, 5),
 (1, 6),
 (1, 7),
-(1, 8),
 (1, 9),
 (1, 10),
 (1, 11),
 (1, 12),
 (1, 14),
+(1, 15),
 (2, 1),
 (2, 2),
 (3, 1),
@@ -469,7 +464,7 @@ MODIFY `pkavance` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `bitacora`
 --
 ALTER TABLE `bitacora`
-MODIFY `pkbitacora` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=2;
+MODIFY `pkbitacora` int(11) NOT NULL AUTO_INCREMENT;
 --
 -- AUTO_INCREMENT de la tabla `cargo`
 --
@@ -484,7 +479,7 @@ MODIFY `pkemision` int(11) NOT NULL AUTO_INCREMENT;
 -- AUTO_INCREMENT de la tabla `estado_documento`
 --
 ALTER TABLE `estado_documento`
-MODIFY `pkestado_documento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=7;
+MODIFY `pkestado_documento` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=9;
 --
 -- AUTO_INCREMENT de la tabla `menu`
 --
@@ -494,7 +489,7 @@ MODIFY `pkmenu` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=5;
 -- AUTO_INCREMENT de la tabla `menu_detalle`
 --
 ALTER TABLE `menu_detalle`
-MODIFY `pkmenu_detalle` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=15;
+MODIFY `pkmenu_detalle` int(11) NOT NULL AUTO_INCREMENT,AUTO_INCREMENT=16;
 --
 -- AUTO_INCREMENT de la tabla `notificacion`
 --

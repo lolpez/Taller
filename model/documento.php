@@ -35,6 +35,16 @@ class Documento {
         }
     }
 
+    public function Obtener_Por_Area($fkarea){
+        try {
+            $consulta = array("fkarea" => $fkarea);
+            $mongo = $this->mongo->selectCollection($this->mongo_tabla)->find($consulta);
+            return $mongo;
+        } catch (MongoException $e) {
+            die($e->getMessage());
+        }
+    }
+
     public function Obtener_Simple($pkdocumento){
         try {
             $consulta = array('_id' => new MongoId($pkdocumento));

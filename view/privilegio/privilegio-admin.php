@@ -19,28 +19,30 @@
                             </div>
                             <div id="<?php echo $c->pkcargo; ?>" class="panel-collapse collapse">
                                 <div class="panel-body">
-                                    <?php foreach ($menupriv as $m): ?>
-                                        <div class="col-md-6">
-                                            <div class="panel panel-primary">
-                                                <div class="panel-heading">
-                                                    <i class="<?php echo $m->icono?>"></i> <?php echo $m->nombre ?>
-                                                </div>
-                                                <div class="panel-body permisos">
-                                                    <?php foreach ($menu_detallepriv as $d): ?>
-                                                        <?php if ($d->fkmenu == $m->pkmenu){ ?>
-                                                            <?php foreach ($privilegio as $p): ?>
-                                                                <?php if (($p->fkcargo == $c->pkcargo) && ($p->fkmenu_detalle == $d->pkmenu_detalle)){ ?>
-                                                                    <div>
-                                                                        <label><i class="<?php echo $d->icono ?> icono"></i><?php echo $d->nombre ?></label>
-                                                                    </div>
-                                                                <?php } ?>
-                                                            <?php endforeach ?>
-                                                        <?php } ?>
-                                                    <?php endforeach ?>
+                                    <div class="row">
+                                        <?php foreach ($menupriv as $m): ?>
+                                            <div class="col-md-4">
+                                                <div class="panel panel-primary">
+                                                    <div class="panel-heading">
+                                                        <i class="<?php echo $m->icono?>"></i> <?php echo $m->nombre ?>
+                                                    </div>
+                                                    <div class="panel-body permisos">
+                                                        <?php foreach ($menu_detallepriv as $d): ?>
+                                                            <?php if ($d->fkmenu == $m->pkmenu){ ?>
+                                                                <?php foreach ($privilegio as $p): ?>
+                                                                    <?php if (($p->fkcargo == $c->pkcargo) && ($p->fkmenu_detalle == $d->pkmenu_detalle)){ ?>
+                                                                        <div>
+                                                                            <label><i class="<?php echo $d->icono ?> icono"></i><?php echo $d->nombre ?></label>
+                                                                        </div>
+                                                                    <?php } ?>
+                                                                <?php endforeach ?>
+                                                            <?php } ?>
+                                                        <?php endforeach ?>
+                                                    </div>
                                                 </div>
                                             </div>
-                                        </div>
-                                    <?php endforeach ?>
+                                        <?php endforeach ?>
+                                    </div>
                                 </div>
                             </div>
                         </div>

@@ -34,16 +34,27 @@
                         <button id="btndownload" type="submit" class="btn btn-default btn-outline btn-circle btn-xl" data-toggle="tooltip" data-placement="top" title="Descargar Documento" style="border-color:  #31b0d5"><i class="fa fa-download"></i></button>
                     </form>
                     <?php foreach ($botones as $b) { ?>
-                        <?php if ($b->estado_documento_nuevo->pkestado_documento != 1) { ?>
-                            <button onclick="confComentario('cambiar_estado','<?php echo $documento['_id'] ?>','<?php echo $pkavance ?>','<?php echo $b->estado_documento_nuevo->pkestado_documento ?>')" type="button" id="btn<?php echo $b->estado_documento_nuevo->pkestado_documento ?>" class="btn btn-default btn-outline btn-circle btn-xl" data-toggle="tooltip" data-placement="top" title="<?php echo $b->estado_documento_nuevo->descripcion ?>" style="border-color: <?php echo $b->estado_documento_nuevo->color ?>"><i class="<?php echo $b->estado_documento_nuevo->icono ?>"></i></button>
-                        <?php }else{ ?>
-                            <form action="?c=documento&a=editar" method="post" autocomplete="off">
-                                <input type="hidden" name="pkdocumento" value="<?php echo $documento['_id'] ?>">
-                                <input type="hidden" name="pkavance" value="<?php echo $pkavance ?>">
-                                <input type="hidden" name="pkestado_documento_nuevo" value="<?php echo $b->estado_documento_nuevo->pkestado_documento ?>">
-                                <button type="submit" id="btn<?php echo $b->estado_documento_nuevo->pkestado_documento ?>" class="btn btn-default btn-outline btn-circle btn-xl" data-toggle="tooltip" data-placement="top" title="Suba una nueva version del documento" style="border-color: <?php echo $b->estado_documento_nuevo->color ?>"><i class="<?php echo $b->estado_documento_nuevo->icono ?>"></i></button>
-                            </form>
-                        <?php } ?>
+                        <?php switch($b->estado_documento_nuevo->pkestado_documento){
+                            case 1: ?>
+                                <form action="?c=documento&a=editar" method="post" autocomplete="off">
+                                    <input type="hidden" name="pkdocumento" value="<?php echo $documento['_id'] ?>">
+                                    <input type="hidden" name="pkavance" value="<?php echo $pkavance ?>">
+                                    <input type="hidden" name="pkestado_documento_nuevo" value="<?php echo $b->estado_documento_nuevo->pkestado_documento ?>">
+                                    <button type="submit" id="btn<?php echo $b->estado_documento_nuevo->pkestado_documento ?>" class="btn btn-default btn-outline btn-circle btn-xl" data-toggle="tooltip" data-placement="top" title="Suba una nueva version del documento" style="border-color: <?php echo $b->estado_documento_nuevo->color ?>"><i class="<?php echo $b->estado_documento_nuevo->icono ?>"></i></button>
+                                </form>
+                                <?php break;
+                            case 8: ?>
+                                <form action="?c=documento&a=editar" method="post" autocomplete="off">
+                                    <input type="hidden" name="pkdocumento" value="<?php echo $documento['_id'] ?>">
+                                    <input type="hidden" name="pkavance" value="<?php echo $pkavance ?>">
+                                    <input type="hidden" name="pkestado_documento_nuevo" value="<?php echo $b->estado_documento_nuevo->pkestado_documento ?>">
+                                    <button type="submit" id="btn<?php echo $b->estado_documento_nuevo->pkestado_documento ?>" class="btn btn-default btn-outline btn-circle btn-xl" data-toggle="tooltip" data-placement="top" title="Suba una nueva version del documento" style="border-color: <?php echo $b->estado_documento_nuevo->color ?>"><i class="<?php echo $b->estado_documento_nuevo->icono ?>"></i></button>
+                                </form>
+                                <?php break;
+                            default: ?>
+                                <button onclick="confComentario('cambiar_estado','<?php echo $documento['_id'] ?>','<?php echo $pkavance ?>','<?php echo $b->estado_documento_nuevo->pkestado_documento ?>')" type="button" id="btn<?php echo $b->estado_documento_nuevo->pkestado_documento ?>" class="btn btn-default btn-outline btn-circle btn-xl" data-toggle="tooltip" data-placement="top" title="<?php echo $b->estado_documento_nuevo->descripcion ?>" style="border-color: <?php echo $b->estado_documento_nuevo->color ?>"><i class="<?php echo $b->estado_documento_nuevo->icono ?>"></i></button>
+                                <?php break;
+                        }?>
                     <?php } ?>
                 </div>
             </div>

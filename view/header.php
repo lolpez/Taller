@@ -32,7 +32,7 @@
     <!-- Calendario -->
     <link rel="stylesheet" href="resources/bower_components/calendar/css/zabuto_calendar.css"/>
     <!-- DateTime Picker -->
-    <link rel="stylesheet" href="resources/bower_components/datetime-picker/css/bootstrap-datetimepicker.css" />
+    <link rel="stylesheet" href="resources/bower_components/datetime-picker/css/bootstrap-datetimepicker.css"/>
     <!-- Switch Button -->
     <link rel="stylesheet" href="resources/bower_components/switch/css/bootstrap-switch.min.css"/>
     <!-- Color Picker -->

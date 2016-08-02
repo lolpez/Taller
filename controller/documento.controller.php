@@ -149,6 +149,12 @@ class DocumentoController {
         $this->vista->Editar($documento,$pkavance,$pkestadodocumento_nuevo,$tipo_documento,$archivos_permitidos,$this->permiso);
     }
 
+    public function Actualizacion() {
+        $documento = $this->model->Obtener_Simple($_REQUEST['pkdocumento']);
+        $usuarios = $this->usuario->Listar_Por_Area($_SESSION['usuario']->fkarea);
+        $this->vista->Actualizacion($documento,$usuarios,$this->permiso);
+    }
+
     public function Detalle() {
         $pkavance = $_REQUEST['pkavance'];
         $documento =  $this->model->Obtener_Simple($_REQUEST['pkdocumento']);
@@ -186,6 +192,11 @@ class DocumentoController {
     }
 
     public function Guardar(){
+        if ($_POST['comentario'] == ''){
+            $comentario = 'sin comentarios';
+        }else{
+            $comentario = $_POST['comentario'];
+        }
         date_default_timezone_set("America/La_Paz");
         $tarea = 'agregar';
         $ext = $this->ObtenerExtencion($_FILES["documento"]["name"]);
@@ -235,7 +246,7 @@ class DocumentoController {
                 'fkusuario' => $usuario_origen->pkusuario,
                 'fkdocumento' => $arrayExito['pkdocumento'],
                 'fkestado_documento' => $estado_documento,
-                'comentario' => $_POST['comentario']
+                'comentario' => $comentario
             );
             $pkavance = $this->avance->Guardar($datos);
             //Insertar tabla notificacion
@@ -411,6 +422,41 @@ class DocumentoController {
         $exito = true;
         $this->bitacora->GuardarBitacora($tarea);
         header('Location: ?c=documento&item=&tarea='.$tarea.'&exito='.$exito);
+    }
+
+    public function Guardar_Orden_Actualizacion(){
+        if ($_POST['comentario'] == ''){
+            $comentario = 'sin comentarios';
+        }else{
+            $comentario = $_POST['comentario'];
+        }
+        //Insertar tabla avance como Historial de documento
+
+        $datos = array(
+            'fecha' => date("d/m/Y"),
+            'hora' => date("h:i:s"),
+            'fkusuario' => $_SESSION['usuario']->pkusuario,
+            'fkdocumento' => $_POST['pkdocumento'],
+            'fkestado_documento' => 8,
+            'comentario' => $comentario
+        );
+        $pkavance = $this->avance->Guardar($datos);
+        //Insertar tabla notificacion
+        $datos = array(
+            'fkavance' => $pkavance,
+            'fkusuario_destino' => $_POST['usuario']
+        );
+        $this->notificacion->Guardar($datos);
+		//Remover el documento de emisiones
+		$datos = array(
+			'fkusuario' => $_SESSION['usuario']->pkusuario,
+			'fkdocumento' => $_POST['pkdocumento']
+		);
+		$this->emision->Eliminar($datos);
+        
+        $tarea = 'se ha ordenado la actualizacion del documento '.$this->model->Obtener_Simple($_POST['pkdocumento'])['codigo'].' al usuario '.$this->usuario->Obtener($_POST['usuario'])->nombre;
+        $this->bitacora->GuardarBitacora($tarea);
+        header('Location: ?c=documento&item=&tarea='.$tarea.'&exito='.true);
     }
 
     public function Eliminar(){
